@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/" name="alley">
+	<sprite x="-1131.49932246573" sprite="alley/images/BACKGROUND" y="-722.761633974605" type="none" scalex="0.718802481254666" angle="0.1" scaley="0.738031846930483" name="Background"/>
+	<sprite x="-1303.82164338767" sprite="alley/images/Behind the clouds and fence" y="-759.293505958374" type="none" name="Behind the clouds and fence"/>
+	<sprite x="-1243.13535191869" sprite="alley/images/Behind the Fence" y="-764.970562748272" type="none" name="Behind the Fence"/>
+	<sprite x="-1150.59236186816" sprite="alley/images/MIDGROUND" y="-624.43058993797" type="none" scalex="0.73149818493885" scaley="0.628019403043201" name="MIDGROUND"/>
+	<girlfriend/>
+	<dad x="-343.502419009794" y="75.2380952380952"/>
+	<boyfriend x="705.805192469948" y="244.919195833471"/>
+	<sprite x="-687.737444172012" y="-535.514647577061" type="none" angle="0.09" name="FOREGROUND TREE" sprite="alley/images/FOREGROUND TREE" scroll="0.5" scalex="0.876257455285275" scaley="0.83331893093833"/>
+</stage>

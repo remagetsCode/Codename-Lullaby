@@ -1,0 +1,15 @@
+{
+	"color": "#000000",
+	"customValues": {},
+	"opponentModeAllowed": false,
+	"difficulties": [
+		"hard"
+	],
+	"icon": "icon-red",
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "Frostbite",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 115
+}

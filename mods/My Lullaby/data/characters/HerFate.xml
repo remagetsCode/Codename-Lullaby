@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="-320" y="-90" sprite="last_stand" flipX="true" camx="1000" icon="hypnogf4" color="#A5004B">
+	<anim name="idle" anim="Lullaby_GF_Idle_2"/>
+	<anim name="singDOWN" anim="Lullaby_GF_down" x="13" y="-17" indices="0..9"/>
+	<anim name="singRIGHT" anim="Lullaby_GF_right" x="11" indices="0..5"/>
+	<anim name="singLEFT" anim="Lullaby_GF_left" x="57" y="-5" indices="0..5"/>
+	<anim name="singUP" anim="Lullaby_GF_up" x="109" y="13" indices="0..5"/>
+	<anim name="singUPmiss" anim="Lullaby_GF_up_miss" x="110" y="14"/>
+	<anim name="singDOWNmiss" anim="Lullaby_GF_down_miss" x="16" y="-17"/>
+	<anim name="singLEFTmiss" anim="Lullaby_GF_left_miss" x="56" y="-4"/>
+	<anim name="singRIGHTmiss" anim="Lullaby_GF_right_miss" x="11" y="-1"/>
+</character>

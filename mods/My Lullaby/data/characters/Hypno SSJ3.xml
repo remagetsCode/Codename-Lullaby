@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="ABOMINATION_HYPNO" camx="-250" camy="50" icon="Hypno3" color="#FF6300">
+	<anim name="idle" anim="idle" x="-1"/>
+	<anim name="singDOWN" anim="down" x="-3" y="-210"/>
+	<anim name="singRIGHT" anim="right" x="2" y="-24"/>
+	<anim name="singLEFT" anim="left instance 1" x="114" y="-69"/>
+	<anim name="singUP" anim="up" x="-6" y="183"/>
+</character>

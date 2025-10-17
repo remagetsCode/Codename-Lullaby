@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/glitchy/images/" name="glitchy">
+	<sprite x="-1140" scroll="0.4" sprite="glitch_City" y="-1019" type="none" scale="0.9" name="city"/>
+	<sprite x="-1138" scroll="0.5" sprite="tiles" y="-1039" type="none" scale="0.9" name="Tiles"/>
+	<sprite x="-672.901152581862" sprite="haze" y="-1041.32092146623" type="none" scalex="0.925026681442979" scaley="0.93559350305155" name="Gradient"/>
+	<girlfriend x="1100" y="-500"/>
+	<dad scale="0.95" x="1153" scroll="0.53" y="0"/>
+	<boyfriend camxoffset="350" x="466" scroll="1.1" camyoffset="-50" y="186" zoomfactor="0.7"/>
+</stage>

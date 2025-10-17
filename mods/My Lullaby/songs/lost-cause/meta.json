@@ -1,0 +1,15 @@
+{
+	"color": "#000000",
+	"customValues": {},
+	"opponentModeAllowed": false,
+	"icon": "Hypno3",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "Lost Cause",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 170
+}

@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Hypno Phase 1 Sheet" camx="100" camy="30" icon="icon-hypno" color="#F9DF44">
+	<anim name="idle" anim="Hypno Idle 1"/>
+	<anim name="singDOWN" anim="Final Hypno Down" x="-97" y="-101"/>
+	<anim name="singRIGHT" anim="Hypno Right" x="-232" y="59"/>
+	<anim name="singLEFT" anim="Hypno Left" x="116" y="14"/>
+	<anim name="singUP" anim="Hypno Up" x="-65" y="190"/>
+	<anim name="Psyshock" anim="Psyshock Full" x="-234" y="22"/>
+</character>

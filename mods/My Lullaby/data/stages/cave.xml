@@ -1,0 +1,7 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/cave/images/" name="cave">
+	<sprite x="-379.280939718588" sprite="cave" y="-606.608032459942" type="none" scalex="0.838105769153822" scaley="0.843115507331132" name="sprite_3"/>
+	<girlfriend/>
+	<dad x="814.18758912385" y="-478.079496281363"/>
+	<boyfriend x="-74.7955912237683" y="446.113628123211"/>
+</stage>

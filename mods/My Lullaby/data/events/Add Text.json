@@ -1,0 +1,34 @@
+{
+	"params": [
+		{
+			"name": "X value:",
+			"type": "Int(0, 999999, 1)",
+			"defaultValue": null
+		},
+		{
+			"name": "Y value",
+			"type": "Int(0, 999999, 1)",
+			"defaultValue": null
+		},
+		{
+			"name": "What's the text?",
+			"type": "String",
+			"defaultValue": "Lorem ipsum dolor sit amet i dontk now whta's next"
+		},
+		{
+			"name": "What's the size?",
+			"type": "Int(0, 999999, 1)",
+			"defaultValue": 24
+		},
+		{
+			"name": "How many time (in seconds) ?",
+			"type": "Float(0, 999999, 1)",
+			"defaultValue": 1
+		},
+		{
+      		"name": "Color",
+      		"type": "ColorWheel",
+      		"defaultValue": "#FFFFFF"
+		}
+	]
+}

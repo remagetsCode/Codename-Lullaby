@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="phase_3" flipX="true" icon="hypnogf4" color="#A5004B">
+	<anim name="idle" anim="GF_SHAKING_BF_she_is_like_real_hot_tho_because_she_is_lullaby_girlfriend"/>
+	<anim name="singRIGHT" anim="right_GF_SHAKING_BF_she_is_like_real_hot_tho_because" x="5" loop="true" indices="0..5"/>
+	<anim name="singLEFT" anim="left_GF_SHAKING_BF_she_is_like_real_hot_tho_because" x="-5" y="-4" indices="0..5"/>
+	<anim name="singUP" anim="up_GF_SHAKING_BF_she_is_like_real_hot_tho_because" x="-2" y="23" indices="0..5"/>
+	<anim name="singDOWN" anim="down_GF_SHAKING_BF_she_is_like_real_hot_tho_because" x="4" y="-9" indices="0..5"/>
+	<anim name="GF_BF_DROP" anim="GF_SHAKING_BF_drop" x="24" y="92"/>
+	<anim name="singUPmiss" anim="up_GF_SHAKING_BF_she_is_like_real_hot_tho_because_miss" x="-1" y="24"/>
+	<anim name="singDOWNmiss" anim="down_GF_SHAKING_BF_she_is_like_real_hot_tho_because_miss" y="-10"/>
+	<anim name="singLEFTmiss" anim="left_GF_SHAKING_BF_she_is_like_real_hot_tho_because_miss" x="29" y="8"/>
+	<anim name="singRIGHTmiss" anim="right_GF_SHAKING_BF_she_is_like_real_hot_tho_because_miss" x="-19"/>
+</character>

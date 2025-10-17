@@ -1,0 +1,27 @@
+
+
+<dialogue box="default">
+    <!-- All characters -->
+    <char name="dialogueHypno" position="left" />
+	<char name="dialogueGF" char="dialogueGF" position="middle" defaultAnim="idle"/>
+    <!-- Lines -->
+    <line char="dialogueGF" changeDefAnim="yell-back" bubble="angry">
+        Boyfriend!
+    </line>
+	<line char="dialogueGF" changeDefAnim="yell-front" bubble="angry">
+        BOYFRIENDD!!!!!
+    </line>
+    <line char="dialogueGF" changeDefAnim="idle">
+		Where's that blue dwarf this time?
+    </line>
+	<line char="dialogueHypno">
+        Are you looking for a blue dwarf, child?
+    </line>
+    <line char="dialogueGF" changeDefAnim="surprised">
+		(How does it know him?)
+    </line>
+	<line char="dialogueHypno">
+        Follow me into the forest, I saw him in there.
+    </line>
+</dialogue>
+

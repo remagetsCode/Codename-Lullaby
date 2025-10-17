@@ -1,0 +1,103 @@
+var pressed = false;
+var startedTimer = false;
+var healthDrain:Float = 0.1;
+var ;
+var counter:Int = 1;
+
+var songStarted = false;
+
+function postCreate(){
+	// Pendelum "sprite"
+	pendelum = new FlxSprite();
+	//pendelum.loadGraphic(Paths.image("UI/base/hypno/Pendelum_Phase2"));
+	pendelum.frames = Paths.getFrames('UI/base/hypno/Pendelum_Phase2');
+	pendelum.animation.addByPrefix('idle','Pendelum Phase 2',24);
+	pendelum.animation.play('idle');
+	add(pendelum);
+	pendelum.setGraphicSize(pendelum.width * 1.30, pendelum.height * 1.30);
+	pendelum.screenCenter();
+	pendelum.scrollFactor.set(0);
+	pendelum.cameras = [camHUD];
+	pendelum.antialiasing = true;
+	pendelum.origin.set(pendelum.width/2, 0);
+	pendelum.alpha = 0.8;
+
+	if(downscroll){
+		pendelum.y += 180;
+	}
+	else{
+		pendelum.y -= 180;
+	}
+
+
+}
+
+function onSongStart(){
+	// To prevent loosing life befor the song starts
+	songStarted = true;
+
+	//Some aesthetic anticipation
+	FlxTween.angle(pendelum, 0, -50, t, {
+		ease: FlxEase.sineOut
+	});
+
+	// Here it comes 👀, this is the time of the Sixteenth Note in second of the actual song's bpm
+	new FlxTimer().start(0.300*2, ()->{
+		pend();
+	});
+}
+function update(){
+	health += 1;
+	// Don't
+	if(!startedTimer && FlxG.keys.justPressed.SPACE){ 
+		FlxG.sound.play(Paths.sound('error'), 0.3);
+		health -= healthDrain*0.5;
+	}
+	
+	// Good
+	else if(startedTimer && FlxG.keys.justPressed.SPACE){
+		pressed = true;
+		health += healthDrain*0.2;
+	}
+
+}
+
+function stepHit(step){
+	// You're welcome player :)
+	if(songStarted && step == (counter*3)+(counter-1)){
+		
+		counter += 1;
+		pressed = false;
+		startedTimer = true;
+
+		// Reaction time to hit that spacebar
+		new FlxTimer().start(0.4, ()->{
+			if(!pressed){
+				health -= healthDrain;
+			}
+			startedTimer = false;
+		});
+		
+	}
+
+}
+
+// Freaking pendelum 🤬
+function pend(){
+
+	FlxTween.angle(pendelum, -50, 50, t, { 
+        ease: FlxEase.sineOut, 
+        onComplete: function(){
+
+			FlxTween.angle(pendelum, 50, -50, t, { 
+        		ease: FlxEase.sineOut, 
+				onComplete: function(){
+
+					pend();
+				}
+    		});
+
+		}
+    });
+
+}

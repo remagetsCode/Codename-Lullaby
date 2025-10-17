@@ -1,0 +1,6 @@
+<character x="100" y="-100">
+    <anim name="yell-back" anim="GF Sprite 1" fps="24" />
+    <anim name="yell-front" anim="GF Sprite 2" fps="24" />
+    <anim name="idle" anim="GF Sprite 3" fps="24" />
+    <anim name="surprised" anim="GF Sprite 4" fps="24" />
+</character>

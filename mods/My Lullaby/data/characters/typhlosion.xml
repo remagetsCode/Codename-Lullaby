@@ -1,0 +1,5 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="TYPHLOSION_MECHANIC" camx="150" camy="-190" icon="typhlosion">
+	<anim name="idle" anim="TYPHLOSION MECHANIC" indices="0..13"/>
+	<anim name="mechanic" anim="TYPHLOSION MECHANIC" x="11" y="30" indices="14..30"/>
+</character>

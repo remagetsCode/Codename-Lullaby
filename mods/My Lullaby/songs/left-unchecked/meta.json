@@ -1,0 +1,15 @@
+{
+	"color": "#000000",
+	"customValues": {},
+	"opponentModeAllowed": false,
+	"icon": "Hypno2",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "Left Unchecked",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 200
+}

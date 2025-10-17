@@ -1,0 +1,150 @@
+var pressed = false;
+var startedTimer = false;
+var healthDrain:Float = 0.15;
+var t = 0.706;
+var counter:Int = 1;
+var vibrationX:FlxTween;
+var vibrationY:FlxTween;
+var songStarted = false;
+
+function postCreate(){
+	// Pendelum "sprite"
+	pendelum = new FlxSprite();
+	pendelum.frames = Paths.getFrames('UI/base/hypno/Pendelum_Phase2');
+	pendelum.animation.addByPrefix('idle','Pendelum Phase 2',24);
+	pendelum.animation.play('idle');
+	add(pendelum);
+	pendelum.setGraphicSize(pendelum.width * 1.30, pendelum.height * 1.30);
+	pendelum.screenCenter();
+	pendelum.y -= 180;
+	pendelum.scrollFactor.set(0);
+	pendelum.cameras = [camHUD];
+	pendelum.antialiasing = true;
+	pendelum.origin.set(pendelum.width/2, 0);
+	pendelum.alpha = 0;
+
+	
+
+	pendelumBr = new FlxSprite();
+	pendelumBr.frames = Paths.getFrames('UI/base/hypno/Pendelum_Phase2_BR');
+	add(pendelumBr);
+	pendelumBr.setGraphicSize(pendelumBr.width * 1.30, pendelumBr.height * 1.30);
+	pendelumBr.screenCenter();
+	pendelumBr.y -= 180;
+	pendelumBr.scrollFactor.set(0);
+	pendelumBr.cameras = [camHUD];
+	pendelumBr.antialiasing = true;
+	pendelumBr.alpha = 0;
+
+	if(downscroll){
+		pendelum.y += 180;
+		pendelumBr.y += 180;
+	}
+	else{
+		pendelum.y -= 180;
+		pendelumBr.y -= 180;
+	}
+}
+
+function onSongStart(){
+
+	//Some aesthetic anticipation
+	FlxTween.angle(pendelum, 0, -50, t, {
+		ease: FlxEase.sineOut
+	});
+
+	// Here it comes 👀, this is the time of the Sixteenth Note in second of the actual song's bpm, i used this to syncronize the pendelum with the func and song
+	new FlxTimer().start(0.176*2, ()->{
+		pend();
+	});
+}
+
+function update(){
+	// Don't
+	if(!startedTimer && FlxG.keys.justPressed.SPACE && songStarted){ 
+		FlxG.sound.play(Paths.sound('error'), 0.3);
+		health -= healthDrain*0.5;
+	}
+	// Good
+	else if(startedTimer && FlxG.keys.justPressed.SPACE && songStarted){
+		pressed = true;
+		health += healthDrain*0.2;
+	}
+}
+
+function stepHit(step){
+	// You're welcome player :)
+	if(songStarted && step == (counter*7)+(counter-1)){
+		
+		counter += 1;
+		pressed = false;
+		startedTimer = true;
+
+		// Reaction time to hit that spacebar
+		new FlxTimer().start(0.4, ()->{
+			if(!pressed){
+				health -= healthDrain;
+			}
+			startedTimer = false;
+		});
+	}
+	
+	// Bro why this sound takes too long to play 😭🙏
+	if(step == 1088){
+		FlxG.sound.play(Paths.sound('breaking1'),2);
+	}
+
+	// I got tired of this freaking pendulum I'm going to break it
+	if(step == 1090){
+		pendelum.alpha = 0;
+		pendelumBr.alpha = 1;
+		songStarted = false;
+		
+        vibrationX = FlxTween.tween(pendelumBr, { x: pendelumBr.x + 60 }, 0.05, {
+            type: FlxTween.PINGPONG,
+			ease: FlxEase.quintOut
+        });
+
+		vibrationY = FlxTween.tween(pendelumBr, { y: pendelumBr.y + 60 }, 0.10, {
+            type: FlxTween.PINGPONG,
+			ease: FlxEase.quintOut
+        });
+		
+		FlxTween.tween(pendelumBr, { alpha: 0.2 }, 8, {
+			ease: FlxEase.quadOut
+		});
+	}
+
+
+	if(step == 1094){
+		vibrationX.cancel();
+		vibrationY.cancel();
+	}
+}
+
+
+function beatHit(beat){
+	if(beat == 90){
+		FlxTween.tween(pendelum, { alpha: 0.8 }, 2, {
+    		ease: FlxEase.quadOut
+		});
+		songStarted = true;
+		counter = 48;
+	}
+}
+
+// Freaking pendelum 🤬
+function pend(){
+	FlxTween.angle(pendelum, -50, 50, t, { 
+        ease: FlxEase.sineOut, 
+        onComplete: function(){
+			FlxTween.angle(pendelum, 50, -50, t, { 
+        		ease: FlxEase.sineOut, 
+				onComplete: function(){
+					pend();
+				}
+    		});
+		}
+    });
+
+}

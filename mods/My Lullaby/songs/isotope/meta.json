@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#9271FD",
+	"opponentModeAllowed": false,
+	"icon": "icon-glitchy-red1",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "isotope",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 188
+}

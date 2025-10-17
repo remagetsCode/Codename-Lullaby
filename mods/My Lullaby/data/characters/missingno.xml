@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Missingno" scale="5" antialiasing="false" camy="50" icon="Missingno" color="#FFFEF8">
+	<anim name="idle" anim="missingno idle"/>
+	<anim name="singDOWN" anim="missingno down"/>
+	<anim name="singRIGHT" anim="missingno right"/>
+	<anim name="singLEFT" anim="missingno left"/>
+	<anim name="singUP" anim="missingno up"/>
+	<anim name="missingno intro" anim="missingno intro"/>
+</character>

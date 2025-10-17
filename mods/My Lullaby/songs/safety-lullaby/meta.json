@@ -1,0 +1,15 @@
+{
+	"color": "#D6F300",
+	"customValues": {},
+	"opponentModeAllowed": false,
+	"icon": "icon-hypno",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "Safety Lullaby",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 130
+}

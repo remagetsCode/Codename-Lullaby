@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Glitchy_Red_Assets_elpepe" icon="icon-glitchy-red1" color="#FF0000">
+	<anim name="idle" anim="RedIdle"/>
+	<anim name="singDOWN" anim="RedDown" x="1" y="-13"/>
+	<anim name="singRIGHT" anim="RedRight" x="-58" y="24"/>
+	<anim name="singLEFT" anim="RedLeft" x="105" y="11"/>
+	<anim name="singUP" anim="RedUp" x="80" y="30"/>
+</character>

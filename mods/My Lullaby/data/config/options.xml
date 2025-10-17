@@ -1,0 +1,4 @@
+<menu name="Mod Options" desc="Do whatever you want.">
+    <checkbox id="lullabyMechanics" name="Mechanics" desc="Disables the custom mechanics as the pendulum, the freeze mechanic, etc. Is this the so-called 'pussy mode'?"/>
+    <checkbox id="lullabyShaders" name="Shaders" desc="Enable/Disable shaders. If disabled may improve the performance, but there'll be less visual effects"/>
+</menu>

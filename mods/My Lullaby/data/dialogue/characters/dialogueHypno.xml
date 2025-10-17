@@ -1,0 +1,3 @@
+<character x="400" y="-400">
+    <anim name="idle" anim="Hypno Sprite 1" fps="24" />
+</character>

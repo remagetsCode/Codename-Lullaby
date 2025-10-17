@@ -1,0 +1,15 @@
+{
+	"color": "#000000",
+	"customValues": {},
+	"opponentModeAllowed": false,
+	"difficulties": [
+		"hard"
+	],
+	"icon": "Gold",
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "monochrome",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 160
+}

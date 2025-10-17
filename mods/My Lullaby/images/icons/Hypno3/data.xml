@@ -1,0 +1,5 @@
+<icon scale="0.35" offsetX="0" offsetY="0">
+<anim name="neutral" anim="ABOMINATION HYPNO ICON instance 1" fps="24" loop="true"/>
+<anim name="lose" anim="ABOMINATION HYPNO ICON instance 1" fps="24" loop="false"/>
+<anim name="win" anim="ABOMINATION HYPNO ICON instance 1" fps="24" loop="true"/>
+</icon>

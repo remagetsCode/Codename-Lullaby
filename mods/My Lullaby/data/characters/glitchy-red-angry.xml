@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Glitchy_Red_Assets_angrybitch" icon="icon-glitchy-red-mad1" color="#FF0606">
+	<anim name="idle" anim="RedIdleMad"/>
+	<anim name="singDOWN" anim="RedDownMad" x="-64" y="-17"/>
+	<anim name="singRIGHT" anim="RedRightMad" x="-151" y="11"/>
+	<anim name="singLEFT" anim="RedLeftMad" x="72" y="18"/>
+	<anim name="singUP" anim="RedUpMad" x="-73" y="55"/>
+</character>

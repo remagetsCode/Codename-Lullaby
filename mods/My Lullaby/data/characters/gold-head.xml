@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="GoldHead Sheet" camx="-85" camy="100" icon="Gold" color="#000000">
+	<anim name="idle" anim="GoldHead Idle" loop="true"/>
+	<anim name="singDOWN" anim="GoldHead DOwn full" x="101" y="-47"/>
+	<anim name="singRIGHT" anim="GoldHead Right" x="-97" y="68"/>
+	<anim name="singLEFT" anim="GoldHead Left Full" x="266" y="23"/>
+	<anim name="singUP" anim="GoldHead Up" x="-8" y="175"/>
+</character>

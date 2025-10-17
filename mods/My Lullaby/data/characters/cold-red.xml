@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="mt_silver_red_norm" icon="icon-red" color="#FF0808">
+	<anim name="idle" anim="Norm Red Idle"/>
+	<anim name="singDOWN" anim="Norm Red down" x="9" y="3"/>
+	<anim name="singRIGHT" anim="Norm Red right" x="-59"/>
+	<anim name="singLEFT" anim="Norm Red left" x="22" y="3"/>
+	<anim name="singUP" anim="Norm Red UP" x="3" y="36"/>
+</character>

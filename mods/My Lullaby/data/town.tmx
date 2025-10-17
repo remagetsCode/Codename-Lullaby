@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="24" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="164">
+ <editorsettings>
+  <export target="town.csv" format="csv"/>
+ </editorsettings>
+ <tileset firstgid="1" source="tiles.tsx"/>
+ <tileset firstgid="1" source="castle.tsx"/>
+ <imagelayer id="5" name="img">
+  <image source="../images/cinnabar.png" width="384" height="352"/>
+ </imagelayer>
+ <objectgroup id="6" name="obj">
+  <object id="124" x="228" y="193" width="53.6667" height="58.6667"/>
+  <object id="125" x="68.6667" y="161.333" width="88.2121" height="57.3333"/>
+  <object id="126" x="69.5" y="65" width="85.6667" height="57.3333"/>
+  <object id="127" x="228.833" y="67.3333" width="85.6667" height="57.3333"/>
+  <object id="128" x="165.167" y="192.667" width="53.6667" height="58.6667"/>
+  <object id="131" x="57" y="64.5" width="6" height="196.5"/>
+  <object id="132" x="62.5" y="255" width="31" height="7"/>
+  <object id="133" x="91" y="257.5" width="4" height="36.5"/>
+  <object id="134" x="93.5" y="288" width="233" height="4.5"/>
+  <object id="136" x="58.5" y="57" width="100" height="4"/>
+  <object id="138" x="195" y="55" width="55" height="7.5"/>
+  <object id="140" x="147.5" y="148" width="12" height="10"/>
+  <object id="141" x="210.5" y="116" width="12.5" height="10"/>
+  <object id="142" x="146" y="244" width="13" height="10"/>
+  <object id="144" x="193.5" y="36.5" width="5.5" height="17.5"/>
+  <object id="145" x="157" y="37" width="1.5" height="18.5"/>
+  <object id="154" x="322" y="96.75" width="23" height="93.75"/>
+  <object id="155" x="322" y="209" width="21.75" height="77"/>
+  <object id="157" x="344" y="189.25" width="2.75" height="21.25"/>
+ </objectgroup>
+ <objectgroup id="7" name="extra" offsetx="3.33333" offsety="0.666667">
+  <object id="65" name="playerSpawn" x="192.998" y="165.622">
+   <point/>
+  </object>
+  <object id="143" name="next" x="156.667" y="34.8333" width="31.5" height="3"/>
+  <object id="146" name="shop" x="247.303" y="239.061" width="2.27273" height="13"/>
+  <object id="149" name="options" x="182.515" y="238.712" width="2.77273" height="13.5"/>
+  <object id="150" name="credits" x="103.985" y="207.106" width="1.5" height="13"/>
+  <object id="151" name="error" x="104.848" y="116.833" width="1.09091" height="8.5"/>
+  <object id="156" name="missing" x="338.417" y="191.583" width="1.75" height="16.5"/>
+  <object id="161" name="upSign" x="201.667" y="108.583" width="23.25" height="20.75"/>
+  <object id="162" name="leSign" x="138.042" y="140.958" width="23.25" height="20.75"/>
+  <object id="163" name="soSign" x="136.86" y="237.504" width="23.25" height="20.75"/>
+ </objectgroup>
+</map>

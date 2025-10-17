@@ -1,0 +1,14 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Hypno Girlfriend" flipX="true" camy="20" isPlayer="true" icon="hypnogf4" color="#A5004B">
+	<anim name="idle" anim="gf_idle_not_hypno_2s instance 1" x="-1"/>
+	<anim name="singDOWN" anim="gf_down instance 1" x="12" y="-125"/>
+	<anim name="singRIGHT" anim="gf_right_better instance 1" x="-2" y="-38"/>
+	<anim name="singLEFT" anim="gf_left_alt instance 1" x="71" y="-24"/>
+	<anim name="singUP" anim="gf_up instance 1" x="-21" y="48"/>
+	<anim name="singUPmiss" anim="gf_up_MISS instance 1" x="-33" y="45"/>
+	<anim name="singDOWNmiss" anim="gf_down_MISS instance 1" x="-15" y="-132"/>
+	<anim name="singLEFTmiss" anim="gf_left_alt_MISS instance 1" x="69" y="-26"/>
+	<anim name="singRIGHTmiss" anim="gf_right_better_miss instance 1" x="3" y="-66"/>
+	<anim name="gf_idle_hypno" anim="gf_idle_ok_shes_hypno_2s instance 1" x="51" y="-23"/>
+	<anim name="gf_idle_half_hypno" anim="gf_idle_ok_maybe_shes_hypno_2s instance 1" x="8" y="-7"/>
+</character>

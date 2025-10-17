@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Lost Silver Assets Gold">
+	<anim name="idle" anim="Silver Idle" loop="true"/>
+	<anim name="singDOWN" anim="Silver Down Full" x="-94" y="-374"/>
+	<anim name="singRIGHT" anim="Silver Right Finished" x="-78" y="55"/>
+	<anim name="singLEFT" anim="Lost Silver Left finished" x="482" y="46"/>
+	<anim name="singUP" anim="Full Silver Up" x="14" y="165"/>
+	<anim name="spawn" anim="Silver Spawn Full" indices="0..15"/>
+</character>

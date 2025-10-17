@@ -1,0 +1,5 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Feralisleep" icon="icon-feraligatr" color="#000000">
+	<anim name="idle" anim="Feralisleep instance 1" x="-1"/>
+	<anim name="e" anim="Feralisleep instance 1" x="1" y="-3" indices="30"/>
+</character>

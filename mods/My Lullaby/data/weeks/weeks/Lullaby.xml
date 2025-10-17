@@ -1,0 +1,6 @@
+<week name="Lullaby" chars="pico,bf,gf" sprite="week3">
+    <song>safety-lullaby</song>
+    <song>left-unchecked</song>
+    <song>lost-cause</song>
+	<difficulty name="Hard"/>
+</week>

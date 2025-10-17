@@ -1,0 +1,240 @@
+// Customized Main Menu script inspired in lunarcleint's FNDustin' main menu script
+
+import flixel.addons.util.FlxSimplex;
+import funkin.editors.EditorPicker;
+import funkin.menus.ModSwitchMenu;
+import funkin.menus.credits.CreditsMain;
+import funkin.options.OptionsMenu;
+
+var bgList = CoolUtil.coolTextFile(Paths.txt("config/backgrounds"));
+var itemList = CoolUtil.coolTextFile(Paths.txt("config/menuItems"));
+var vesselList = CoolUtil.coolTextFile(Paths.txt("config/vessels"));
+var options:Array<Dynamic> = [];
+
+var curDisplayHeight = window.display.bounds.height;
+var curDisplayWidth = window.display.bounds.width;
+var curDisplayX = window.display.bounds.x;
+var curDisplayY = window.display.bounds.y;
+
+var prevX = window.x;
+var prevY = window.y;
+
+var windowTitle = "Friday Night Funkin' Lullaby - Main Menu";
+
+var curSelected:Int = 0;
+var vesselName = FlxG.random.getObject(vesselList);
+var bgName = FlxG.random.getObject(bgList);
+var lullabyWeek = (Paths.xml('data/weeks/weeks/lullaby'));
+var curMusic = FlxG.sound.music;
+
+FlxG.game.setFilters([]);
+
+if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", "insomnia" => "unlocking"];
+else if(!FlxG.save.data.unlockedSongs.exists("missingno")) FlxG.save.data.unlockedSongs.set("missingno", "unlocking");
+
+var shader = new CustomShader('glitch');
+shader.iTime = -0.009;
+function create(){
+	//FlxG.game.addShader(shader);
+	
+	FlxG.camera.bgColor = 0xFF000000;
+    FlxG.mouse.visible = true;
+    //CoolUtil.playMenuSong();
+
+	// Background
+	bg = new FlxSprite().loadGraphic(Paths.image('menus/stagesprev/' + bgName));
+    bg.antialiasing = false;
+	bg.setGraphicSize(FlxG.width, FlxG.height);
+    bg.updateHitbox();
+    bg.screenCenter();
+    bg.scrollFactor.set(0.5, 0.5);
+    add(bg);
+
+	vignette = new FlxSprite().loadGraphic(Paths.image('UI/base/vignette3'));
+	vignette.screenCenter();
+	vignette.setGraphicSize(FlxG.width, FlxG.height);
+	vignette.alpha = 0.4;
+	add(vignette);
+
+
+
+	vessel = new FlxSprite();
+	vessel.frames = Paths.getFrames('menus/menu/' + vesselName + '_menu');
+	vessel.animation.addByPrefix('idle', vesselName + ' menu',24);
+	vessel.screenCenter();
+	vessel.animation.play('idle');
+	vessel.x += FlxG.width/5; 
+	add(vessel);
+
+	black = new FlxSprite().loadGraphic(Paths.image('menus/menu/black'));
+	black.setGraphicSize(FlxG.width, FlxG.height);
+	black.screenCenter();
+	//black.alpha = 0.1;
+	add(black);
+
+	for (k => v in itemList) {
+        var txt = new FunkinText(125, 125*(k+1), 0, v, 24, false);
+        txt.setFormat(Paths.font("pokefont.ttf"), 56, 0xbbBBbb);
+        
+        txt.ID = k;
+        add(txt);
+        options.push(txt);
+    }
+
+	vignette2 = new FlxSprite().loadGraphic(Paths.image('UI/base/vignette2'));
+	vignette2.antialiasing = true;
+	vignette2.screenCenter();
+	vignette2.setGraphicSize(FlxG.width, FlxG.height);
+	vignette2.alpha = 1;
+	add(vignette2);
+
+}
+
+function postCreate(){
+	if(curMusic != null){
+	FlxTween.tween(curMusic, {volume: 0}, 1, {
+		onComplete: ()->{
+			FlxG.sound.playMusic(Paths.music('freakyMenu'),0);
+			FlxTween.tween(curMusic, {volume:1},1);
+		}
+	});
+}
+	else{
+	
+		FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
+	}
+
+	if(!window.fullscreen){
+		window.maximized = false;
+		alo = FlxTween.num(window.width, curDisplayWidth/1.2, 2, { 
+			ease: FlxEase.smootherStep,
+			onUpdate: function(num){
+				window.x = lerp(window.x, curDisplayX + curDisplayWidth/10, 0.04);
+				window.width = num.value;
+			}
+		});
+		
+		alo = FlxTween.num(window.height, curDisplayHeight/1.2, 2, { 
+			ease: FlxEase.smootherStep,
+			onUpdate: function(num){
+				window.y = lerp(window.y, curDisplayY + curDisplayHeight/10, 0.04);
+				window.height = num.value;
+			}
+		});
+	}
+
+	window.title = windowTitle;
+}
+
+function update(){
+
+	//trace(window.x);
+	//trace(window.display.bounds.x);
+	//trace(window.x);
+	if (controls.SWITCHMOD) {
+		openSubState(new ModSwitchMenu());
+	}
+
+	//! DEV ACCESS
+	//if (controls.DEV_ACCESS) {
+	//	FlxG.game.setFilters([]);
+	//	persistentUpdate = false;
+	//	persistentDraw = true;
+	//	openSubState(new EditorPicker());
+	//}
+
+
+	if (FlxG.mouse.justMoved) {
+        for (a in options) {
+            if (FlxG.mouse.overlaps(a)) {
+                changeItem(a.ID, true);
+                break;
+            }
+			
+			else if(a.ID == 3){
+				curSelected = null;
+			}
+			
+        }
+    }
+
+	var upP = controls.UP_P;
+	var downP = controls.DOWN_P;
+	var scroll = FlxG.mouse.wheel;
+
+	if (upP || downP || scroll != 0)  // like this we wont break mods that expect a 0 change event when calling sometimes  - Nex
+		changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
+
+	if(FlxG.mouse.justPressed || controls.ACCEPT) selectItem();
+
+	if(curSelected != null) {
+		black.alpha = lerp(black.alpha, 0.9, 0.05);
+		vignette2.alpha = lerp(vignette2.alpha, 0.8, 0.05);
+		
+}
+	else { 
+		black.alpha = lerp(black.alpha, 0.3, 0.05);
+		vignette2.alpha = lerp(vignette2.alpha, 1, 0.05);
+	}
+
+	if (controls.BACK) FlxG.switchState(new TitleState());
+
+}
+
+function postUpdate(elapsed:Float) {
+    for (a in options) {
+        var s = 1.0 + (a.ID == curSelected ? 0.2 : 0);
+        a.scale.x = lerp(a.scale.x, s, 0.25);
+        a.scale.y = lerp(a.scale.y, s, 0.25);
+        a.updateHitbox();
+		a.color = a.ID == curSelected ? 0xFF7777 : 0xFFFFFF;
+		
+    }
+}
+
+function changeItem(huh:Int = 0, ?mouse:Bool = false)
+	{
+		if(curSelected != huh) FlxG.sound.play(Paths.sound("scrollMenu"),0.5);
+		if(mouse) curSelected = huh;
+		else{
+			switch(huh){
+				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = options.length-1;
+				case 1: curSelected+1 <= options.length-1 ? curSelected++ : curSelected = 0;
+			}
+	}
+	}
+
+function selectItem(){
+	if(curSelected != null){
+		var selected = curSelected;
+
+		FlxG.sound.play(Paths.sound("confirmMenu"));
+
+		for(t => a in options){
+			if(selected != a.ID){
+				FlxTween.tween(a, {x:a.x-1500*(t+1)},t/2+0.2, {
+					ease: FlxEase.cubeIn
+				});
+			}
+		}
+
+			new FlxTimer().start(1, (_) -> {
+			switch(selected){
+				case 0: 
+					FlxG.switchState(PlayState.loadWeek({
+					name: 'Lullaby',
+					id: '1',
+					songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
+					difficulties: ['hard']
+					}, 'hard'));
+					FlxG.switchState(new PlayState());
+
+				//case 0: FlxG.switchState(new StoryMenuState());
+				case 1: FlxG.switchState(new FreeplayState());
+				case 3: FlxG.switchState(new CreditsMain());
+				case 2: FlxG.switchState(new OptionsMenu());
+		}
+	});
+
+	}
+}

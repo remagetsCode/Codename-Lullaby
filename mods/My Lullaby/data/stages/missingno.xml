@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/missingno/images/" name="missingno">
+	<sprite x="510" sprite="bg" y="485" type="none" scale="8" name="bg-ocean"/>
+	<sprite x="507" sprite="sky" y="485" type="none" scale="8" name="bg-water"/>
+	<sprite x="535" sprite="ground" y="467" type="none" scale="8" name="bg-grass"/>
+	<girlfriend x="348.818937742688" y="318.561808316413"/>
+	<dad x="41.1928430654297" y="452.881739558231"/>
+	<boyfriend scalex="0.999808477549043" x="940.197204003964" skewy="9.22841536521446e-11" y="196.511233064621"/>
+</stage>

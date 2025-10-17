@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#9271FD",
+	"opponentModeAllowed": false,
+	"icon": "missingno",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "missingno",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 120
+}
