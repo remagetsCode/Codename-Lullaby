@@ -255,38 +255,38 @@ function celebiMechanic(){
 
 // I was lazy so i just duped the function dont kill me :'(
 function jumpscare(){
-	//jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
-	//jemp.setGraphicSize(FlxG.width, FlxG.height);
-	//jemp.updateHitbox();
-	//jemp.cameras = [camHUD];
-	//jemp.alpha = 1;
-	//add(jemp);
-//
-	//FlxTween.tween(jemp, {alpha: 0.98}, 0.2, {
-	//	ease: FlxEase.expoOut,
-	//	onComplete: ()->{
-	//		FlxTween.tween(jemp, {alpha: 0}, 0.4, {
-	//			ease: FlxEase.expoIn
-	//		});
-	//	}
-	//});
+	jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
+	jemp.setGraphicSize(FlxG.width, FlxG.height);
+	jemp.updateHitbox();
+	jemp.cameras = [camHUD];
+	jemp.alpha = 1;
+	add(jemp);
+
+	FlxTween.tween(jemp, {alpha: 0.98}, 0.2, {
+		ease: FlxEase.expoOut,
+		onComplete: ()->{
+			FlxTween.tween(jemp, {alpha: 0}, 0.4, {
+				ease: FlxEase.expoIn
+			});
+		}
+	});
 }
 
 function jumpscare1(){
-	//jump = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
-	//jump.setGraphicSize(FlxG.width, FlxG.height);
-	//jump.updateHitbox();
-	//jump.cameras = [camHUD];
-	//jump.alpha = 0;
-	//add(jump);
-//
-	//FlxTween.tween(jump, {alpha: 0.98}, 0.05, {
-	//	ease: FlxEase.expoOut,
-	//	onComplete: ()->{
-	//		FlxTween.tween(jump, {alpha: 0}, 0.07, {
-	//			ease: FlxEase.expoIn
-	//		});
-	//	}
-	//});
+	jump = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
+	jump.setGraphicSize(FlxG.width, FlxG.height);
+	jump.updateHitbox();
+	jump.cameras = [camHUD];
+	jump.alpha = 0;
+	add(jump);
+
+	FlxTween.tween(jump, {alpha: 0.98}, 0.05, {
+		ease: FlxEase.expoOut,
+		onComplete: ()->{
+			FlxTween.tween(jump, {alpha: 0}, 0.07, {
+				ease: FlxEase.expoIn
+			});
+		}
+	});
 }
 
