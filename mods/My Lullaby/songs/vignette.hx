@@ -17,7 +17,6 @@ function postCreate(){
 		add(black);
 		if(availableSongs.contains(curSong))
 			new FlxTimer().start(0.7, ()->{
-
 				vignetteIdk();
 			});
 	});

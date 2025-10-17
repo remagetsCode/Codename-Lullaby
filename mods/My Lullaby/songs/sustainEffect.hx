@@ -1,6 +1,3 @@
-// 
-import openfl.geom.Vector3D;
-
 var colors:Array = ["Purple", "Blue", "Green", "Red"];
 var generated:Bool = false;
 public var holds:FlxTypedGroup<FlxSprite>;
@@ -41,32 +38,14 @@ function stepHit(){
 			(player.members[i].y-player.members[i].height)-mode+(modchart.getPercent('y'+i,1)+modchart.getPercent('y',1))
 		);
 	}
-
-	//for (i => strum in player.members)
-	//{
-	//    var data = {
-	//        hitTime: 0,
-	//        distance: 0,
-	//        lane: strum.ID,
-	//        player: strum.strumLine.ID,
-	//        hitten: false,
-	//        isTapArrow: false,
-	//        __holdSubdivisionOffset: 0
-	//    };
-	//    var output:ModifierOutput = modchart.playfields[0].modifiers.getPath(new Vector3D(strum.x + Note.swagWidth *.5, strum.y + Note.swagWidth * .5), data, 0, true, true);
-	//    // output.pos.x, output.pos.y, output.visuals.angleZ
-	//	trace(output.pos);
-	//}
 		
 	
 }
 
-//var milking:Bool = false;
 function onPlayerHit(event){
 	var d = event.direction;
 	var milk = holds.members[event.direction];
 
-	//if(event.note.isSustainNote && !event.note.prevNote.isSustainNote && event.rating == "sick"){ 
 	if(event.note.isSustainNote){ 
 		milk.visible = true;
 

@@ -13,8 +13,6 @@ var test;
 
 public var output;
 function postCreate(){
-
-
 	rectUp = new FlxSprite();
 	rectUp.makeGraphic(camHUD.width, camHUD.height/4, FlxColor.BLACK);
 	rectUp.cameras = [camHUD];
@@ -32,8 +30,9 @@ function postCreate(){
 	modchart = new Manager();
 	add(modchart);
 
-		holds = new FlxTypedGroup<FlxSprite>();
-		add(holds);
+	// V-slice sustain anim 
+	holds = new FlxTypedGroup<FlxSprite>();
+	add(holds);
 
 	
 	switch(curSong){ 
@@ -113,7 +112,6 @@ function beatHit(beat){
 
 function leftUnchecked(){
 	modchart.set('drunk',1,1.5,0);
-	//modchart.ease('localrotatez',5, 4,90,FlxEase.cubeOut, 1);
 	modchart.ease('tipsy', 85, 4, 0.35, FlxEase.cubeOut, 1);
 	modchart.ease('tipsy', 160, 4, 0, FlxEase.cubeOut, 1);
 	modchart.ease('beat', 85, 4, 0.6, FlxEase.cubeOut, 1);
