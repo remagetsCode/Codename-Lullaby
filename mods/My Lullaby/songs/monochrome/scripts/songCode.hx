@@ -79,9 +79,32 @@ function postCreate(){
 		ease: FlxEase.quadInOut,
 		type: FlxTweenType.PINGPONG
 	});
+	
+	new FlxTimer().start(0.01, ()->{
+		modchart.setPercent('alpha', 0, 1);
+		for(u in uiStuff.members) u.alpha = 0;
+	});
 }
 
 function onSongStart(){
+	modchart.ease('alpha', 44, 1, 1, FlxEase.cubeOut, 1);
+	modchart.ease('wiggle', 92, 3, 0.5, FlxEase.smoothStep, 1);
+	modchart.ease('tipsyX', 92, 3, 0.2, FlxEase.smoothStep, 1);
+	modchart.ease('tipsy', 92, 3, 0.1, 	FlxEase.smoothStep, 1);
+	modchart.ease('tipsyZ', 92, 3, 0.2, FlxEase.smoothStep, 1);
+
+	modchart.ease('alpha', 385, 2, 0, FlxEase.cubeOut, 1);
+	modchart.ease('alpha', 444, 2, 1, FlxEase.cubeOut, 1);
+
+	modchart.ease('wiggle', 400, 1, 0.7, FlxEase.cubeOut, 1);
+	modchart.ease('tipsyX', 400, 1, 0.7, FlxEase.cubeOut, 1);
+	modchart.ease('tipsy', 400, 1, 0.2,  FlxEase.cubeOut, 1);
+	modchart.ease('tipsyZ', 400, 1, 0.5, FlxEase.cubeOut, 1);
+
+	modchart.ease('wiggle', 544, 1, 1.3, FlxEase.cubeOut, 1);
+
+	modchart.ease('y', 681, 1, downscroll ? 300 : -300, FlxEase.cubeIn, 1);
+
 	
 }
 
@@ -113,6 +136,29 @@ function update(){
 			}
 		}
 	}
+}
+
+function stepHit(step){
+	switch(step){
+		case 0: dad.alpha = 1;
+
+		case 1: holds.visible = false;
+
+		case 128: for(i=>u in uiStuff.members) FlxTween.tween(u, {alpha: 0.9}, 1+i*0.3);
+
+		case 368: FlxTween.num(0, 0.25, 1, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
+
+		case 419: coolEnabled = true;
+
+		case 1608: 
+			nomore.visible = true;
+			nomore.animation.play('no');
+
+		case 1640:
+			FlxTween.num(5, 6.5, 5, {onUpdate: function(v){aberration.iTime = v.value;}});
+			FlxTween.num(0.25, 0.5, 1, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
+	}
+	
 }
 
 var counter:Int = 0;
@@ -174,25 +220,6 @@ function unownMechanic(?word:String){
 	}
 }
 
-function stepHit(step){
-	switch(step){
-		case 0: dad.alpha = 1;
-
-		case 1: holds.visible = false;
-
-		case 368: FlxTween.num(0, 0.25, 1, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
-
-		case 1608: 
-			nomore.visible = true;
-			nomore.animation.play('no');
-
-		case 1640:
-			FlxTween.num(5, 6.5, 5, {onUpdate: function(v){aberration.iTime = v.value;}});
-			FlxTween.num(0.25, 0.5, 1, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
-	}
-	
-}
-
 function celebiMechanic(){
 	// IF TRYING TO PORT TO MOBILE, THIS MECHANIC CAN BE USED BUT IF ITS TOO DIFFICULT YOU CAN ADJUST IT WITH THE FOLLOWING VARIABLE
 	var much:Float = 0.35;
@@ -228,38 +255,38 @@ function celebiMechanic(){
 
 // I was lazy so i just duped the function dont kill me :'(
 function jumpscare(){
-	jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
-	jemp.setGraphicSize(FlxG.width, FlxG.height);
-	jemp.updateHitbox();
-	jemp.cameras = [camHUD];
-	jemp.alpha = 1;
-	add(jemp);
-
-	FlxTween.tween(jemp, {alpha: 0.98}, 0.2, {
-		ease: FlxEase.expoOut,
-		onComplete: ()->{
-			FlxTween.tween(jemp, {alpha: 0}, 0.4, {
-				ease: FlxEase.expoIn
-			});
-		}
-	});
+	//jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
+	//jemp.setGraphicSize(FlxG.width, FlxG.height);
+	//jemp.updateHitbox();
+	//jemp.cameras = [camHUD];
+	//jemp.alpha = 1;
+	//add(jemp);
+//
+	//FlxTween.tween(jemp, {alpha: 0.98}, 0.2, {
+	//	ease: FlxEase.expoOut,
+	//	onComplete: ()->{
+	//		FlxTween.tween(jemp, {alpha: 0}, 0.4, {
+	//			ease: FlxEase.expoIn
+	//		});
+	//	}
+	//});
 }
 
 function jumpscare1(){
-	jump = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
-	jump.setGraphicSize(FlxG.width, FlxG.height);
-	jump.updateHitbox();
-	jump.cameras = [camHUD];
-	jump.alpha = 0;
-	add(jump);
-
-	FlxTween.tween(jump, {alpha: 0.98}, 0.05, {
-		ease: FlxEase.expoOut,
-		onComplete: ()->{
-			FlxTween.tween(jump, {alpha: 0}, 0.07, {
-				ease: FlxEase.expoIn
-			});
-		}
-	});
+	//jump = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold'+FlxG.random.int(0,1)));
+	//jump.setGraphicSize(FlxG.width, FlxG.height);
+	//jump.updateHitbox();
+	//jump.cameras = [camHUD];
+	//jump.alpha = 0;
+	//add(jump);
+//
+	//FlxTween.tween(jump, {alpha: 0.98}, 0.05, {
+	//	ease: FlxEase.expoOut,
+	//	onComplete: ()->{
+	//		FlxTween.tween(jump, {alpha: 0}, 0.07, {
+	//			ease: FlxEase.expoIn
+	//		});
+	//	}
+	//});
 }
 

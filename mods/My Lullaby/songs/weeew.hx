@@ -6,7 +6,7 @@ public var modchart:Manager;
 var oldPosX = window.x;
 var oldPosY = window.y;
 
-var coolEnabled = true;
+public var coolEnabled = false;
 var rectUp:FlxSprite;
 var rectDown:FlxSprite;
 var test;
@@ -44,7 +44,10 @@ function postCreate(){
 	modchart.addModifier('confusion');
 	modchart.addModifier('opponentswap');
 	modchart.addModifier('drunk');
+	//modchart.addModifier('Schmovindrunk');
+	//modchart.addModifier('drugged');
 	modchart.addModifier('tipsy');
+	//modchart.addModifier('Schmovintipsy');
 	modchart.addModifier('wiggle');
 	modchart.addModifier('vibrate');
 	modchart.addModifier('beat');
@@ -52,17 +55,47 @@ function postCreate(){
 }
 
 function coolThing(d){
-	//if(coolEnabled){
-	//	modchart.ease('confusionOffset' + d, curBeatFloat, 0.2, FlxG.random.int(-30,30,0), FlxEase.smootherStepInOut, 1);
-	//	modchart.ease('y' + d, curBeatFloat, 0.2, downscroll ? 40 : -40, FlxEase.quintInOut, 1);
-	//	
-	//	modchart.ease('confusionOffset' + d, curBeatFloat, 0.5, 0, FlxEase.smootherStepInOut, 1);
-	//	modchart.ease('y' + d, curBeatFloat, 0.5, 0, FlxEase.quintOut, 1);
-	//}
+	if(coolEnabled){
+		modchart.ease('confusionOffset' + d, curBeatFloat, 0, FlxG.random.int(-20,20,0), FlxEase.smootherStepInOut, 1);
+		modchart.ease('y' + d, curBeatFloat, 0, downscroll ? 45 : -45, FlxEase.quintInOut, 1);
+		
+		modchart.ease('confusionOffset' + d, curBeatFloat, 0.5, 0, FlxEase.smootherStepInOut, 1);
+		modchart.ease('y' + d, curBeatFloat, 0.5, 0, FlxEase.quintOut, 1);
+	}
 
 }
 function onPlayerHit(note){
 	coolThing(note.direction);
+}
+
+
+function beatHit(beat){
+	if(curSong == 'lost-cause'){
+		switch(beat){
+			case 1: trace('if ur reading this, you are uhhh (insert any sex orientation u dont like)');
+
+			case 75: coolEnabled = false;
+		}
+	}
+
+	if(curSong == 'missingno'){
+		switch(beat){
+			case 100: coolEnabled = false;
+		}
+	}
+}
+
+function leftUnchecked(){
+	modchart.set('drunk',1,1.5,0);
+	modchart.ease('tipsy', 85, 4, 0.35, FlxEase.cubeOut, 1);
+	modchart.ease('tipsy', 160, 4, 0, FlxEase.cubeOut, 1);
+	modchart.ease('beat', 85, 4, 0.6, FlxEase.cubeOut, 1);
+	modchart.ease('beat', 160, 4, 0, FlxEase.cubeOut, 1);
+	modchart.ease('drunk', 200, 4, 1, FlxEase.cubeOut, 1);
+	modchart.ease('drunk', 215, 4, 0, FlxEase.cubeOut, 1);
+	modchart.ease('beat', 216, 4, 0.6, FlxEase.cubeOut, 1);
+	modchart.ease('tipsy', 216, 4, 0.35, FlxEase.cubeOut, 1);
+	
 }
 
 function lostCause(){
@@ -94,34 +127,6 @@ function lostCause(){
 	
 }
 
-function beatHit(beat){
-	if(curSong == 'lost-cause'){
-		switch(beat){
-			case 1: trace('if ur reading this, you are uhhh (insert any sex orientation u dont like)');
-
-			case 75: coolEnabled = false;
-		}
-	}
-
-	if(curSong == 'missingno'){
-		switch(beat){
-			case 100: coolEnabled = false;
-		}
-	}
-}
-
-function leftUnchecked(){
-	modchart.set('drunk',1,1.5,0);
-	modchart.ease('tipsy', 85, 4, 0.35, FlxEase.cubeOut, 1);
-	modchart.ease('tipsy', 160, 4, 0, FlxEase.cubeOut, 1);
-	modchart.ease('beat', 85, 4, 0.6, FlxEase.cubeOut, 1);
-	modchart.ease('beat', 160, 4, 0, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 200, 4, 1, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 215, 4, 0, FlxEase.cubeOut, 1);
-	modchart.ease('beat', 216, 4, 0.6, FlxEase.cubeOut, 1);
-	modchart.ease('tipsy', 216, 4, 0.35, FlxEase.cubeOut, 1);
-	
-}
 
 function showCineBorders(length){
 	FlxTween.tween(rectDown, { y: 0 }, length, {
