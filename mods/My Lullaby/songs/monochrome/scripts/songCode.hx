@@ -81,6 +81,10 @@ function postCreate(){
 	});
 }
 
+function onSongStart(){
+	
+}
+
 function update(){
 	if(health < limit) gameOver();
 	ljBar.percent = limit*50;
@@ -173,6 +177,7 @@ function unownMechanic(?word:String){
 function stepHit(step){
 	switch(step){
 		case 0: dad.alpha = 1;
+
 		case 1: holds.visible = false;
 
 		case 368: FlxTween.num(0, 0.25, 1, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
