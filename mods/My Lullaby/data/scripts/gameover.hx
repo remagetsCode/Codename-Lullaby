@@ -9,6 +9,7 @@ function create(event){
 		case 'lost-cause': lostOver(event);
 		case 'missingno': missingno(event);
 		case 'insomnia': insomnia(event);
+		case 'monochrome': monochrome(event);
 	}
 }
 
@@ -147,10 +148,31 @@ if (video.load(Paths.video("feraligatr")))
     new FlxTimer().start(0.001, (_) -> video.play());
 }
 
+function monochrome(event){
+	event.cancel();
+
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	if(curBeat < 415){
+		gold = new FlxSprite();
+		gold.frames = Paths.getFrames('characters/Lost Silver Assets Gold');
+		gold.animation.addByPrefix('spawn', 'Silver Spawn Full', 24, false);
+		gold.screenCenter();
+		gold.y += 110;
+		gold.x -= 10;
+		gold.animation.play('spawn',true,true);
+		add(gold);
+	}
+}
+
 function update(){
 	if (controls.ACCEPT && !ending) endBullshit();
 	if (controls.BACK) exit();
 }
+
+
 
 var ending:Bool = false;
 function endBullshit():Void
@@ -162,7 +184,7 @@ function endBullshit():Void
 			FlxG.sound.music.stop();
 		FlxG.sound.music = null;
 
-		var sound = FlxG.sound.play(Paths.sound(retrySFX), 0.5);
+		//var sound = FlxG.sound.play(Paths.sound(retrySFX), 0.5);
 
 		var waitTime = 0.7;
 

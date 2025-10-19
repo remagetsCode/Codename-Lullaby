@@ -6,7 +6,12 @@ var reverse:Bool = false;
 var limit:Float = 0;
 var ljBar:FlxBar;
 
+//TODO: time bar in unown func
+
 var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
+
+FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
+introLength = 7;
 
 function create(){
 	if(FlxG.save.data.lullabyShaders){ 
@@ -61,6 +66,7 @@ function create(){
 	graphicCache.cache(Paths.image('jumpscares/Gold0'));
 	graphicCache.cache(Paths.image('jumpscares/Gold1'));
 	graphicCache.cache(Paths.image('UI/base/Unown_Alphabet'));
+	
 }
 
 function postCreate(){
@@ -86,6 +92,8 @@ function postCreate(){
 	});
 }
 
+function onCountdown(event) event.cancel();
+
 function onSongStart(){
 	modchart.ease('alpha', 44, 1, 1, FlxEase.cubeOut, 1);
 	modchart.ease('wiggle', 92, 3, 0.5, FlxEase.smoothStep, 1);
@@ -101,11 +109,9 @@ function onSongStart(){
 	modchart.ease('tipsy', 400, 1, 0.2,  FlxEase.cubeOut, 1);
 	modchart.ease('tipsyZ', 400, 1, 0.5, FlxEase.cubeOut, 1);
 
-	modchart.ease('wiggle', 544, 1, 1.3, FlxEase.cubeOut, 1);
+	modchart.ease('wiggle', 544, 1, 1.5, FlxEase.cubeOut, 1);
 
 	modchart.ease('y', 681, 1, downscroll ? 300 : -300, FlxEase.cubeIn, 1);
-
-	
 }
 
 function update(){
@@ -211,7 +217,7 @@ function unownMechanic(?word:String){
 		add(linesGrp);
 
 		new FlxTimer().start(6, ()->{
-			FlxTween.num(health, health - (curWord.length - counter)*0.2, 0.75, {
+			FlxTween.num(health, health - (curWord.length - counter)*0.3, 0.75, {
 				ease: FlxEase.quintOut,
 				onUpdate: (v)->{health = v.value;}
 			});
@@ -259,10 +265,10 @@ function jumpscare(){
 	jemp.setGraphicSize(FlxG.width, FlxG.height);
 	jemp.updateHitbox();
 	jemp.cameras = [camHUD];
-	jemp.alpha = 1;
+	jemp.alpha = 0;
 	add(jemp);
 
-	FlxTween.tween(jemp, {alpha: 0.98}, 0.2, {
+	FlxTween.tween(jemp, {alpha: 0.95}, 0.2, {
 		ease: FlxEase.expoOut,
 		onComplete: ()->{
 			FlxTween.tween(jemp, {alpha: 0}, 0.4, {
@@ -280,7 +286,7 @@ function jumpscare1(){
 	jump.alpha = 0;
 	add(jump);
 
-	FlxTween.tween(jump, {alpha: 0.98}, 0.05, {
+	FlxTween.tween(jump, {alpha: 0.95}, 0.05, {
 		ease: FlxEase.expoOut,
 		onComplete: ()->{
 			FlxTween.tween(jump, {alpha: 0}, 0.07, {
@@ -290,3 +296,7 @@ function jumpscare1(){
 	});
 }
 
+function onGameOver(event){
+	//event.cancel();
+	//dad.animation.play('spawn',true,true);
+}
