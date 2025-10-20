@@ -3,6 +3,8 @@ FlxG.game.setFilters([]);
 var i:Float = 0;
 
 public var heat = new CustomShader('heatwave');
+heat.intensity = 1;
+heat.vel = 1;
 public var heat1 = new CustomShader('heatwave1');
 public var desat = new CustomShader('desaturation');
 public var shader = new CustomShader('glitch');

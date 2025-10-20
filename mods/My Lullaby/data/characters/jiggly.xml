@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="jigglyassets" scale="0.5" icon="icon-jigglypuff" color="#838383">
+	<anim name="idle" anim="Jigglypuff idle main"/>
+	<anim name="singDOWN" anim="jigglydown" x="31" y="-39"/>
+	<anim name="singRIGHT" anim="jigglyright" x="24" y="51"/>
+	<anim name="singLEFT" anim="jigglyleft" x="224" y="65"/>
+	<anim name="singUP" anim="jigglyup" x="117" y="96"/>
+	<anim name="jigglysing" anim="jigglysing" x="7" y="2"/>
+	<anim name="jigglyturn" anim="jigglyturn" x="50" y="8"/>
+</character>

@@ -1,0 +1,14 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/pokecenter/images/" name="pokecenter">
+	<girlfriend/>
+	<sprite type="none" sprite="8floor" name="Floor"/>
+	<sprite type="none" sprite="7backlayer" name="Backlayer"/>
+	<sprite x="1269.6216556129" sprite="6nursejoy" y="696.536684966279" type="none" name="..."/>
+	<sprite type="none" sprite="5table" name="Table"/>
+	<sprite type="none" sprite="4toplayer" name="hall"/>
+	<sprite type="none" sprite="3window" name="Window"/>
+	<sprite type="none" sprite="2painting" name="Painting"/>
+	<dad x="765.95598440239" y="902.864722944135"/>
+	<boyfriend x="1538" flipX="false" y="900" camxoffset="-300" camyoffset="0"/>
+	<sprite type="none" sprite="1darknessoverlay" name="Ovlay"/>
+</stage>
