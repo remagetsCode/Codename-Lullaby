@@ -142,6 +142,9 @@ function update(){
 			}
 		}
 	}
+	if (FlxG.keys.justPressed.R){
+        FlxG.keys.reset();
+    }
 }
 
 function stepHit(step){

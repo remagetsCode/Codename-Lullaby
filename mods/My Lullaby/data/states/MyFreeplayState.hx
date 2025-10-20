@@ -30,6 +30,7 @@ function create(){
 	aberration.iTime = 6;
 
 	for(song in songList) graphicCache.cache(Paths.image('menus/freeplay/' + song));
+	graphicCache.cache(Paths.image('menus/freeplay/unknown'));
 
 	cgIntro = new FlxSprite();
 	cgIntro.frames = Paths.getFrames('menus/shop/CGIntro_assets');

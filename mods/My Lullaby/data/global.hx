@@ -5,6 +5,9 @@ import Type;
 
 import funkin.backend.MusicBeatTransition;
 
+import funkin.backend.system.Controls.Control;
+import funkin.backend.system.Controls;
+
 
 
 var overwriteStates:Map<String, String> = [
@@ -15,6 +18,7 @@ var overwriteStates:Map<String, String> = [
 ];
 
 function new() {
+    //FlxG.save.data.unlockedSongs = null;
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
 
@@ -22,6 +26,7 @@ function new() {
 	if(!FlxG.save.data.unlockedSongs.exists("frostbite")) FlxG.save.data.unlockedSongs.set("frostbite", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("isotope")) FlxG.save.data.unlockedSongs.set("isotope", "unlocking");
+	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
 	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking'];
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;

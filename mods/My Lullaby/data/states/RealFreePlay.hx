@@ -207,7 +207,7 @@ function selectItem(){
 
 function unlockAnim(?songName:String){
 	canChange = false;
-	timer = new FlxTimer().start(0.3, ()->{
+	timer = new FlxTimer().start(0.2, ()->{
 		if(songs[curSelected].name == songName){
 			l = locks.members[curSelected];
 			l.animation.play('unlocked');
