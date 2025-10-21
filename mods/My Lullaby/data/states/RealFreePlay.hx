@@ -47,8 +47,8 @@ function create(){
 	locks = new FlxTypedGroup<FlxSprite>();
 	add(locks);
 
-	for (i in 0...songs.length){
-		var songText:Alphabet = new Alphabet(FlxG.width, 110, songs[i].displayName, "bold");
+	for (i => song in songs){
+		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
 		songText.ID = i;
 		grpSongs.add(songText);
 
@@ -60,7 +60,7 @@ function create(){
 		lock.ID = i;
 		locks.add(lock);
 
-		if(status.exists(songs[i].name) && status.get(songs[i].name) == 'unlocked') lock.visible = false;
+		if(status.exists(song.name) && status.get(song.name) == 'unlocked') lock.visible = false;
 	}
 
 		
@@ -76,51 +76,49 @@ function create(){
 			});
 	
 		},
-		onComplete: ()->{
-			canChange = true;
-		}
-	});
-		FlxTween.tween(left, {x:5},1.5, {
-		ease: FlxEase.quintOut,
+		onComplete: ()->{canChange = true;}
 	});
 
-	new FlxTimer().start(2.5, ()->{
-		for(k => song in FlxG.save.data.unlockedSongs) 
-			if(song == 'unlocking'){
-				//trace(k);
-				unlockAnim(k);
-				
-				FlxG.save.data.unlockedSongs.set(k, 'unlocked');
-				FlxG.save.flush();
-				break;
-			}
-	}, songs.length);
+	var unlockQueue = 0;
+	for(k => song in FlxG.save.data.unlockedSongs) if(song == 'unlocking') unlockQueue++;
+
+	if(unlockQueue > 0)
+		new FlxTimer().start(2, ()->{
+			for(k => song in FlxG.save.data.unlockedSongs) 
+				if(song == 'unlocking'){
+					unlockAnim(k);
+
+					FlxG.save.data.unlockedSongs.set(k, 'unlocked');
+					FlxG.save.flush();
+					break;
+				}
+		}, unlockQueue);
 }
 
 function startEverything(){
 	for(a in grpSongs){
-		FlxTween.tween(a, {x: 120}, 2+(a.ID/2), {
+		FlxTween.tween(a, {x: 120}, 2+(a.ID/4), {
 			ease: FlxEase.quintOut
 		});
 	}
-	
+
+	FlxTween.tween(left, {x:5},1.5, {ease: FlxEase.quintOut});
 }
 
 function update(){
-	
 	status = FlxG.save.data.unlockedSongs;
 	
 	if(canChange){
-	var leftP = controls.LEFT_P;
-	if(leftP) preClose();
-
-	var upP = controls.UP_P;
+		var leftP = controls.LEFT_P;
+		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
 		var scroll = FlxG.mouse.wheel;
 
-		if (upP || downP || scroll != 0)  // like this we wont break mods that expect a 0 change event when calling sometimes  - Nex
-			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
+		if(leftP) preClose();
 
+		if (upP || downP || scroll != 0)
+			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
+	
 		if(controls.ACCEPT) selectItem();
 		if (controls.BACK) FlxG.switchState(new MainMenuState());
 
@@ -152,26 +150,20 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false){
 		}
 	}
 
+	mini = new FlxSprite();
 	if(status.exists(songs[curSelected].name) && status.get(songs[curSelected].name) == 'unlocked' || status.get(songs[curSelected].name) == 'unlocking') {
-		mini = new FlxSprite();
 		mini.frames = Paths.getFrames('menus/freeplay/' + songs[curSelected].name);
 		mini.animation.addByPrefix('idle', songs[curSelected].name ,24,true);
-		mini.animation.play('idle');
-		mini.setGraphicSize(mini.width*0.8, mini.height*0.8);
-		mini.screenCenter();
-		mini.x = FlxG.width/1.5;
-		add(mini);
 	}
 	else{
-		mini = new FlxSprite();
 		mini.frames = Paths.getFrames('menus/freeplay/unknown');
 		mini.animation.addByPrefix('idle', 'unknown' ,24,true);
-		mini.animation.play('idle');
-		mini.setGraphicSize(mini.width*0.8, mini.height*0.8);
-		mini.screenCenter();
-		mini.x = FlxG.width/1.5;
-		add(mini);
 	}
+	mini.animation.play('idle');
+	mini.setGraphicSize(mini.width*0.8, mini.height*0.8);
+	mini.screenCenter();
+	mini.x = FlxG.width/1.5;
+	add(mini);
 
 	for(a in grpSongs){
 		if(a.ID - curSelected < -1) targetPos = 0;
@@ -190,14 +182,12 @@ function selectItem(){
 	if(status.exists(songs[curSelected].name)) isUnlocked = true;
 	if(curSelected != null && isUnlocked){
 		var selected = curSelected;
-
 		FlxG.sound.play(Paths.sound("confirmMenu"));
 
 		new FlxTimer().start(0.3, ()->{
 			FlxG.switchState(PlayState.loadSong(songs[selected].name, 'hard'));
 			FlxG.switchState(new PlayState());
 		});
-
 	}
 	else if (!isUnlocked){
 		FlxTween.shake(locks.members[curSelected], 0.1, 0.5, FlxAxes.XY);
@@ -207,7 +197,7 @@ function selectItem(){
 
 function unlockAnim(?songName:String){
 	canChange = false;
-	timer = new FlxTimer().start(0.2, ()->{
+	timer = new FlxTimer().start(0.14, ()->{
 		if(songs[curSelected].name == songName){
 			l = locks.members[curSelected];
 			l.animation.play('unlocked');
@@ -235,7 +225,7 @@ function preClose(){
 	});
 
 	for(a in grpSongs){
-		FlxTween.tween(a, {x: FlxG.width}, 1+(a.ID/4), {
+		FlxTween.tween(a, {x: FlxG.width}, 1.5, {
 			ease: FlxEase.quintOut
 		});
 	}
@@ -247,7 +237,3 @@ function preClose(){
 	});
 
 }
-
-
-
-

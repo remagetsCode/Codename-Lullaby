@@ -35,7 +35,7 @@ function stepHit(step){
 
         case 1432: new FlxTimer().start(0.02, ()->{dad.playAnim('jigglyturn', true, null, true);});
 
-        case 1856: FlxTween.tween(black, {alpha: 1}, 15);
+        case 1856: FlxTween.tween(black, {alpha: 1}, 10);
     }
 }
 

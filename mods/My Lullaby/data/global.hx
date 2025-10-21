@@ -13,7 +13,7 @@ import funkin.backend.system.Controls;
 var overwriteStates:Map<String, String> = [
     "funkin.menus.TitleState" => "MyTitleState",
     "funkin.menus.MainMenuState" => "MyMainMenu",
-    "funkin.menus.FreeplayState" => "MyFreeplayState",
+    "funkin.menus.FreeplayState" => "Shop",
     "funkin.menus.StoryMenuState" => "MyMainMenu"
 ];
 
@@ -22,12 +22,11 @@ function new() {
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
 
-	if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", "insomnia" => "unlocking", "isotope" => "unlocking"];
+	if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", "insomnia" => "unlocking"];
+	if(FlxG.save.data.lullabyMoney == null) FlxG.save.data.lullabyMoney = 0;
 	if(!FlxG.save.data.unlockedSongs.exists("frostbite")) FlxG.save.data.unlockedSongs.set("frostbite", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
-	if(!FlxG.save.data.unlockedSongs.exists("isotope")) FlxG.save.data.unlockedSongs.set("isotope", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
-	if(!FlxG.save.data.unlockedSongs.exists("purin")) FlxG.save.data.unlockedSongs.set("purin", "unlocking");
 	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking'];
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;

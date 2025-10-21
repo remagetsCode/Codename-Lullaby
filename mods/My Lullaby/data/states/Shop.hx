@@ -1,26 +1,26 @@
 import sys.io.File;
 import haxe.Json;
+import flixel.math.FlxRect;
 
 FlxG.game.setFilters([]);
 
 var shaderCrt = new CustomShader('monitor');
-var shopList = CoolUtil.coolTextFile(Paths.txt("shop/shopButtons"));
+var aberration = new CustomShader('aberration');
 var options:Array = [];
 var curSelected = -1;
 
 var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 
-//var data = Json.parse(jsonText);
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var songList = CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
-
+var items:Array = ["2GameBoy Advanced SP", "4Lit Candle"];
+var itemsGrp:FlxTypedGroup;
+var pricesGrp:FlxTypedGroup;
+var prices:Array = [];
 public var onSubstate:Bool = false;
-
 var curMusic = FlxG.sound.music;
-
-var aberration = new CustomShader('aberration');
+var buying:Bool = false;
 
 function create(){
 	window.title = windowTitle;
@@ -29,6 +29,10 @@ function create(){
 	FlxG.game.addShader(aberration);
 	aberration.iTime = 6;
 
+	itemsGrp = new FlxTypedGroup();
+	pricesGrp = new FlxTypedGroup();
+
+	var songList = CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
 	for(song in songList) graphicCache.cache(Paths.image('menus/freeplay/' + song));
 	graphicCache.cache(Paths.image('menus/freeplay/unknown'));
 
@@ -52,6 +56,7 @@ function create(){
 	cgShop.animation.addByPrefix('scaredLoop', 'CG_Scared02_Loop',24,true);
 	cgShop.setGraphicSize(cgShop.width*1.5, cgShop.height*1.5);
 	cgShop.screenCenter();
+	cgShop.animation.play('idle'+FlxG.random.int(1,3));
 	cgShop.x -= 150;
 	cgShop.visible = false;
 	add(cgShop);
@@ -87,7 +92,7 @@ function create(){
 	pokeDollar.y = upperText.y - 10;
 	add(pokeDollar);
 
-	upperCash = new FunkinText(1, 1, 0, "-9999999999", 32, false);
+	upperCash = new FunkinText(1, 1, 0, "", 32, false);
     upperCash.setFormat(Paths.font("pokefont.ttf"), 40, 0x111111);
 	upperCash.screenCenter();
 	upperCash.x = pokeDollar.x + 100;
@@ -111,6 +116,31 @@ function create(){
 	selBox.visible = false;
 	add(selBox);
 
+	buyBox = new FlxSprite().loadGraphic(Paths.image('UI/base/amusia/bigsquaredTextBox'));
+	buyBox.screenCenter();
+	buyBox.x -= 50;
+	buyBox.y -= 50;
+	add(buyBox);
+
+	for(i => item in items) {
+		var d:String = CoolUtil.parseJson(Paths.json("shop/items/" + item));
+		spr = new FunkinSprite((250+150*i)+d.itemDetail.xOffset, 150+d.itemDetail.yOffset);
+		spr.frames = Paths.getFrames("shop/" + item + "/item");
+		spr.animation.addByPrefix('idle', d.itemDetail.animName, 24, true);
+		spr.animation.play('idle');
+		spr.name = d.itemDetail.songUnlock;
+		itemsGrp.add(spr);
+
+		price = new FunkinText(spr.x+spr.width/8, 275, 0, d.itemDetail.price, 24, false);
+		price.color = FlxColor.BLACK;
+		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
+		pricesGrp.add(price);
+
+		prices.push(d.itemDetail.price);
+	}
+	add(itemsGrp);
+	add(pricesGrp);
+
 	talk = new FunkinText(textBox.x+30, textBox.y+30, 650, "", 28, false);
 	talk.wordWrap = true;
 	talk.setFormat(Paths.font("pokefont.ttf"), 28, 0x000000);
@@ -125,10 +155,11 @@ function create(){
 	hand.visible = false;
 	add(hand);
 
-	for (k => v in shopList) {
+	for (k => v in CoolUtil.coolTextFile(Paths.txt("shop/shopButtons"))) {
         var txt = new FunkinText(1010, selBox.y+(k*60), 0, v, 32, false);
         txt.setFormat(Paths.font("pokefont.ttf"), 32, 0x111111);
         txt.ID = k;
+		txt.visible = false;
         add(txt);
         options.push(txt);
 		hand.x = txt.x - 240;
@@ -165,24 +196,29 @@ function create(){
 		
 		cgIntro.visible = false;
 		cgShop.visible = true;
-		cgShop.animation.play('idle'+FlxG.random.int(1,3));
+		
 		staticImg.visible = true;
 		new FlxTimer().start(0.5, ()->{
 			staticImg.visible = false;
+			for(a in FlxG.save.data.unlockedSongs) if(a == "unlocking") {
+					onSubstate = true;
+					right.animation.play('push');
+					openSubState(new ModSubState('RealFreePlay'));
+					break;
+			};
 		});
 
 		showDialogue();
 		curMusic = FlxG.sound.music;
 	});
 
-
-	
+	changeItem(1);
 }
 
 function postCreate(){
 	if(curMusic != null) FlxTween.tween(curMusic, {volume: 0}, 1);
 
-	new FlxTimer().start(0.8, ()->{
+	new FlxTimer().start(0.3, ()->{
 		cgIntro.animation.play('idle');
 		shopSign.animation.play('opening');
 	});
@@ -200,24 +236,28 @@ function postCreate(){
 
 function update(elapsed){
 	var leftP = controls.LEFT_P;
+	var upP = controls.UP_P;
+	var downP = controls.DOWN_P;
+	var rightP = controls.RIGHT_P;
+	var scroll = FlxG.mouse.wheel;
+
 	if(!onSubstate){
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var rightP = controls.RIGHT_P;
-		var scroll = FlxG.mouse.wheel;
-
-		if ((upP || downP || scroll != 0) && textBox.visible)  // like this we wont break mods that expect a 0 change event when calling sometimes  - Nex
+		if ((upP || downP || scroll != 0) && textBox.visible && !buying)
 			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
+		else if((leftP || rightP) && buying)
+			changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
 
-		if(rightP) {
+		if(rightP && !buying) {
 			onSubstate = true;
 			right.animation.play('push');
 			new FlxTimer().start(0.1, (_)->{right.animation.play('idle');});
 			openSubState(new ModSubState('RealFreePlay'));
 		}
-
+		
 		if(controls.ACCEPT) selectItem();
-		if (controls.BACK) FlxG.switchState(new MainMenuState());
+
+		if (controls.BACK && buying) {buying = false; curSelected = 0;}
+		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 
 	}
 	else{
@@ -226,19 +266,28 @@ function update(elapsed){
 
 	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
 	if(textBox.visible){ upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
-	aberration.iTime = 5.8+curMusic.amplitude;
+	aberration.iTime = 5.5+curMusic.amplitude;
 	}
 }
 
+var curMoney:Int;
 function postUpdate(){
-	for (a in options) {
-        var s = 1.0 + (a.ID == curSelected ? 0.1 : 0);
-        a.scale.x = lerp(a.scale.x, s, 0.25);
-        a.scale.y = lerp(a.scale.y, s, 0.25);
-        a.updateHitbox();
-		a.color = a.ID == curSelected ? 0x333333 : 0x000000;
-		
-    }
+	upperCash.text = Math.round(curMoney = lerp(curMoney, FlxG.save.data.lullabyMoney, 0.05));
+
+	if(!buying){
+		for (a in options) {
+    	    var s = 1.0 + (a.ID == curSelected ? 0.1 : 0);
+    	    a.scale.x = lerp(a.scale.x, s, 0.25);
+    	    a.scale.y = lerp(a.scale.y, s, 0.25);
+    	    a.updateHitbox();
+			a.color = a.ID == curSelected ? 0x333333 : 0x000000;
+    	}
+	}
+
+	buyBox.visible = itemsGrp.visible = pricesGrp.visible = buying;
+
+	hand.y = lerp(hand.y, (buying ? itemsGrp.members[curSelected].y - itemsGrp.members[curSelected].height/5: options[curSelected].y - hand.height/2), 0.3);
+	hand.x = lerp(hand.x, (buying ? itemsGrp.members[curSelected].x : options[curSelected].x) - hand.width*0.7, 0.3);
 }
 
 function showDialogue(){
@@ -246,6 +295,7 @@ function showDialogue(){
 	textBox.visible = true;
 	selBox.visible = true;
 	hand.visible = true;
+	for(a in options) a.visible = true;
 
 	text = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
 
@@ -254,28 +304,28 @@ function showDialogue(){
 
 function changeItem(huh:Int = 0, ?mouse:Bool = false)
 	{
+		var len = buying ? itemsGrp.length-1 : options.length-1;
 		
 		if(curSelected != huh) FlxG.sound.play(Paths.sound("scrollMenu"),0.5);
 		if(mouse) curSelected = huh;
-		else{
+		//else if(!mouse && !buying){
 			switch(huh){
-				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = options.length-1;
-				case 1: curSelected+1 <= options.length-1 ? curSelected++ : curSelected = 0;
+				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = len;
+				case 1: curSelected+1 <= len ? curSelected++ : curSelected = 0;
 			}
-		}
-		for(a in options){
-			hand.y = a.ID == curSelected ? a.y - 80 : hand.y;
-		}
+		//}
+		//else if(!mouse && buying){
+		//	
+		//}
+			
 	}
 
 function selectItem(){
-	if(curSelected != null){
+	FlxG.sound.play(Paths.sound("confirmMenu"));
+	if(curSelected != null && !buying){
 		var selected = curSelected;
-
-		FlxG.sound.play(Paths.sound("confirmMenu"));
-
 			switch(selected){
-				case 0: CGDialog("buy");
+				case 0: CGDialog("buy"); buying = true;
 				case 1: 
 					FlxTween.shake(selBox, 0.01, 0.5, FlxAxes.XY, {
 						ease: FlxTween.cubeInOut
@@ -283,6 +333,21 @@ function selectItem(){
 					FlxG.sound.play(Paths.sound('errorMenu'));
 				case 2: FlxG.switchState(new MainMenuState());
 		}
+	}
+	else if(curSelected != null && buying && pricesGrp.members[curSelected].text != "OWNED"){
+		if(pricesGrp.members[curSelected].text == "CONFIRM?"){
+			FlxG.save.data.lullabyMoney -= prices[curSelected];
+			pricesGrp.members[curSelected].text = "OWNED";
+			FlxG.save.data.unlockedSongs.set(itemsGrp.members[curSelected].name, "unlocking");
+
+			onSubstate = true;
+			right.animation.play('push');
+			openSubState(new ModSubState('RealFreePlay'));
+		}
+		else {
+			pricesGrp.members[curSelected].text = "CONFIRM?";
+		}
+
 	}
 }
 

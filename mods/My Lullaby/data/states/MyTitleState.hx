@@ -7,7 +7,6 @@ import funkin.backend.system.framerate.Framerate;
 Framerate.codenameBuildField.visible = false;
 //Framerate.memoryCounter.visible = false;
 
-if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", "insomnia" => "unlocking"];
 //FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking'];
 
 var curDisplayHeight = window.display.bounds.height;
