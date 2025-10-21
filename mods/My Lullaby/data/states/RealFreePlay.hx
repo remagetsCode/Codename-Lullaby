@@ -1,8 +1,9 @@
 import funkin.menus.FreeplayState.FreeplaySonglist;
+import flixel.math.FlxPoint;
 
 var songList:FreeplaySonglist;//= CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
 var curSelected = -1;
-var mini:FlxSprite;
+
 var canChange:Bool = false;
 
 var txtfile = CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
@@ -15,6 +16,19 @@ var camera;
 
 var positions:Array<Int> = [-300, 150, 320, 490, 900];
 var targetPos:Int;
+
+public var portraitOffset:Map<String, FlxPoint> = [
+	'frostbite' => FlxPoint.get(20, 1),
+	'safety-lullaby' => FlxPoint.get(85, 26),
+	'left-unchecked' => FlxPoint.get(29, 10),
+	'lost-cause' => FlxPoint.get(0, -15),
+	'monochrome' => FlxPoint.get(1),
+	'missingno' => FlxPoint.get(12),
+	'brimstone' => FlxPoint.get(0, 115),
+	'death-toll' => FlxPoint.get(160, 165),
+	'isotope' => FlxPoint.get(12, 1),
+	'shitno' => FlxPoint.get(72, 90)
+];
 
 function create(){
 	status = FlxG.save.data.unlockedSongs;
@@ -63,16 +77,28 @@ function create(){
 		if(status.exists(song.name) && status.get(song.name) == 'unlocked') lock.visible = false;
 	}
 
-		
+	miniBG = new FunkinSprite().loadGraphic(Paths.image('menus/freeplay/blank'));
+	miniBG.setGraphicSize(miniBG.width*0.8, miniBG.height*0.8);
+	miniBG.updateHitbox();
+	miniBG.y = 155;
+	miniBG.alpha = 0;
+	add(miniBG);
+	add(mini);
+
 	FlxTween.tween(bg, {x:0},1.5, {
 		ease: FlxEase.quintOut,
 		onStart: ()->{
 			startEverything();	
 			changeItem(1);	
 			mini.x += 1000;
+			miniBG.x += 1000;
 
-			FlxTween.tween(mini, {x: FlxG.width/1.6}, 1.5, {
+			FlxTween.tween(mini, {x: 853}, 1.5, {
 				ease: FlxEase.quintOut
+			});
+			FlxTween.tween(miniBG, {x: 850}, 1.5, {
+				ease: FlxEase.quintOut,
+				onComplete: ()->{miniBG.alpha = 1;}
 			});
 	
 		},
@@ -106,6 +132,7 @@ function startEverything(){
 }
 
 function update(){
+	//trace(mini.x, mini.y);
 	status = FlxG.save.data.unlockedSongs;
 	
 	if(canChange){
@@ -123,7 +150,6 @@ function update(){
 		if (controls.BACK) FlxG.switchState(new MainMenuState());
 
 	}
-		
 	for (a in grpSongs) {
         var s = 0.9 + (a.ID == curSelected ? 0.1 : 0);
         a.scale.x = lerp(a.scale.x, s, 0.2);
@@ -137,8 +163,10 @@ function update(){
 	}
 }
 
+var mini:FunkinSprite = new FunkinSprite();
+var twn:FlxTween = new FlxTween();
 function changeItem(huh:Int = 0, ?mouse:Bool = false){		
-	if(mini != null) mini.visible = false;
+	//if(mini != null) mini.visible = false;
 
 	FlxG.sound.play(Paths.sound("menu/scroll"),0.5);
 			
@@ -150,20 +178,34 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false){
 		}
 	}
 
-	mini = new FlxSprite();
-	if(status.exists(songs[curSelected].name) && status.get(songs[curSelected].name) == 'unlocked' || status.get(songs[curSelected].name) == 'unlocking') {
-		mini.frames = Paths.getFrames('menus/freeplay/' + songs[curSelected].name);
-		mini.animation.addByPrefix('idle', songs[curSelected].name ,24,true);
-	}
-	else{
-		mini.frames = Paths.getFrames('menus/freeplay/unknown');
-		mini.animation.addByPrefix('idle', 'unknown' ,24,true);
-	}
-	mini.animation.play('idle');
-	mini.setGraphicSize(mini.width*0.8, mini.height*0.8);
-	mini.screenCenter();
-	mini.x = FlxG.width/1.5;
-	add(mini);
+	if(twn.active) twn.cancel();
+	twn = FlxTween.tween(mini, {alpha: 0}, 0.15, {
+		ease: FlxEase.cubeIn,
+		onComplete: ()->{
+			
+			if(status.exists(songs[curSelected].name) && status.get(songs[curSelected].name) == 'unlocked' || status.get(songs[curSelected].name) == 'unlocking') {
+				mini.name = songs[curSelected].name;
+				mini.frames = Paths.getFrames('menus/freeplay/' + songs[curSelected].name);
+				mini.animation.addByPrefix('idle', songs[curSelected].name ,24,true);
+			}
+			else{
+				mini.name = '';
+				mini.frames = Paths.getFrames('menus/freeplay/unknown');
+				mini.animation.addByPrefix('idle', 'unknown' ,24,true);
+			}
+			var offs = portraitOffset.get(mini.name);
+			mini.animation.play('idle');
+			mini.setGraphicSize(mini.width*0.8, mini.height*0.8);
+			mini.updateHitbox();
+			mini.screenCenter();
+			mini.x = FlxG.width/1.5;
+			if(offs != null) mini.setPosition(mini.x-offs.x, mini.y-offs.y);
+			
+
+			twn = FlxTween.tween(mini, {alpha: 1}, 0.3, {ease: FlxEase.cubeIn});
+		}
+	});
+
 
 	for(a in grpSongs){
 		if(a.ID - curSelected < -1) targetPos = 0;
@@ -221,6 +263,9 @@ function preClose(){
 	});
 
 	FlxTween.tween(mini, {x: FlxG.width}, 0.5, {
+		ease: FlxEase.quintOut
+	});
+	FlxTween.tween(miniBG, {x: FlxG.width}, 0.5, {
 		ease: FlxEase.quintOut
 	});
 

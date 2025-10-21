@@ -27,7 +27,9 @@ function new() {
 	if(!FlxG.save.data.unlockedSongs.exists("frostbite")) FlxG.save.data.unlockedSongs.set("frostbite", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
-	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking'];
+
+    //Hacker mode
+	FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = true;
