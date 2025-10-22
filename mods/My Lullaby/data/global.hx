@@ -36,6 +36,7 @@ function new() {
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = false;
+	FlxG.save.data.extraHits = 'NONE';
 }
 function preStateSwitch() {
     if (overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))) != null)

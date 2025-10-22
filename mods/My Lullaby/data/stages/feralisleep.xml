@@ -1,6 +1,5 @@
 <!DOCTYPE codename-engine-stage>
 <stage folder="stages/feralisleep/images/" name="feralisleep">
-	<sprite x="-734.042319095351" sprite="back" y="-104.29386448479" type="none" name="Back"/>
 	<sprite x="-756" scroll="0.6" sprite="lake" y="586" type="none" name="Lake"/>
 	<sprite x="-722" scroll="0.7" sprite="fog" y="378" type="none" scalex="1.05" scaley="1.09" name="Fog"/>
 	<sprite x="-717.564941016503" sprite="ground" y="717.564941005956" type="none" name="Ground"/>
