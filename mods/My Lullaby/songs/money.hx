@@ -25,7 +25,5 @@ function update(){
         new FlxTimer().start(1.2, ()->{
             FlxTween.tween(m, {y: 900}, 0.2);
         });
-
-        
     }
 }
