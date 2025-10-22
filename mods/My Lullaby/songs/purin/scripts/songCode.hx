@@ -1,10 +1,12 @@
 var amnt:Float = 1;
 function create(){
-    FlxG.game.addShader(desat);
-    FlxG.game.addShader(heat);
-    heat.intensity = 0;
-    heat.vel = 0;
-    desat.desaturationAmount = amnt;
+    if(FlxG.save.data.lullabyShaders){
+        FlxG.game.addShader(desat);
+        FlxG.game.addShader(heat);
+        heat.intensity = 0;
+        heat.vel = 0;
+        desat.desaturationAmount = amnt;
+    }
 }
 
 var a:Float = 0.0;

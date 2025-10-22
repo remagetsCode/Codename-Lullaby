@@ -179,54 +179,54 @@ var curWord:String;
 function unownMechanic(?word:String){
 
 	//IF TRYING TO PORT THIS TO MOBILE, JUST COMMENT ALL THIS CHUNK OR DISABLE THE MECHANICS.
-	if(FlxG.save.data.lullabyMechanics){
-		unownGrp = new FlxTypedGroup<FlxSprite>();
-		linesGrp = new FlxTypedGroup<FlxSprite>();
-		counter = 0;
-		counter2ndcoming = 0;
-		unown = true;
-
-		if(word == "") curWord = data.monochromeTexts.words[FlxG.random.int(0, data.monochromeTexts.words.length-1)];
-		else curWord = word;
-
-		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 20, 20, 150));
-		bg.scrollFactor.set(0);
-		add(bg);
-
-		var test = 1-curWord.length*0.055;
-
-		for(i in 0...curWord.length){
-			var char = curWord.charAt(i);
-			if(char != " "){
-				var uAlpha = new FlxSprite();
-				uAlpha.frames = Paths.getFrames('UI/base/Unown_Alphabet');
-				uAlpha.animation.addByPrefix('this', char, 24, true);
-				uAlpha.animation.play('this');
-				uAlpha.setGraphicSize((uAlpha.width*test)+20, uAlpha.height*test);
-				uAlpha.updateHitbox();
-				uAlpha.setPosition((420-curWord.length*26)+(uAlpha.width*1.5)*i, 250);
-				uAlpha.scrollFactor.set(0);
-				uAlpha.antialiasing = true;
-				unownGrp.add(uAlpha);
-
-				var line = new FlxSprite().loadGraphic(Paths.image('UI/base/line'));
-				line.scrollFactor.set(0);
-				line.setGraphicSize(line.width*test, line.height*test);
-				line.setPosition(uAlpha.x-line.width/4, uAlpha.y+300);
-				linesGrp.add(line);
-			}
-		}
-		add(unownGrp);
-		add(linesGrp);
-
-		new FlxTimer().start(6, ()->{
-			FlxTween.num(health, health - (curWord.length - counter)*0.3, 0.75, {
-				ease: FlxEase.quintOut,
-				onUpdate: (v)->{health = v.value;}
-			});
-			if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill();}
-		});
-	}
+	//if(FlxG.save.data.lullabyMechanics){
+	//	unownGrp = new FlxTypedGroup<FlxSprite>();
+	//	linesGrp = new FlxTypedGroup<FlxSprite>();
+	//	counter = 0;
+	//	counter2ndcoming = 0;
+	//	unown = true;
+//
+	//	if(word == "") curWord = data.monochromeTexts.words[FlxG.random.int(0, data.monochromeTexts.words.length-1)];
+	//	else curWord = word;
+//
+	//	bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 20, 20, 150));
+	//	bg.scrollFactor.set(0);
+	//	add(bg);
+//
+	//	var test = 1-curWord.length*0.055;
+//
+	//	for(i in 0...curWord.length){
+	//		var char = curWord.charAt(i);
+	//		if(char != " "){
+	//			var uAlpha = new FlxSprite();
+	//			uAlpha.frames = Paths.getFrames('UI/base/Unown_Alphabet');
+	//			uAlpha.animation.addByPrefix('this', char, 24, true);
+	//			uAlpha.animation.play('this');
+	//			uAlpha.setGraphicSize((uAlpha.width*test)+20, uAlpha.height*test);
+	//			uAlpha.updateHitbox();
+	//			uAlpha.setPosition((420-curWord.length*26)+(uAlpha.width*1.5)*i, 250);
+	//			uAlpha.scrollFactor.set(0);
+	//			uAlpha.antialiasing = true;
+	//			unownGrp.add(uAlpha);
+//
+	//			var line = new FlxSprite().loadGraphic(Paths.image('UI/base/line'));
+	//			line.scrollFactor.set(0);
+	//			line.setGraphicSize(line.width*test, line.height*test);
+	//			line.setPosition(uAlpha.x-line.width/4, uAlpha.y+300);
+	//			linesGrp.add(line);
+	//		}
+	//	}
+	//	add(unownGrp);
+	//	add(linesGrp);
+//
+	//	new FlxTimer().start(6, ()->{
+	//		FlxTween.num(health, health - (curWord.length - counter)*0.3, 0.75, {
+	//			ease: FlxEase.quintOut,
+	//			onUpdate: (v)->{health = v.value;}
+	//		});
+	//		if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill();}
+	//	});
+	//}
 }
 
 function celebiMechanic(){

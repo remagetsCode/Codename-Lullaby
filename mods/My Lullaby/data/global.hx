@@ -34,10 +34,8 @@ function new() {
 	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
 
-
-
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
-	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = true;
+	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = false;
 }
 function preStateSwitch() {
     if (overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))) != null)

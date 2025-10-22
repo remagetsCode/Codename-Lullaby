@@ -276,7 +276,7 @@ function typhlosionMechanic(elapsed){
 	
 	freezeBar.percent = freezeVal;
 
-	if(FlxG.keys.justPressed.SPACE && ty){
+	if((FlxG.keys.justPressed.SPACE || hitbox.buttonExtra.justPressed) && ty){
 		health += 0.1;
 		FlxTween.num(freezeVal, freezeVal-33, 1.5,{
 			ease: FlxEase.smootherStepInOut,

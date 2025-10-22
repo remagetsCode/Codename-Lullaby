@@ -60,24 +60,24 @@ function postCreate(){
 	
 	//Better way to do this :)
 
-	if(!window.fullscreen){
-		window.maximized = false;
-		alo = FlxTween.num(window.width, curDisplayWidth/2, 0.75, { 
-			ease: FlxEase.quadInOut,
-			onUpdate: function(num){
-				window.x = lerp(window.x, curDisplayX + curDisplayWidth/3, 0.03);
-				window.width = num.value;
-			}
-		});
-		
-		alo = FlxTween.num(window.height, curDisplayHeight/2, 0.75, { 
-			ease: FlxEase.quadInOut,
-			onUpdate: function(num){
-				window.y = lerp(window.y, curDisplayY + curDisplayHeight/5, 0.03);
-				window.height = num.value;
-			}
-		});
-	}
+	//if(!window.fullscreen){
+	//	window.maximized = false;
+	//	alo = FlxTween.num(window.width, curDisplayWidth/2, 0.75, { 
+	//		ease: FlxEase.quadInOut,
+	//		onUpdate: function(num){
+	//			window.x = lerp(window.x, curDisplayX + curDisplayWidth/3, 0.03);
+	//			window.width = num.value;
+	//		}
+	//	});
+	//	
+	//	alo = FlxTween.num(window.height, curDisplayHeight/2, 0.75, { 
+	//		ease: FlxEase.quadInOut,
+	//		onUpdate: function(num){
+	//			window.y = lerp(window.y, curDisplayY + curDisplayHeight/5, 0.03);
+	//			window.height = num.value;
+	//		}
+	//	});
+	//}
 	
 }
 function update(){

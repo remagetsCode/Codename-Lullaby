@@ -158,10 +158,10 @@ function missingnoEffect(){
 			else modchart.set('x'+i, curBeat, modchart.getPercent('x' + (i-1), 1) + FlxG.random.int(70, 250), 1);
 		}
 
-		window.x = oldPosX;
-		window.y = oldPosY;
-		window.x += FlxG.random.int(-100,100);
-		window.y += FlxG.random.int(-65,65);
+		//window.x = oldPosX;
+		//window.y = oldPosY;
+		//window.x += FlxG.random.int(-100,100);
+		//window.y += FlxG.random.int(-65,65);
 
 		missingno.iTime = FlxG.random.float(0,5);
 	}

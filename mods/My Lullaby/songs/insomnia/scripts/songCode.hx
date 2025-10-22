@@ -83,14 +83,14 @@ function beatHit(beat){
 }
 
 function feraMechanic(){
-	if(accuracy < 0.85 && accuracy > 0){
+	if(accuracy < 0.8 && accuracy > 0){
 		move = false;
 		camGame.scroll.x = lerp(camGame.scroll.x, gf.x-500, 0.08);
 		camGame.scroll.y = lerp(camGame.scroll.y, gf.y-200, 0.08);
 		camGame.zoom += 0.01;	
 	}
 
-	if((accuracy < 0.85 && accuracy > 0) && !feralidying){ 
+	if((accuracy < 0.8 && accuracy > 0) && !feralidying){ 
 		feralidying = true;
 
 		fSound = FlxG.sound.play(Paths.sound('feraligatrWakes'));

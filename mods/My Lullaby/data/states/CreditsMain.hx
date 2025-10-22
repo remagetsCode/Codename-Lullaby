@@ -11,3 +11,8 @@ function create(){
 		}
 	});
 }
+
+#if mobile
+	addTouchPad("UP_DOWN", "A_B");
+	addTouchPadCamera();
+#end

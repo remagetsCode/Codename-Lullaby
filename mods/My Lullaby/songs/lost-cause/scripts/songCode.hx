@@ -154,7 +154,7 @@ function beatHit(beat){
     		ease: FlxEase.quadOut
 		});
 		for(i in 0...4) FlxTween.tween(uiStuff.members[i], {alpha: 1}, 3);
-		if(FlxG.save.data.lullabyMechanics) songStarted = true;
+		//if(FlxG.save.data.lullabyMechanics) songStarted = true;
 	}
 	//FlxG.sound.play(Paths.sound('editors/charter/metronome'));
 }

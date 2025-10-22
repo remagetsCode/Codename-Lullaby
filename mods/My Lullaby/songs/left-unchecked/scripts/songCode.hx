@@ -55,7 +55,7 @@ function postCreate(){
 }
 
 function onSongStart(){
-	if(FlxG.save.data.lullabyMechanics) songStarted = true;
+	//if(FlxG.save.data.lullabyMechanics) songStarted = true;
 	modchart.ease('alpha', 1, 4, 0.6, FlxEase.cubeOut, 0);
 	
 }

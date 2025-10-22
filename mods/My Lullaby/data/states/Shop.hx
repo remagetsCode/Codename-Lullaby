@@ -27,9 +27,9 @@ var introing:Bool = true;
 function create(){
 	window.title = windowTitle;
 
-	FlxG.game.addShader(shaderCrt);
-	FlxG.game.addShader(aberration);
-	aberration.iTime = 6;
+	//FlxG.game.addShader(shaderCrt);
+	//FlxG.game.addShader(aberration);
+	//aberration.iTime = 6;
 
 	itemsGrp = new FlxTypedGroup();
 	pricesGrp = new FlxTypedGroup();
@@ -414,5 +414,10 @@ function showNextLetter(timer:FlxTimer){
 		typeTimer = null;
     }
 }
+
+#if mobile
+	addTouchPad("LEFT_FULL", "A_B");
+	addTouchPadCamera();
+#end
 
 // WE REACHED THE 4 HUNDRED LINES LETS GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
