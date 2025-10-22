@@ -23,7 +23,7 @@ function new() {
     trace("Transition script path: " + MusicBeatTransition.script);
 
     //Hacker mode
-	FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
+	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
 
     //Noob mode
     //FlxG.save.data.unlockedSongs = ["u" => "stoopid"];

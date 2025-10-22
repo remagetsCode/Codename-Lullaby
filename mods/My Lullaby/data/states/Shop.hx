@@ -26,10 +26,11 @@ var introing:Bool = true;
 
 function create(){
 	window.title = windowTitle;
-
-	//FlxG.game.addShader(shaderCrt);
-	//FlxG.game.addShader(aberration);
-	//aberration.iTime = 6;
+	if(FlxG.save.data.lullabyShaders){
+		FlxG.game.addShader(shaderCrt);
+		FlxG.game.addShader(aberration);
+		aberration.iTime = 6;
+	}
 
 	itemsGrp = new FlxTypedGroup();
 	pricesGrp = new FlxTypedGroup();
@@ -240,7 +241,7 @@ function postCreate(){
 
 }
 
-
+var canMove:Bool = true;
 function update(elapsed){
 	var leftP = controls.LEFT_P;
 	var upP = controls.UP_P;
@@ -249,21 +250,23 @@ function update(elapsed){
 	var scroll = FlxG.mouse.wheel;
 
 	if(!onSubstate && !introing){
-		if ((upP || downP || scroll != 0) && textBox.visible && !buying)
-			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
-		else if((leftP || rightP) && buying)
-			changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
+		if(canMove){
+			if ((upP || downP || scroll != 0) && textBox.visible && !buying)
+				changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
+			else if((leftP || rightP) && buying)
+				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
 
-		if(rightP && !buying) {
-			onSubstate = true;
-			right.animation.play('push');
-			new FlxTimer().start(0.1, (_)->{right.animation.play('idle');});
-			openSubState(new ModSubState('RealFreePlay'));
+			if(rightP && !buying) {
+				onSubstate = true;
+				right.animation.play('push');
+				new FlxTimer().start(0.1, (_)->{right.animation.play('idle');});
+				openSubState(new ModSubState('RealFreePlay'));
+			}
 		}
 		
 		if(controls.ACCEPT) selectItem();
 
-		if (controls.BACK && buying && pricesGrp.members[curSelected].text == "CONFIRM?") {pricesGrp.members[curSelected].text = itemsGrp.members[curSelected].extra.get('price');}
+		if (controls.BACK && buying && pricesGrp.members[curSelected].text == "CONFIRM?") {pricesGrp.members[curSelected].text = itemsGrp.members[curSelected].extra.get('price'); canMove = true;}
 		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 
@@ -354,7 +357,8 @@ function selectItem(){
 			FlxG.save.data.lullabyMoney -= item.extra.get('price');
 			ptext = "OWNED";
 			FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
-
+			canMove = true;
+			
 			onSubstate = true;
 			right.animation.play('push');
 			persistentUpdate = false;
@@ -370,6 +374,7 @@ function selectItem(){
 		else {
 			pricesGrp.members[curSelected].text = "CONFIRM?";
 			dialogue(item.extra.get('dialog'));
+			canMove = false;
 		}
 
 	}
