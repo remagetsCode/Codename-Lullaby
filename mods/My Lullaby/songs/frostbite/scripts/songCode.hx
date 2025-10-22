@@ -109,7 +109,7 @@ function create(){
 	add(scare1);
 }
 function postCreate(){
-	canDie = false;
+	//canDie = false;
 	gf.alpha = 1;
 	gf.y = 900;
 	

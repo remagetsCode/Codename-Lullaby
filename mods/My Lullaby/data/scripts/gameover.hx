@@ -168,7 +168,7 @@ function monochrome(event){
 }
 
 function update(){
-	if (controls.ACCEPT && !ending) endBullshit();
+	if ((controls.ACCEPT || FlxG.mouse.justPressed) && !ending) endBullshit();
 	if (controls.BACK) exit();
 }
 
