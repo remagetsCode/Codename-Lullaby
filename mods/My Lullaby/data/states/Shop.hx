@@ -22,6 +22,8 @@ public var onSubstate:Bool = false;
 var curMusic = FlxG.sound.music;
 var buying:Bool = false;
 
+var introing:Bool = true;
+
 function create(){
 	window.title = windowTitle;
 
@@ -129,6 +131,8 @@ function create(){
 		spr.animation.addByPrefix('idle', d.itemDetail.animName, 24, true);
 		spr.animation.play('idle');
 		spr.name = d.itemDetail.songUnlock;
+		spr.extra.set('dialog', d.itemDetail.songDescription);
+		spr.extra.set('price', d.itemDetail.price);
 		itemsGrp.add(spr);
 
 		price = new FunkinText(spr.x+spr.width/8, 275, 0, d.itemDetail.price, 24, false);
@@ -200,6 +204,7 @@ function create(){
 		staticImg.visible = true;
 		new FlxTimer().start(0.5, ()->{
 			staticImg.visible = false;
+			introing = false;
 			for(a in FlxG.save.data.unlockedSongs) if(a == "unlocking") {
 					onSubstate = true;
 					right.animation.play('push');
@@ -241,7 +246,7 @@ function update(elapsed){
 	var rightP = controls.RIGHT_P;
 	var scroll = FlxG.mouse.wheel;
 
-	if(!onSubstate){
+	if(!onSubstate && !introing){
 		if ((upP || downP || scroll != 0) && textBox.visible && !buying)
 			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
 		else if((leftP || rightP) && buying)
@@ -256,7 +261,8 @@ function update(elapsed){
 		
 		if(controls.ACCEPT) selectItem();
 
-		if (controls.BACK && buying) {buying = false; curSelected = 0;}
+		if (controls.BACK && buying && pricesGrp.members[curSelected].text == "CONFIRM?") {pricesGrp.members[curSelected].text = itemsGrp.members[curSelected].extra.get('price');}
+		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 
 	}
@@ -297,9 +303,13 @@ function showDialogue(){
 	hand.visible = true;
 	for(a in options) a.visible = true;
 
-	text = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
+	if(FlxG.save.data.lullabyMechanics == false) {
+		targ = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
+		if(FlxG.random.bool(40)) targ = data.shopLines.pussyLines[FlxG.random.int(0,data.shopLines.pussyLines.length-1)];
+	}
+	else targ = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
 
-	dialogue(text);
+	dialogue(targ);
 }
 
 function changeItem(huh:Int = 0, ?mouse:Bool = false)
@@ -314,7 +324,7 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false)
 				case 1: curSelected+1 <= len ? curSelected++ : curSelected = 0;
 			}
 		//}
-		//else if(!mouse && buying){
+		//else if(!mouse && buying){  //For later
 		//	
 		//}
 			
@@ -335,17 +345,27 @@ function selectItem(){
 		}
 	}
 	else if(curSelected != null && buying && pricesGrp.members[curSelected].text != "OWNED"){
-		if(pricesGrp.members[curSelected].text == "CONFIRM?" && FlxG.save.data.lullabyMoney >= prices[curSelected]){
-			FlxG.save.data.lullabyMoney -= prices[curSelected];
-			pricesGrp.members[curSelected].text = "OWNED";
-			FlxG.save.data.unlockedSongs.set(itemsGrp.members[curSelected].name, "unlocking");
+		var ptext = pricesGrp.members[curSelected].text;
+		var item = itemsGrp.members[curSelected];
+
+		if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney >= item.extra.get('price')){
+			FlxG.save.data.lullabyMoney -= item.extra.get('price');
+			ptext = "OWNED";
+			FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
 
 			onSubstate = true;
 			right.animation.play('push');
 			openSubState(new ModSubState('RealFreePlay'));
 		}
+
+		else if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney < item.extra.get('price')) {
+			CGDialog("poor"); 
+			FlxG.sound.play(Paths.sound('errorMenu'));
+		}
+
 		else {
 			pricesGrp.members[curSelected].text = "CONFIRM?";
+			dialogue(item.extra.get('dialog'));
 		}
 
 	}
@@ -358,6 +378,9 @@ function CGDialog(reason:String){
 	switch(reason){
 		case "buy": 
 			var target = data.shopLines.buyLines[FlxG.random.int(0,data.shopLines.buyLines.length-1)];
+			dialogue(target);
+		case "poor": 
+			var target = data.shopLines.poorLines[FlxG.random.int(0,data.shopLines.poorLines.length-1)];
 			dialogue(target);
 	}
 }
@@ -372,7 +395,7 @@ function dialogue(target:String){
 
 	if(typeTimer == null){
 		typeTimer = new FlxTimer();
-		typeTimer.start(0.05, showNextLetter, 0);
+		typeTimer.start(0.04, showNextLetter, 0);
 	}
 	
 }
@@ -384,7 +407,6 @@ function showNextLetter(timer:FlxTimer){
 
 	if(fullText.charAt(currentIndex) != " ") FlxG.sound.play(Paths.sound('cartridgeGuy'), 0.1);
 
-    // Si terminó el texto
     if (currentIndex >= fullText.length){
 		//trace('e');
         isTyping = false;
@@ -392,3 +414,5 @@ function showNextLetter(timer:FlxTimer){
 		typeTimer = null;
     }
 }
+
+// WE REACHED THE 4 HUNDRED LINES LETS GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO

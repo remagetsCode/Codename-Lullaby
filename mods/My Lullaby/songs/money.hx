@@ -1,7 +1,7 @@
 var finishedOnce = false;
 function update(){
     
-    if (Conductor.songPosition >= inst.length-1500 && !finishedOnce) {
+    if (Conductor.songPosition >= inst.length-2300 && !finishedOnce) {
         finishedOnce = true;
 
         var got = FlxG.random.int(230,270);
@@ -12,7 +12,7 @@ function update(){
         money.animation.addByPrefix('idle', 'Moneybag final', 24, false);
         money.animation.play('idle');
         money.cameras = [camHUD];
-        add(money); 
+        insert(30, money); 
 
         m = new FunkinText(money.x+20, 690, 0, "", 24, false);
         m.color = FlxColor.YELLOW;

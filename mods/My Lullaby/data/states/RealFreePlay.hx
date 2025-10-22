@@ -93,7 +93,7 @@ function create(){
 			mini.x += 1000;
 			miniBG.x += 1000;
 			trace(mini.name);
-			FlxTween.tween(mini, {x: 853}, 1.5, {
+			FlxTween.tween(mini, {x: status.exists('safety-lullaby') ? 768 : 853}, 1.5, {
 				ease: FlxEase.quintOut
 			});
 			FlxTween.tween(miniBG, {x: 850}, 1.5, {
