@@ -4,6 +4,8 @@ var feralidying:Bool = false;
 var a:Float = 0;
 
 var pattern1:Array<Int> = [];
+
+var accuracyLimit = 0.85;
 function postCreate(){
 	coolEnabled = false;
 
@@ -83,21 +85,21 @@ function beatHit(beat){
 }
 
 function feraMechanic(){
-	if(accuracy < 0.85 && accuracy > 0){
+	if(accuracy < accuracyLimit && accuracy > 0){
 		move = false;
 		camGame.scroll.x = lerp(camGame.scroll.x, gf.x-500, 0.08);
 		camGame.scroll.y = lerp(camGame.scroll.y, gf.y-200, 0.08);
 		camGame.zoom += 0.01;	
 	}
 
-	if((accuracy < 0.85 && accuracy > 0) && !feralidying){ 
+	if((accuracy < accuracyLimit && accuracy > 0) && !feralidying){ 
 		feralidying = true;
 
 		fSound = FlxG.sound.play(Paths.sound('feraligatrWakes'));
 		shake = FlxTween.shake(accuracyTxt, 0.005, 5, FlxAxes.XY);
 		
 		timer1 = new FlxTimer().start(0.5, ()->{
-			if(accuracy > 0.85) {
+			if(accuracy > accuracyLimit) {
 				fSound.stop();
 				move = true;
 				feralidying = false;
