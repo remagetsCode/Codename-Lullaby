@@ -18,7 +18,7 @@ var overwriteStates:Map<String, String> = [
 ];
 
 function new() {
-    FlxG.save.data.unlockedSongs = null;
+    //FlxG.save.data.unlockedSongs = null;
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
 
@@ -36,7 +36,7 @@ function new() {
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = false;
-	FlxG.save.data.extraHits = 'NONE';
+	Options.extraHints = 'NONE';
 }
 function preStateSwitch() {
     if (overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))) != null)

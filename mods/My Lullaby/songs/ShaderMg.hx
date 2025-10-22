@@ -41,8 +41,3 @@ function update(elapsed){
 function destroy(){
 	FlxG.game.setFilters([]);
 }
-
-#if mobile
-	addTouchPad("NONE", "A_B");
-	addTouchPadCamera();
-#end

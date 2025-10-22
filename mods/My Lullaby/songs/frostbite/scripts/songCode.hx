@@ -9,6 +9,7 @@ var uses:Int = 0;
 var ty:Bool = true;
 var extraSound:FlxSound;
 
+if(FlxG.save.data.lullabyMechanics) Options.extraHints = 'SINGLE';
 function create(){
 	graphicCache.cache(Paths.image('characters/red/freakachu_entrance'));
 	graphicCache.cache(Paths.image('characters/red/Freakachu'));
@@ -264,6 +265,10 @@ function beatHit(beat){
 			});
 		}
 		
+}
+
+function destroy(){
+	Options.extraHints = 'NONE';
 }
 
 //! Mechanics 
