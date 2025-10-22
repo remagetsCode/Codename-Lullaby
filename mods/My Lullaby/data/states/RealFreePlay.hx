@@ -92,7 +92,7 @@ function create(){
 			changeItem(1);	
 			mini.x += 1000;
 			miniBG.x += 1000;
-
+			trace(mini.name);
 			FlxTween.tween(mini, {x: 853}, 1.5, {
 				ease: FlxEase.quintOut
 			});

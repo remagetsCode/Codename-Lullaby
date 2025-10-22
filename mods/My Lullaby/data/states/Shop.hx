@@ -335,7 +335,7 @@ function selectItem(){
 		}
 	}
 	else if(curSelected != null && buying && pricesGrp.members[curSelected].text != "OWNED"){
-		if(pricesGrp.members[curSelected].text == "CONFIRM?"){
+		if(pricesGrp.members[curSelected].text == "CONFIRM?" && FlxG.save.data.lullabyMoney >= prices[curSelected]){
 			FlxG.save.data.lullabyMoney -= prices[curSelected];
 			pricesGrp.members[curSelected].text = "OWNED";
 			FlxG.save.data.unlockedSongs.set(itemsGrp.members[curSelected].name, "unlocking");

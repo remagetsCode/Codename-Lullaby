@@ -187,7 +187,7 @@ function update(elapsed){
 	}
 
 	if (extraSound != null && extraSound.playing) {
-		inst.pitch = 0.2;
+		inst.pitch = 0.3;
         extraSound.onComplete = function() {
             endSong(); // manually ends the song
         }

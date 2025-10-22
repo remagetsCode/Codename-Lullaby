@@ -1,9 +1,9 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="Purin_Recolored" scale="0.5"  camx="-100" camy="90" icon="jiggly-stare">
+<character sprite="Purin_Recolored" scale="0.5" camx="-100" camy="90">
 	<anim name="idle" anim="Body" loop="true"/>
-	<anim name="singDOWN" anim="Jigglypuff Down front" y="1"/>
-	<anim name="singRIGHT" anim="Right pose"/>
-	<anim name="singLEFT" anim="Left pose"/>
-	<anim name="singUP" anim="Up pose"/>
+	<anim name="singDOWN" anim="Jigglypuff Down front" x="36" y="-37"/>
+	<anim name="singRIGHT" anim="Right pose" x="-50" y="16"/>
+	<anim name="singLEFT" anim="Left pose" x="206" y="10"/>
+	<anim name="singUP" anim="Up pose" x="46" y="22"/>
 	<anim name="Body" anim="Body"/>
 </character>
