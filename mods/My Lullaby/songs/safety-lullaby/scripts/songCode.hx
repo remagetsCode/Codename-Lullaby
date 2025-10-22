@@ -64,7 +64,7 @@ function postCreate(){
 
 function onSongStart(){
 	//if(FlxG.save.data.lullabyMechanics) songStarted = true;
-	else lil.visible = false;
+	//else lil.visible = false;
 	
 	for(pend in both){
 		FlxTween.angle(pend, 0, -50, t*3, {

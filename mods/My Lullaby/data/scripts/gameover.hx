@@ -211,3 +211,7 @@ function exit(){
 		//}
 	}
 
+#if mobile
+	addTouchPad("NONE", "A_B");
+	addTouchPadCamera();
+#end

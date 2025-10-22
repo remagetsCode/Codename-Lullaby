@@ -11,7 +11,7 @@ var ljBar:FlxBar;
 var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
 
 FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
-introLength = 7;
+//introLength = 7;
 
 function create(){
 	if(FlxG.save.data.lullabyShaders){ 
@@ -118,13 +118,13 @@ function update(){
 	if(health < limit) gameOver();
 	ljBar.percent = limit*50;
 
-	user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
-
-	switch(user){
-		case 'SLASH': user = '?';
-		case 'MINUS': user = '?';
-		case '1': user = '!';
-	}
+	//user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
+//
+	//switch(user){
+	//	case 'SLASH': user = '?';
+	//	case 'MINUS': user = '?';
+	//	case '1': user = '!';
+	//}
 	
 	if(unown){
 		if(user == curWord.charAt(counter)){

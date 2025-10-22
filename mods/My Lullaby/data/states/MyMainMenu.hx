@@ -35,7 +35,7 @@ function create(){
 	//FlxG.game.addShader(shader);
 	
 	FlxG.camera.bgColor = 0xFF000000;
-    FlxG.mouse.visible = true;
+    FlxG.mouse.visible = false;
     //CoolUtil.playMenuSong();
 
 	// Background
