@@ -26,10 +26,11 @@ var introing:Bool = true;
 
 function create(){
 	window.title = windowTitle;
-
-	FlxG.game.addShader(shaderCrt);
-	FlxG.game.addShader(aberration);
-	aberration.iTime = 6;
+	if(FlxG.save.data.lullabyShaders){
+		FlxG.game.addShader(shaderCrt);
+		FlxG.game.addShader(aberration);
+		aberration.iTime = 6;
+	}
 
 	itemsGrp = new FlxTypedGroup();
 	pricesGrp = new FlxTypedGroup();
