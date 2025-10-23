@@ -2,7 +2,6 @@ var bgDesat:Bool = false;
 var damage:Bool = false;
 
 function create(){
-	coolEnabled = false;
 	if(FlxG.save.data.lullabyShaders){
 		var bg = stage.getSprite("city");
 		bg.shader = desat;

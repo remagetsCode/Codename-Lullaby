@@ -17,7 +17,6 @@ function onSongStart(){
 				case "end": holds.members[i].visible = false;
 			}
 		});
-		//add(s);
 		holds.add(s);
 	}
 	generated = true;

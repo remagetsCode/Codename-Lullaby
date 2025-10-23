@@ -1,6 +1,7 @@
 var amnt:Float = 1;
 function create(){
     if(FlxG.save.data.lullabyShaders){
+        FlxG.camera.addShader(blur);
         FlxG.game.addShader(desat);
         FlxG.game.addShader(heat);
         heat.intensity = 0;
@@ -9,16 +10,26 @@ function create(){
     }
 }
 
+function postCreate(){
+    new FlxTimer().start(0.03, ()->{
+        black.alpha = 1;
+    });
+    modchart.setPercent('alpha', 0);
+    modchart.ease('alpha', 61, 40, 0.5, FlxEase.cubeOut, 0);
+    modchart.ease('alpha', 88, 2.5, 1, FlxEase.cubeOut, 1);
+}
+
 var a:Float = 0.0;
 function update(elapsed){
     heat.iTime = a += elapsed;
+    blur.Size = bruh;
 }
 
+var bruh:Float = 20;
 var bru:Int = 0;
 var br:Float = 0;
 function stepHit(step){
     
-
     amnt = lerp(amnt, 1, 0.035);
     desat.desaturationAmount = amnt;
 
@@ -26,6 +37,10 @@ function stepHit(step){
     if(bru == 2) {heat.intensity = br = lerp(br, 0, 0.1); heat.vel = br;}
 
     switch(step){
+        case 0: FlxTween.tween(black, {alpha: 0.2}, 25);
+            FlxTween.num(bruh, 0, 30, {
+                onUpdate: (v)->{bruh = v.value;}
+            });
         case 345:
             bf.playAnim('Pico Turn', true, false, 0, null);
             bf.animation.onFinish.addOnce(function() {bf.playAnim('turned', true);});

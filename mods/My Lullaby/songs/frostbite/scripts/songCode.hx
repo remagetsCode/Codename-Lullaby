@@ -108,10 +108,9 @@ function create(){
 	add(scare1);
 }
 function postCreate(){
-	canDie = false;
+	//canDie = false;
 	gf.alpha = 1;
 	gf.y = 900;
-	
 
 	new FlxTimer().start(0.02, ()->{for(o in uiStuff) o.y += 500;});
 

@@ -53,7 +53,6 @@ function stepHit(){
 	var g:Float = (0.84-accuracy)*-5;
 	var r:Float = 1-g;
 	var b:Float = 0.1;
-	//accuracyTxt.color = 0xffff4343;
 	accuracyTxt.color = FlxColor.fromRGB(
         Std.int(r * 255),
         Std.int(g * 255),

@@ -18,12 +18,11 @@ var overwriteStates:Map<String, String> = [
 ];
 
 function new() {
-    FlxG.save.data.unlockedSongs = null;
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
 
     //Hacker mode
-	FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
+	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
 
     //Noob mode
     //FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
