@@ -1,6 +1,6 @@
 <!DOCTYPE codename-engine-stage>
 <stage folder="stages/pokecenter/images/" name="pokecenter">
-	<girlfriend/>
+	<girlfriend x="1050" y="700"/>
 	<sprite type="none" sprite="8floor" name="Floor"/>
 	<sprite type="none" sprite="7backlayer" name="Backlayer"/>
 	<sprite x="1269.6216556129" sprite="6nursejoy" y="696.536684966279" type="none" name="..."/>

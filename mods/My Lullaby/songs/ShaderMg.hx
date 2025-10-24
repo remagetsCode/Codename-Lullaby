@@ -16,7 +16,7 @@ public var fireflies1 = new CustomShader('fireflies1');
 public var blur = new CustomShader('blur');
 blur.Directions = 8.0;
 blur.Quality = 4.0;
-blur.Size = 0;
+blur.Size = 15;
 public var blurfast = new CustomShader('lightBlur');
 blurfast.Strength = 0;
 

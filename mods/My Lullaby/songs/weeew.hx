@@ -12,28 +12,9 @@ var rectDown:FlxSprite;
 var test;
 
 public var output;
-function postCreate(){
-	rectUp = new FlxSprite();
-	rectUp.makeGraphic(camHUD.width, camHUD.height/4, FlxColor.BLACK);
-	rectUp.cameras = [camHUD];
-	test = rectUp.y;
-	rectUp.y = rectUp.height*4;
-	//rectUp.y += camHUD.height;
-	add(rectUp);
 
-	rectDown = new FlxSprite();
-	rectDown.makeGraphic(camHUD.width, camHUD.height/4, FlxColor.BLACK);
-	rectDown.cameras = [camHUD];
-	rectDown.y = -rectDown.height;
-	add(rectDown);
-
+function create(){
 	modchart = new Manager();
-	add(modchart);
-
-	// V-slice sustain anim 
-	holds = new FlxTypedGroup<FlxSprite>();
-	add(holds);
-
 	
 	switch(curSong){ 
 		case 'left-unchecked': leftUnchecked();
@@ -52,6 +33,28 @@ function postCreate(){
 	modchart.addModifier('vibrate');
 	modchart.addModifier('beat');
 	modchart.addModifier('reverse');
+}
+
+function postCreate(){
+	rectUp = new FlxSprite();
+	rectUp.makeGraphic(camHUD.width, camHUD.height/4, FlxColor.BLACK);
+	rectUp.cameras = [camHUD];
+	test = rectUp.y;
+	rectUp.y = rectUp.height*4;
+	//rectUp.y += camHUD.height;
+	add(rectUp);
+
+	rectDown = new FlxSprite();
+	rectDown.makeGraphic(camHUD.width, camHUD.height/4, FlxColor.BLACK);
+	rectDown.cameras = [camHUD];
+	rectDown.y = -rectDown.height;
+	add(rectDown);
+
+	add(modchart);
+
+	// V-slice sustain anim 
+	holds = new FlxTypedGroup<FlxSprite>();
+	add(holds);
 }
 
 function coolThing(d){

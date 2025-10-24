@@ -2,6 +2,7 @@ PauseSubState.script = 'data/scripts/pause';
 GameOverSubstate.script = "data/scripts/gameover";
 
 function create(){
+	camera.zoom = defaultCamZoom;
 	if(gf != null) gf.alpha = 0;
 }
 

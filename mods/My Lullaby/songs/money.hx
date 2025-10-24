@@ -4,6 +4,10 @@ function update(){
     if (Conductor.songPosition >= inst.length-2300 && !finishedOnce) {
         finishedOnce = true;
 
+        moneyCam = new FlxCamera(0, 0);
+        moneyCam.bgColor = FlxColor.fromRGB(0,0,0,75);
+        FlxG.cameras.add(moneyCam, false);
+
         var got = FlxG.random.int(230,270);
         FlxG.save.data.lullabyMoney += got;
 
@@ -11,19 +15,19 @@ function update(){
         money.frames = Paths.getFrames('UI/base/moneybag');
         money.animation.addByPrefix('idle', 'Moneybag final', 24, false);
         money.animation.play('idle');
-        money.cameras = [camHUD];
-        insert(30, money); 
+        money.cameras = [moneyCam];
+        add(money); 
 
         m = new FunkinText(money.x+20, 690, 0, "", 24, false);
         m.color = FlxColor.YELLOW;
         m.text = "+" + got;
-        m.cameras = [camHUD];
+        m.cameras = [moneyCam];
         add(m);
 
         new FlxTimer().start(0.5, ()->{FlxG.sound.play(Paths.sound('MoneyBagGet'));});
 
         new FlxTimer().start(1.2, ()->{
-            FlxTween.tween(m, {y: 900}, 0.2);
+            FlxTween.tween(m, {y: 800}, 0.2);
         });
     }
 }

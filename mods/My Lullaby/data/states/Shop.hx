@@ -321,7 +321,7 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false)
 	{
 		var len = buying ? itemsGrp.length-1 : options.length-1;
 		
-		if(curSelected != huh) FlxG.sound.play(Paths.sound("scrollMenu"),0.5);
+		FlxG.sound.play(Paths.sound("menu/scroll"),0.5);
 		if(mouse) curSelected = huh;
 		//else if(!mouse && !buying){
 			switch(huh){
