@@ -4,6 +4,8 @@ import funkin.menus.credits.CreditsMain;
 import funkin.options.OptionsMenu;
 import funkin.editors.EditorPicker;
 
+import funkin.backend.system.Controls;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxRect;
@@ -13,13 +15,7 @@ import funkin.options.PlayerSettings;
 var curMusic = FlxG.sound.music;
 FlxG.game.setFilters([]);
 
-var curDisplayHeight = window.display.bounds.height;
-var curDisplayWidth = window.display.bounds.width;
-var curDisplayX = window.display.bounds.x;
-var curDisplayY = window.display.bounds.y;
-
 var windowTitle = "Friday Night Funkin' Lullaby - Main Menu";
-window.borderless = false;
 
 var player:FlxSprite;
 public var walls:FlxGroup;
@@ -40,24 +36,6 @@ function create(){
 		curMusic = FlxG.sound.music;
 	}
 		
-	if(!window.fullscreen){
-		window.maximized = false;
-		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.2, { 
-			ease: FlxEase.quadInOut,
-			onUpdate: function(num){
-				window.x = lerp(window.x, curDisplayX + curDisplayWidth/5, 0.04);
-				window.width = num.value;
-			}
-		});
-		
-		alo = FlxTween.num(window.height, 3*curDisplayHeight/3.5, 1.2, { 
-			ease: FlxEase.quadInOut,
-			onUpdate: function(num){
-				window.y = lerp(window.y, curDisplayY + curDisplayHeight/16, 0.04);
-				window.height = num.value;
-			}
-		});
-	}
 	
 	Main.scaleMode.width = 1280;
     Main.scaleMode.height = 960;
@@ -94,6 +72,7 @@ function create(){
 }
 
 function update(){
+	trace(controls.UP);
 	if(controls.SWITCHMOD){
 		persistentDraw = !(persistentUpdate = false);
 		openSubState(new ModSwitchMenu());
@@ -111,9 +90,6 @@ function update(){
 }
 
 function destroy(){
-	var curDisplayHeight = window.display.bounds.height;
-	var curDisplayWidth = window.display.bounds.width;	
-
 	Main.scaleMode.width = 1280;
     Main.scaleMode.height = 720;
 
@@ -124,14 +100,6 @@ function destroy(){
         c.width = 1280;
         c.height = 720;
     }
-	
-	if(!window.fullscreen && !window.maximized){
-		window.x = window.x + (window.width - 16*curDisplayHeight/11)*0.5;
-		window.width = 16*curDisplayHeight/11;
-
-		window.y = window.y + (window.height - 9*curDisplayHeight/11)*0.5;
-		window.height = 9*curDisplayHeight/11;
-	}
 }
 
 //Dialog
@@ -301,8 +269,8 @@ class Player extends FlxSprite
 				setPosition(prevX + (tileSize * xDir * percentToNextTile), prevY + (tileSize * yDir * percentToNextTile));
 			}
 		}else{
-			if(yDir == 0)xDir = ((FlxG.keys.pressed.D||FlxG.keys.pressed.RIGHT)-(FlxG.keys.pressed.A||FlxG.keys.pressed.LEFT));
-			if(xDir == 0)yDir = ((FlxG.keys.pressed.S||FlxG.keys.pressed.DOWN)-(FlxG.keys.pressed.W||FlxG.keys.pressed.UP));
+			if(yDir == 0)xDir = ((FlxG.keys.pressed.D||FlxG.keys.pressed.RIGHT || PlayerSettings.solo.controls.RIGHT)-(FlxG.keys.pressed.A||FlxG.keys.pressed.LEFT||PlayerSettings.solo.controls.LEFT));
+			if(xDir == 0)yDir = ((FlxG.keys.pressed.S||FlxG.keys.pressed.DOWN||PlayerSettings.solo.controls.DOWN)-(FlxG.keys.pressed.W||FlxG.keys.pressed.UP||PlayerSettings.solo.controls.UP));
 			if((yDir != 0 || xDir != 0) && canMove){	
 				tileInFront = GetTileInFront(); //Check the next tile to see if its solid
 				var blocked = tileInFront != null && tileInFront.solid;				
@@ -387,3 +355,8 @@ class Player extends FlxSprite
 		super.update(elapsed);
 	}
 }
+
+#if mobile
+	addTouchPad("LEFT_FULL", "A_B_C");
+	addTouchPadCamera();
+#end

@@ -282,8 +282,3 @@ function preClose(){
 	});
 
 }
-
-#if mobile
-	addTouchPad("LEFT_FULL", "A_B");
-	addTouchPadCamera();
-#end

@@ -12,8 +12,8 @@ function stepHit(){
 }
 
 function hypnoAttack(){
-	healthHypno -= 0.1;
-	health -= 0.1;
+	healthHypno -= 0.07;
+	health -= 0.05;
 	FlxG.sound.play(Paths.sound('Psyshock'));
 	camGame.flash(FlxColor.RED, 1);
 }
