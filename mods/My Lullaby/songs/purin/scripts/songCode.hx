@@ -60,6 +60,23 @@ function stepHit(step){
     }
 }
 
+function beatHit(beat){
+    //switch(beat){
+    //case 502:         money = new FlxSprite(FlxG.width-150, -30);
+    //    money.frames = Paths.getFrames('UI/base/moneybag');
+    //    money.animation.addByPrefix('idle', 'Moneybag final', 24, false);
+    //    money.animation.play('idle');
+    //    money.cameras = [camHUD];
+    //    add(money); 
+//
+    //    m = new FunkinText(money.x+20, 690, 0, "", 24, false);
+    //    m.color = FlxColor.YELLOW;
+    //    m.text = "+";
+    //    m.cameras = [camHUD];
+    //    add(m);
+    //}
+}
+
 function onDadHit(){
     amnt = lerp(amnt, 0, 0.4);
 }

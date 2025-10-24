@@ -4,11 +4,14 @@
 import Type;
 
 import funkin.backend.MusicBeatTransition;
+import funkin.options.OptionsMenu;
+import funkin.menus.credits.CreditsMain;
+import funkin.backend.MusicBeatState;
 
 import funkin.backend.system.Controls.Control;
 import funkin.backend.system.Controls;
 
-
+public static var playerSpawnPos:Array<Int> = [12,9];
 
 var overwriteStates:Map<String, String> = [
     "funkin.menus.TitleState" => "MyTitleState",
@@ -38,7 +41,13 @@ function new() {
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = true;
 }
+
 function preStateSwitch() {
-    if (overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))) != null)
-        FlxG.game._requestedState = new ModState(overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))));
+    if (overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))) != null)FlxG.game._requestedState = new ModState(overwriteStates.get(Type.getClassName(Type.getClass(FlxG.game._requestedState))));
+	if(Std.isOfType(FlxG.game._requestedState, MusicBeatState) && FlxG.game._requestedState.scriptName == "MyMainMenu"){
+		playerSpawnPos = [12, 9];
+		if(Std.isOfType(FlxG.game._state, OptionsMenu))playerSpawnPos = [11, 16];
+		if(Std.isOfType(FlxG.game._state, CreditsMain))playerSpawnPos = [6, 14];
+		if(Std.isOfType(FlxG.game._state, MusicBeatState) && FlxG.game._state.scriptName == "Shop")playerSpawnPos = [15, 16];	
+	}
 }

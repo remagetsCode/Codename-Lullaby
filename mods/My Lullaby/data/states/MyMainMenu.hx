@@ -1,19 +1,16 @@
-import flixel.tile.FlxTilemap;
-import flixel.util.FlxDirectionFlags;
-import flixel.addons.editors.tiled.TiledMap;
-import flixel.addons.editors.tiled.TiledObjectLayer;
-
-import flixel.addons.util.FlxSimplex;
-import funkin.editors.EditorPicker;
+import funkin.menus.MainMenuState;
 import funkin.menus.ModSwitchMenu;
 import funkin.menus.credits.CreditsMain;
 import funkin.options.OptionsMenu;
+import funkin.editors.EditorPicker;
 
-var player:FlxSprite;
-var speed:Int;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.math.FlxRect;
+import funkin.backend.system.Control;
+import funkin.options.PlayerSettings;
 
 var curMusic = FlxG.sound.music;
-
 FlxG.game.setFilters([]);
 
 var curDisplayHeight = window.display.bounds.height;
@@ -21,38 +18,14 @@ var curDisplayWidth = window.display.bounds.width;
 var curDisplayX = window.display.bounds.x;
 var curDisplayY = window.display.bounds.y;
 
-
 var windowTitle = "Friday Night Funkin' Lullaby - Main Menu";
 window.borderless = false;
 
-//https://www.youtube.com/watch?v=08OMWjoCEXY&list=PLkTxsDc9_MX6p6tkjuzQVb2RfCav8Hfrg&index=64
-//!------- Playstate code -----------
+var player:FlxSprite;
+public var walls:FlxGroup;
+var tileSize = 16;
+
 function create(){
-	Main.scaleMode.width = 1280;
-    Main.scaleMode.height = 960;
-
-	FlxG.width = 1280; 
-	FlxG.height = 960;
-    
-    for (c in FlxG.cameras.list) {
-        c.width = 1280;
-        c.height = 960;
-    }
-
-	camera.zoom = 5;
-	camera.minScrollY = 35;
-	camera.maxScrollY = 320;
-	camera.minScrollX = 16;
-	camera.maxScrollX = 400;
-
-	loadMap();
-
-	player = new Player();
-	add(player);
-
-}
-
-function postCreate(){
 	if(curMusic != null){
 		FlxTween.tween(curMusic, {volume: 0}, 1, {
 		onComplete: ()->{
@@ -66,7 +39,7 @@ function postCreate(){
 		FlxG.sound.playMusic(Paths.music('CinnabarOverworld'), 0.6, true);
 		curMusic = FlxG.sound.music;
 	}
-
+		
 	if(!window.fullscreen){
 		window.maximized = false;
 		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.2, { 
@@ -85,86 +58,74 @@ function postCreate(){
 			}
 		});
 	}
-
-	window.title = windowTitle;
-
-	extraObjects = new FlxTypedGroup<FlxSprite>();
-	for(i => obj in extraLayer.objects){
-		if(obj.name == "playerSpawn") player.setPosition(obj.x, obj.y);
-		else{
-			objSpr = new FlxSprite(obj.x, obj.y).makeGraphic(obj.width, obj.height, FlxColor.WHITE);
-			objSpr.ID = i;
-			//trace(obj.name + "'s ID: " + objSpr.ID);
-			objSpr.visible = false;
-			objSpr.immovable = true;
-			extraObjects.add(objSpr);
-		}
-	}
-	add(extraObjects);
-
-
 	
+	Main.scaleMode.width = 1280;
+    Main.scaleMode.height = 960;
+
+	FlxG.width = 1280; 
+	FlxG.height = 960;
+    
+    for(c in FlxG.cameras.list){
+        c.width = 1280;
+        c.height = 960;
+    }	
+
+	window.title = windowTitle;		
+		
+	var bg = new FlxSprite(0, 0, "images/overworld/cinnabar.png");
+	bg.scale.set(1, 1);
+	bg.immovable = true;
+	bg.updateHitbox();
+	bg.solid = false;
+    add(bg);
+	
+	trace(playerSpawnPos);
+	player = new Player(playerSpawnPos[0], playerSpawnPos[1]);
+	add(player);
+		
+	walls = new FlxGroup();
+	add(walls);
+	mapLayout();
+	
+	camera.follow(player,FlxCamera.STYLE_LOCKON);
+	camera.zoom = 5;
+	camera.minScrollY = 35;camera.maxScrollY = 320;
+	camera.minScrollX = 16;camera.maxScrollX = 400;
 }
 
 function update(){
-	player.updateMovement();
-	FlxG.camera.follow(player);
-
-	FlxG.collide(player, walls);
-
-	if (controls.BACK) FlxG.switchState(new TitleState());
-	//if (controls.SWITCHMOD) openSubState(new ModSwitchMenu());
-
-	if((inDialog && isTyping) && controls.ACCEPT) skipDialog();
-	else if((inDialog && !isTyping) && controls.ACCEPT) finishDialog();
-
-	//! DEV ACCESS
-	if (controls.DEV_ACCESS) {
+	if(controls.SWITCHMOD){
+		persistentDraw = !(persistentUpdate = false);
+		openSubState(new ModSwitchMenu());
+	}
+	if(controls.BACK)FlxG.switchState(new TitleState());
+	if(inDialog && controls.ACCEPT){
+		if(isTyping)skipDialog(); else finishDialog();	
+	}
+	if(controls.DEV_ACCESS){
 		FlxG.game.setFilters([]);
 		persistentUpdate = false;
 		persistentDraw = true;
 		openSubState(new EditorPicker());
-	}
-
-	/*
-	IDs:
-		next = 1
-		shop = 2
-		options = 3
-		credits = 4
-		error = 5
-		missingno = 6
-	*/
-	FlxG.overlap(player, extraObjects, (c1, c2)->{
-		switch(c2.ID){
-			case 1: nextRoom();
-			case 2: FlxG.switchState(new FreeplayState());
-			case 3: FlxG.switchState(new OptionsMenu());
-			case 4: FlxG.switchState(new CreditsMain());
-			case 5: FlxG.sound.play(Paths.sound('errorMenu')); 
-			case 6: missingnoSong();
-			case 7: if(controls.ACCEPT && !inDialog) startDialog("North: Story \n\nSouth: Menu houses\n\nEast: ???");
-			case 8: if(controls.ACCEPT && !inDialog) startDialog("Why is this sign even here? ");
-			case 9: if(controls.ACCEPT && !inDialog) startDialog("Left house: Credits Menu \n\nMiddle house: Options Menu \n\nRight house: Shop");
-		}
-	});
+	}	
 }
 
 function destroy(){
 	var curDisplayHeight = window.display.bounds.height;
 	var curDisplayWidth = window.display.bounds.width;	
-	//trace('y ya');
+
 	Main.scaleMode.width = 1280;
     Main.scaleMode.height = 720;
 
 	FlxG.width = 1280; 
 	FlxG.height = 720;
     
-    for (c in FlxG.cameras.list) {
+    for(c in FlxG.cameras.list){
         c.width = 1280;
         c.height = 720;
     }
-		if(!window.fullscreen && !window.maximized){
+	
+	if(!window.fullscreen && !window.maximized){
 		window.x = window.x + (window.width - 16*curDisplayHeight/11)*0.5;
 		window.width = 16*curDisplayHeight/11;
 
@@ -173,67 +134,7 @@ function destroy(){
 	}
 }
 
-
-
-//! ------- Map code ---------
-var map;
-
-var tilemap = new TiledMap(Paths.file('data/town.tmx'));
-var imgLayer:TiledTileLayer = cast tilemap.getLayer("img");
-var objLayer:TiledObjectLayer = cast tilemap.getLayer("obj");
-var extraLayer:TiledObjectLayer = cast tilemap.getLayer("extra");
-var walls:FlxTypedGroup<FlxSprite>;
-
-var extraObjects:FlxTypedGroup<FlxSprite>;
-
-function loadMap(){
-	walls = new FlxTypedGroup<FlxSprite>();
-
-	var bg = new FlxSprite(imgLayer.x, imgLayer.y, "images/" + imgLayer.imagePath);
-    add(bg);
-
-	for(obj in objLayer.objects){
-		
-		objSprite = new FlxSprite(obj.x, obj.y).makeGraphic(obj.width, obj.height, FlxColor.WHITE);
-		objSprite.visible = false;
-		objSprite.immovable = true;
-		walls.add(objSprite);
-	}
-
-	add(walls);
-
-}
-
-function nextRoom(){
-	FlxG.switchState(PlayState.loadWeek({
-		name: 'Lullaby',
-		id: '1',
-		songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
-		difficulties: ['hard']
-	}, 'hard'));
-
-	FlxG.switchState(new PlayState());
-} 
-
-function missingnoSong(){
-	curMusic.volume = 0;
-	FlxG.sound.play(Paths.sound('StartupBroke'), 0.5);
-	new FlxTimer().start(5, ()->{
-		FlxG.switchState(PlayState.loadSong('missingno', 'hard'));
-		FlxG.switchState(new PlayState()); 
-	});
-	for(obj in extraObjects){
-		if(obj.ID == 6) obj.destroy();
-	}
-	player.canMove = false;
-
-}
-
-
-
-
-
-//! Dialog code
+//Dialog
 var textBox:FlxSprite;
 var dialogText:FunkinText;         // El cuadro de texto
 var fullText:String;
@@ -242,9 +143,9 @@ var typeTimer:FlxTimer;         // Timer para mostrar letra por letra
 var isTyping:Bool = true;
 var inDialog:Bool = false;
 
-function startDialog(text){
-	
+function startDialog(text){	
 	player.canMove = false;
+	player.startingTrigger = true;
 	inDialog = true;
 	isTyping = true;
 	fullText = text;
@@ -276,9 +177,7 @@ function showNextLetter(timer:FlxTimer){
 	dialogText.setPosition(textBox.x+6, textBox.y+8);
 
     // Si terminó el texto
-    if (currentIndex >= fullText.length){
-        isTyping = false;
-    }
+    if(currentIndex >= fullText.length)isTyping = false;
 }
 
 function skipDialog(){
@@ -296,116 +195,195 @@ function finishDialog(){
 	typeTimer = null;
 
 	player.canMove = true;
-	currentIndex = 0;
+	currentIndex = 0;	
 
-	new FlxTimer().start(0.1, ()->{inDialog = false;});
+	new FlxTimer().start(0.1, ()->{inDialog = false;player.startingTrigger = false;});
 }
 
+//Walls
+function mapLayout(){
+	createWall(3,4,1,13); //Left Wall
+	createWall(4,16,1,1); //Bottom Left Wall
+	createWall(5,16,1,2);
+	createWall(5,18,15,1); //Bottom Wall
+	createWall(20,13,1,6);
+	createWall(20,6,1,6);
+	
+	createWall(9,2,1,2); // Left Bridge
+	createWall(12,2,2,2); // Right Bridge
+	
+	createWall(10,2,2,2,1); // Bridge Trigger
+	createWall(20,12,1,1,2); // Missingno Trigger
+	
+	createWall(4,4,6,4); //Top left Building
+	createWall(14,4,6,4); //Top Right Building
+	
+	createWall(6,13,1,1,3); //Credits Building Trigger
+	createWall(4,10,6,4); //Credits Building
+	
+	createWall(11,15,1,1,4); //Options Building Trigger
+	createWall(10,12,4,4); //Options Building
+	
+	createWall(15,15,1,1,5); //Freeplay Building Trigger
+	createWall(14,12,4,4); //Freeplay Building
+	
+	createWall(13,7,1,1,6); //North Sign
+	createWall(9,9,1,1,7); //Useless Sign
+	createWall(9,15,1,1,8); //Menu Sign
+}
 
-
-
-
-
-
-//! ----- Player code ------
-class Player extends FlxSprite
+class Wall extends FlxSprite
 {
-	public inline var SPEED:Float = 100;
-	public var facing;
-	public var isMoving:Bool;
-	public var canMove:Bool = true;
+	var type = 0;
+	var solid = true;
+	public function new(x:int = 0, y:int = 0, width:int = 1, height:int = 1, type:int = 0)
+	{
+		super(x, y);
+		makeGraphic(width, height, FlxColor.BLUE);
+		immovable = true;
+		alpha = .5;visible = false;
+		this.type = type;
+		solid = (this.type == 0 || this.type >= 3);
+	}
+}
 
-	public function new(x:Float = 0, y:Float = 0)
+function createWall(x:Float, y:Float, width:Float, height:Float, type:int = 0){
+	var wall = new Wall(x*tileSize,y*tileSize,width*tileSize,height*tileSize,(type == null?0:type));
+	walls.add(wall);
+}
+
+//Player
+class Player extends FlxSprite
+{	
+	public var isMoving:Bool = false;
+	public var canMove:bool = true;
+	var percentToNextTile:Float = 0;
+	var prevX = 0;var prevY = 0;
+	var yDir = 0;var xDir = 0;
+	var dir = "down";
+	var speed = 5;
+	var tileInFront = null;
+	var startingTrigger = false;
+	
+	public function new(x:int = 0, y:int = 0)
 	{
 		super(x, y);
 		
-		loadGraphic(Paths.image('characters/bf/bf'), true, 16, 16);
-		drag.x = drag.y = 5000;
-		
-
-		//setSize(8, 8);
+		loadGraphic("images/overworld/bf.png",true,16,16);
 		offset.set(0, 4);
+		setPosition(x*tileSize,y*tileSize);
 
-		animation.add("d_idle", [1]);
-		animation.add("l_idle", [7]);
-		animation.add("r_idle", [9]);
-		animation.add("u_idle", [4]);
-		animation.add("d_walk", [1, 0, 1, 2], 6);
-		animation.add("l_walk", [7, 6], 6);
-		animation.add("r_walk", [8, 9], 6);
-		animation.add("u_walk", [4, 3, 4, 5], 6);
+		animation.add("idle_down", [1]);
+		animation.add("idle_side", [7]);
+		animation.add("idle_up", [4]);
+		animation.add("walk_down", [1, 0, 1, 2], 9);
+		animation.add("walk_side", [7, 6], 9);
+		animation.add("walk_up", [4, 3, 4, 5], 9);		
+		moves = true;
+		animation.play('idle_down');
+		updateHitbox();
 	}
-
-	public function updateMovement(){
-		speed = SPEED;
+	
+	public function updateMovement()
+	{
+		//Sprinting
+		speed = FlxG.keys.pressed.SHIFT ? 8 : 4;
+		animation.getByName("walk_side").frameRate = (speed == 8 ? 14 : 9);
+		animation.getByName("walk_down").frameRate = (speed == 8 ? 14 : 9);
+		animation.getByName("walk_up").frameRate = (speed == 8 ? 14 : 9);
 		
-		var up:Bool = FlxG.keys.pressed.W;
-		var down:Bool = FlxG.keys.pressed.S;
-		var left:Bool = FlxG.keys.pressed.A;
-		var right:Bool = FlxG.keys.pressed.D;
-
-		if (FlxG.keys.pressed.SHIFT) speed += 50;
-		if (up || down || left || right) {
-
-		if (up && down)
-			up = down = false;
-		if (left && right)
-			left = right = false;
-
-		if(canMove && (up || down || left || right)){
-			var newAngle:Float = 0;
-			if (up){
-				newAngle = -90;
-				if (left)
-					newAngle -= 45;
-				else if (right)
-					newAngle += 45;
-				facing = 'up';
+		if(isMoving){
+			percentToNextTile += speed * FlxG.elapsed;
+			if(percentToNextTile >= 1){
+				percentToNextTile = 0;isMoving = false;tileInFront = GetTileInFront(); //Get the newest tile in front after moving
+				setPosition(prevX + (tileSize * xDir), prevY + (tileSize * yDir));
+			}else{
+				setPosition(prevX + (tileSize * xDir * percentToNextTile), prevY + (tileSize * yDir * percentToNextTile));
 			}
-			else if (down){
-				newAngle = 90;
-				if (left)
-					newAngle += 45;
-				else if (right)
-					newAngle -= 45;
-				facing = 'down';
+		}else{
+			if(yDir == 0)xDir = ((FlxG.keys.pressed.D||FlxG.keys.pressed.RIGHT)-(FlxG.keys.pressed.A||FlxG.keys.pressed.LEFT));
+			if(xDir == 0)yDir = ((FlxG.keys.pressed.S||FlxG.keys.pressed.DOWN)-(FlxG.keys.pressed.W||FlxG.keys.pressed.UP));
+			if((yDir != 0 || xDir != 0) && canMove){	
+				tileInFront = GetTileInFront(); //Check the next tile to see if its solid
+				var blocked = tileInFront != null && tileInFront.solid;				
+				isMoving = !blocked;
+				dir = yDir == -1 ? "up" : yDir == 1 ? "down" : xDir == -1 ? "left" : "right";
+				prevX = x;prevY = y;
 			}
-			else if (left){
-				newAngle = 180;
-				facing = 'left';
-			}
-
-			else if (right){
-				newAngle = 0;
-				facing = 'right';
-			}
-			
-			velocity.setPolarDegrees(speed, newAngle);
+			if(!startingTrigger)InteractionTriggers(); //Triggers action triggers
 		}
-
+		
+		flipX = dir == "right"; //Flips the side sprite instead of having 2 copies
+		animation.play((isMoving?'walk_':'idle_')+((dir == "left" || dir == "right")?"side":dir)); //Plays idle/walk anims
+		if(!startingTrigger)FlxG.overlap(cast(this,FlxObject), walls, OverlapWallTriggers); //Triggers walk over triggers
 	}
-
-		// ------- Sprite animation ---------
-	var action = "idle";
-	// check if the player is moving, and not walking into walls
-	if ((velocity.x != 0 || velocity.y != 0))
+	
+	//Triggers that require an input
+	function InteractionTriggers(){
+		if(tileInFront != null && PlayerSettings.solo.controls.ACCEPT){
+			switch(tileInFront.type){
+				case 3: //Credits
+					FlxG.switchState(new CreditsMain());startingTrigger = true;
+				case 4: //Options
+					FlxG.switchState(new OptionsMenu());startingTrigger = true;
+				case 5: //Shop
+					FlxG.switchState(new FreeplayState());startingTrigger = true;
+				case 6: //North Sign
+					if(!inDialog)startDialog("North: Story \n\nSouth: Menu houses\n\nEast: ???");
+				case 7: //Useless Sign
+					if(!inDialog)startDialog("Why is this sign even here? ");
+				case 8: //South Sign
+					if(!inDialog)startDialog("Left house: Credits Menu \n\nMiddle house: Options Menu \n\nRight house: Shop");
+			}
+		}	
+	}
+	
+	//Triggers that require you to walk over them
+	function OverlapWallTriggers(self:FlxObject, other:FlxObject){
+		switch(other.type){
+			default:
+				return;
+			case 1:
+				canMove = false;
+				if(!isMoving){
+					FlxG.switchState(PlayState.loadWeek({
+						name: 'Lullaby',
+						id: '1',
+						songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
+						difficulties: ['hard']
+					}, 'hard'));
+					FlxG.switchState(new PlayState());
+					startingTrigger = true;			
+				}
+				return;
+			case 2:
+				canMove = false;
+				if(!isMoving){
+					curMusic.volume = 0;
+					FlxG.sound.play(Paths.sound('StartupBroke'), 0.5);
+					new FlxTimer().start(5, ()->{
+						FlxG.switchState(PlayState.loadSong('missingno', 'hard'));
+						FlxG.switchState(new PlayState()); 
+					});
+					startingTrigger = true;
+				}
+				return;
+		}
+	}
+	
+	function GetTileInFront():Wall{
+		var moveRect = new FlxRect(x + tileSize * xDir, y + tileSize * yDir, width, height);
+		for(wall in walls.members){
+			if(wall != null && wall.exists){						
+				var wallRect = new FlxRect(wall.x, wall.y, wall.width, wall.height);
+				if(moveRect.overlaps(wallRect))return wall;
+			}
+		}	
+	}	
+	
+	override function update(elapsed:Float)
 	{
-		action = "walk";
+		updateMovement();
+		super.update(elapsed);
 	}
-	switch (facing)
-	{
-		case 'left':
-			animation.play('l_' + action);
-		case 'right':
-			animation.play("r_" + action);
-		case 'up':
-			animation.play("u_" + action);
-		case 'down':
-			animation.play("d_" + action);
-		case null:
-	}
-
-	isMoving = velocity.x == 0 && velocity.x == 0 ? false : true;
 }
-}
-
