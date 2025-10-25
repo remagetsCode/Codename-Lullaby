@@ -9,8 +9,8 @@
 	<anim name="Knife out" anim="Knife out" x="29" y="4"/>
 	<anim name="Pico Turn" anim="Pico Turn" x="3" y="23" fps="20"/>
 	<anim name="turned" anim="Pico Turn" x="3" y="23" loop="true" indices="11"/>
-	<anim name="pico miss up" anim="pico miss up" x="12" y="21"/>
-	<anim name="pico miss down" anim="pico miss down" x="134" y="-40"/>
-	<anim name="pico miss left" anim="pico miss left" x="11" y="32"/>
-	<anim name="pico right miss" anim="pico right miss" x="-1" y="-4"/>
+	<anim name="singUPmiss" anim="pico miss up" x="12" y="21"/>
+	<anim name="singDOWNmiss" anim="pico miss down" x="134" y="-40"/>
+	<anim name="singLEFTmiss" anim="pico miss left" x="11" y="32"/>
+	<anim name="singRIGHTmiss" anim="pico right miss" x="-1" y="-4"/>
 </character>

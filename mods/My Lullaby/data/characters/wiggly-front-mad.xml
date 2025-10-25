@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="WigglesTerrorUneashed" x="-370" y="530" scale="0.6">
+	<anim name="idle" anim="WigglesTerror" y="1" indices="1..12"/>
+	<anim name="singLEFT" anim="WigglesTerror" y="2" indices="14..23"/>
+	<anim name="singUP" anim="WigglesTerror" x="-3" y="3" indices="29..37"/>
+	<anim name="singRIGHT" anim="WigglesTerror" x="-1" y="2" indices="41..58"/>
+	<anim name="singDOWN" anim="WigglesTerror" x="1" y="2" indices="59..73"/>
+	<anim name="WigglesTerror" anim="WigglesTerror"/>
+</character>

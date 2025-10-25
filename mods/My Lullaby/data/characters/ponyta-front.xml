@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="-100" y="500" sprite="PONYTA" camy="100" icon="icon-ponyta" color="#FFBC00">
+	<anim name="idle" anim="PONYTA IDLE"/>
+	<anim name="singDOWN" anim="PONYTA DOWN" x="-5" y="-55"/>
+	<anim name="singRIGHT" anim="PONYTA RIGHT " x="17" y="-22"/>
+	<anim name="singLEFT" anim="PONYTA LEFT" x="2" y="-15"/>
+	<anim name="singUP" anim="PONYTA UP" x="-23" y="-4"/>
+	<anim name="singUPmiss" anim="PONYTA Miss UP" x="-23" y="4"/>
+	<anim name="singDOWNmiss" anim="PONYTA MISS DOWN" x="-13" y="-59"/>
+	<anim name="singLEFTmiss" anim="PONYTA MISS LEFT" x="8" y="-12"/>
+	<anim name="singRIGHTmiss" anim="PONYTA MISS RIGHT" x="8" y="-19"/>
+</character>

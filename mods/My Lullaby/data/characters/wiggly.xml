@@ -1,0 +1,23 @@
+<!DOCTYPE codename-engine-character>
+<character x="1" y="300" sprite="wiggles_glitchy" icon="icon-wigglytuff" color="#A36775">
+	<anim name="idle3" anim="STARE idle " x="-15" y="-77"/>
+	<anim name="singDOWN3" anim="STARE down" x="25" y="-109"/>
+	<anim name="singRIGHT3" anim="STARE right" x="-18" y="-61"/>
+	<anim name="singLEFT3" anim="STARE left" x="109" y="-71"/>
+	<anim name="singUP3" anim="STARE up" x="-8" y="-5"/>
+	<anim name="idle2" anim="DECAY 2 idle" x="-47" y="-81"/>
+	<anim name="singUP2" anim="DECAY 2 up" x="-44" y="-66"/>
+	<anim name="singLEFT2" anim="DECAY 2 left" x="-44" y="-77"/>
+	<anim name="singDOWN2" anim="DECAY 2 down" x="-48" y="-78"/>
+	<anim name="singRIGHT2" anim="DECAY 2 right" x="-47" y="-75"/>
+	<anim name="idle1" anim="DECAY 1 idle" x="-50" y="-72"/>
+	<anim name="singUP1" anim="DECAY 1 up" x="-46" y="-62"/>
+	<anim name="singDOWN1" anim="DECAY 1 down" x="-48" y="-78"/>
+	<anim name="singLEFT1" anim="DECAY 1 left" x="-38" y="-78"/>
+	<anim name="singRIGHT1" anim="DECAY 1 right" x="-45" y="-71"/>
+	<anim name="idle" anim="wigglytuff idle"/>
+	<anim name="singUP" anim="wigglytuff up" x="-1" y="9"/>
+	<anim name="singDOWN" anim="wigglytuff down" x="-34" y="-14"/>
+	<anim name="singLEFT" anim="wigglytuff left" x="-1" y="-2"/>
+	<anim name="singRIGHT" anim="wigglytuff right" y="6"/>
+</character>

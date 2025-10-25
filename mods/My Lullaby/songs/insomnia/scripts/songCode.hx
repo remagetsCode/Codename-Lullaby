@@ -50,7 +50,7 @@ function update(elapsed) {
 }
 
 function stepHit(){
-	var g:Float = (0.84-accuracy)*-5;
+	var g:Float = (accuracyLimit-accuracy)*-5;
 	var r:Float = 1-g;
 	var b:Float = 0.1;
 	accuracyTxt.color = FlxColor.fromRGB(
