@@ -1,11 +1,12 @@
 var finishedOnce = false;
-function update(){
+function onSongEnd(e) {  
     
-    if (Conductor.songPosition >= inst.length-2300 && !finishedOnce) {
+    if(!finishedOnce){
+        e.cancel();
         finishedOnce = true;
 
         moneyCam = new FlxCamera(0, 0);
-        moneyCam.bgColor = FlxColor.fromRGB(0,0,0,75);
+        moneyCam.bgColor = FlxColor.fromRGB(0,0,0,245);
         FlxG.cameras.add(moneyCam, false);
 
         var got = FlxG.random.int(230,270);
@@ -16,6 +17,9 @@ function update(){
         money.animation.addByPrefix('idle', 'Moneybag final', 24, false);
         money.animation.play('idle');
         money.cameras = [moneyCam];
+        money.animation.onFinish.add(function(){
+            endSong();
+        });
         add(money); 
 
         m = new FunkinText(money.x+20, 690, 0, "", 24, false);
@@ -29,7 +33,7 @@ function update(){
         new FlxTimer().start(1.2, ()->{
             FlxTween.tween(m, {y: 800}, 0.2);
         });
-
-        
     }
+        
+    
 }

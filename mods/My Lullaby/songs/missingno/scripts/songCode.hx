@@ -11,7 +11,7 @@ function create(){
 	bgSky.setGraphicSize(bgSky.width*sc, bgSky.height*sc);
 	bgSky.screenCenter();
 	bgSky.y += 150;
-	insert(5, bgSky);
+	insert(2, bgSky);
 
 	bgWave = new FlxSprite();
 	bgWave.frames = Paths.getFrames('stages/missingno/images/BG_Assets');
@@ -20,14 +20,16 @@ function create(){
 	bgWave.setGraphicSize(bgSky.width*sc, bgSky.height*sc);
 	bgWave.screenCenter();
 	bgWave.y += 300;
-	insert(6, bgWave);
+	bgWave.scrollFactor.set(1.1,1.25);
+	bf.scrollFactor.set(1.1,1.25);
+	insert(3, bgWave);
 
 	bg = new FlxSprite().loadGraphic(Paths.image('stages/missingno/images/bg'));
 	bg.setGraphicSize(bg.width*sc, bg.height*sc);
 	bg.screenCenter();
 	bg.y += 300;
 	bg.x += 360;
-	insert(4, bg);
+	insert(1, bg);
 
 	dad.alpha = 0;
 	bf.x -= 200;
@@ -40,6 +42,12 @@ function postCreate(){
 	camera.zoom = 1.6;
 	
 	new FlxTimer().start(0.1, ()->{for(obj in uiStuff) obj.alpha = 0;});
+	FlxTween.tween(dad, {y: dad.y+30}, 1, {ease: FlxEase.sineInOut, type: 4});
+}
+
+var crazy:Bool = false;
+function update(){
+	if(crazy) bf.playAnim(bf.singAnims[FlxG.random.int(0,bf.singAnims.length)]);
 }
 
 function stepHit(step){
@@ -58,17 +66,21 @@ function stepHit(step){
 			}});
 
 		case 371:
+			crazy = true;
 			modchart.set('vibrate', curBeat, 40, 1);
 			modchart.set('confusion', curBeat, 30, 1);
 		case 382:
+			crazy = false;
 			modchart.ease('vibrate', curBeat, 2, 0, FlxEase.quintOut, 1);
 			modchart.ease('confusion', curBeat, 4, 0, FlxEase.cubeOut, 1);
 
 		case 640:
 			wiggle = true;
+			crazy = true;
 			modchart.set('vibrate', curBeat, 90, 1);
 			modchart.set('confusion', curBeat, 30, 1);
 		case 648:
+			crazy = false;
 			modchart.ease('vibrate', curBeat, 2, 0, FlxEase.quintOut, 1);
 			modchart.ease('confusion', curBeat, 4, 0, FlxEase.cubeOut, 1);
 
@@ -118,3 +130,26 @@ function destroy(){
 	window.borderless = false;
 }
 
+
+
+//function setBruh(time:Float){
+//		//Conductor.setupSong(SONG);
+//		//instance.loadSong(PlayState.SONG.song);
+//		if(time < 0) time = 0;
+//
+//		FlxG.sound.music.pause();
+//		vocals.pause();												//Experimental
+//
+//		FlxG.sound.music.time = time;
+//		FlxG.sound.music.pitch = 1;
+//		FlxG.sound.music.play();
+//
+//		if (Conductor.songPosition <= vocals.length)
+//		{
+//			vocals.time = time;
+//			vocals.pitch = 1;
+//		}
+//		vocals.play();
+//		Conductor.songPosition = time;
+//		newTime = time;
+//}
