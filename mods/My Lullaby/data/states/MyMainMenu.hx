@@ -72,7 +72,7 @@ function create(){
 }
 
 function update(){
-	trace(controls.UP);
+	//trace(controls.UP);
 	if(controls.SWITCHMOD){
 		persistentDraw = !(persistentUpdate = false);
 		openSubState(new ModSwitchMenu());
