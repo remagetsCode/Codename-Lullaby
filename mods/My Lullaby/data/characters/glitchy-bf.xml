@@ -2,8 +2,8 @@
 <character sprite="Boyfriend_Isotope" flipX="true" icon="bf" color="#30B0D1">
 	<anim name="idle" anim="Bf Idle Dance"/>
 	<anim name="singDOWN" anim="boyfriend down" x="71" y="-22"/>
-	<anim name="singRIGHT" anim="boyfriend right" x="60" y="40"/>
-	<anim name="singLEFT" anim="boyfriend left" x="-103" y="-5"/>
+	<anim name="singLEFT" anim="boyfriend right" x="60" y="40"/>
+	<anim name="singRIGHT" anim="boyfriend left" x="-103" y="-5"/>
 	<anim name="singUP" anim="boyfriend up" x="-32" y="142"/>
 	<anim name="singUPmiss" anim="boyfriend u miss" x="111" y="321"/>
 	<anim name="singDOWNmiss" anim="boyfriend dow miss" x="99" y="112"/>

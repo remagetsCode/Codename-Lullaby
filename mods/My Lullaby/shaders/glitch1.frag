@@ -17,10 +17,11 @@ float hash(in vec2 v) { return fract(sin(dot(v, vec2(12.9898, 78.233)))*43768.54
 vec2 hash2(in float v) { return vec2(hash(v+vec2(77.77)), hash(v+vec2(999.999))); }
 vec2 hash2(in vec2 v) { return vec2(hash(v+vec2(77.77)), hash(v+vec2(999.999))); }
 
-#define GLITCH_THR 0.06
-#define GLITCH_RECT_DIVISION 6.0
-#define GLITCH_RECT_ITR 3
+//#define GLITCH_THR 0.06
+uniform float GLITCH_RECT_DIVISION = 10.0;
+#define GLITCH_RECT_ITR 5
 uniform float iTime;
+uniform float GLITCH_THR = 0.06;
 vec3 glitch(in vec2 p, in float seed) {
 	vec2 q = fract(p);
     float g = -1.0;

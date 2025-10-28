@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/disabled/images/" name="disabled">
+	<girlfriend x="500" y="60"/>
+	<sprite x="150" sprite="background2" y="-100" type="none" scale="1.5" scroll="0.4" name="BG2"/>
+	<sprite x="150" sprite="background" y="-100" type="none" scale="1.5" scroll="0.4" name="BG1"/>
+	<sprite x="-131.379071327549" sprite="Purple_place_half_part" y="4077.28176569839" type="none" angle="0.208210213253643" name="place half"/>
+	<sprite type="none" sprite="Purple_place" x="-80" y="397" name="place-dad"/>
+	<sprite x="768" sprite="Purple_place" y="127" scroll="0.6" type="none" scale="0.6" name="place-bf"/>
+	<dad x="300" y="1"/>
+	<boyfriend x="1048" scroll="0.59" y="-379"/>
+</stage>

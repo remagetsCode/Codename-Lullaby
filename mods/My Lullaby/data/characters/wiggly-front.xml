@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-20" y="650" sprite="The_death_stare" camx="-190" camy="100" icon="icon-wigglytuff" color="#A36775">
+	<anim name="idle" anim="idle"/>
+	<anim name="singDOWN" anim="down" x="3" y="-56"/>
+	<anim name="singRIGHT" anim="right" x="-26" y="-1"/>
+	<anim name="singLEFT" anim="left" x="104" y="2"/>
+	<anim name="singUP" anim="up" x="-8" y="10"/>
+</character>
