@@ -49,12 +49,42 @@ V 0.5
 - Fixed silver icon size.
 - Now the main menu is 4:3, more like the old games.
 
-next:
+V0.6:
 
+- ADDED MONOCHROME SONG
 - Fixed silver's sprite was not looping
 - Fixed safety lullaby text position
 - Fixed frostbite text position
 - Fixed jumpscare in Frostbite not showing up in the latest update
 - Improved freeplay, now its not lagging while showing the song covers.
 - Removed arrow bounce due to bad reputation
+- Changed pause menu music
+- Deleted duped/unnecesary files to make the game lighter
+
+v0.6.1 
+
+- Fixed Monochrome wasnt unlocking
+- Disabled reset action in Monochrome
+
+v0.7 (the shop & freeplay update :sob:)
+
+- ADDED PURIN SONG
+- Now you can buy in the shop!
+- Faster unlock song anim
+- Now songs give you money
+- Improvements to the Shop and Freeplay code
+- Fixed and improved the portraits in freeplay
+- Fixed frostbite can not die
+- Now isotope needs to be bought
+- Fixed camera keeping the zoom when reseting a song
+
+v0.8 
+
+- ADDED AMUSIA SONG
+- Overworld rewrited - Thanks to DonGT
+- Now the overworld can be 100% vanilla so it can work with the vanilla codename build - Thanks to DonGT
+- Fixed the moneybag not appearing in fadeouts, i think...
+- Fixed moneybag position on downscroll
+- Fixed the change sound not playing sometimes in shop
+- added ???drah
 

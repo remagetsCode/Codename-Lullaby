@@ -38,7 +38,6 @@ function create(){
     bf.x = 2500;
 }
 
-var ang:Int = 0;
 function postCreate(){
     modchart.ease('confusionoffset', 136, 1.5, 360, FlxEase.cubeOut);
     modchart.set('confusionoffset', 138, 0);
@@ -47,6 +46,7 @@ function postCreate(){
         modchart.ease('confusionoffset', 328+(8*i), 1, 360, FlxEase.cubeOut);
         modchart.set('confusionoffset', 329+(8*i), 0);
     }
+
     modchart.setPercent('alpha', 0);
     modchart.setPercent('x', 50);
     modchart.setPercent('z', 70, 0);
@@ -84,7 +84,6 @@ function postCreate(){
     });
 }
 
-var time:Float = 0;
 function update(elapsed){
     
     if(curStep < 800)
@@ -102,6 +101,7 @@ function update(elapsed){
 }
 
 function onDadHit(e){
+    var n = e.note;
     e.preventDeletion();
     if(curBeat < 196){
         switch(e.noteType){
@@ -120,6 +120,7 @@ function onDadHit(e){
 
     modchart.setPercent('vibrate', 0.5, 0);
     new FlxTimer().start(0.05, ()->{modchart.setPercent('vibrate', 0, 0);});
+    new FlxTimer().start(0.3, ()->{n.destroy;}); // Idk if this solves the lag, I hope yes
 }
 
 function stepHit(s){
