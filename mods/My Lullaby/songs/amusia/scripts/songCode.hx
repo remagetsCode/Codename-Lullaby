@@ -6,18 +6,17 @@ var placedad;
 introLength = 0;
 
 function create(){
+    bg1 = stage.getSprite("BG1");
+    bg2 = stage.getSprite("BG2");
+    placebf = stage.getSprite("place-bf");
+    placedad = stage.getSprite("place-dad");
 
     if(FlxG.save.data.lullabyShaders){
         FlxG.game.addShader(aberration);
         aberration.iTime = 6.5;
 
-        bg1 = stage.getSprite("BG1");
-        bg2 = stage.getSprite("BG2");
         bg1.shader = missingno;
         bg2.shader = missingno;
-        placebf = stage.getSprite("place-bf");
-        placedad = stage.getSprite("place-dad");
-
         missingno.GLITCH_THR = 0.0;
     }
 
