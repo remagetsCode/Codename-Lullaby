@@ -38,15 +38,63 @@ function create(){
     bf.x = 2500;
 }
 
+var ang:Int = 0;
+function postCreate(){
+    modchart.ease('confusionoffset', 136, 1.5, 360, FlxEase.cubeOut);
+    modchart.set('confusionoffset', 138, 0);
+
+    for(i in 0...20){
+        modchart.ease('confusionoffset', 328+(8*i), 1, 360, FlxEase.cubeOut);
+        modchart.set('confusionoffset', 329+(8*i), 0);
+    }
+    modchart.setPercent('alpha', 0);
+    modchart.setPercent('x', 50);
+    modchart.setPercent('z', 70, 0);
+    modchart.setPercent('z', -70, 1);
+
+    modchart.set('alpha', 8, 1);
+    modchart.set('tipsy', 136, 0.2);
+    modchart.ease('alpha', 173, 2, 0.1, FlxEase.cubeOut);
+    modchart.ease('alpha', 176, 2, 1, FlxEase.cubeOut);
+    modchart.ease('alpha', 200, 2, 0.3, FlxEase.cubeOut, 0);
+    modchart.ease('opponentSwap', 200, 8, 0.5, FlxEase.cubeInOut);
+    modchart.ease('opponentSwap', 264, 8, 1, FlxEase.cubeInOut);
+    modchart.ease('alpha', 264, 2, 0.9, FlxEase.cubeOut, 0);
+    modchart.ease('z', 200, 8, 70, FlxEase.cubeInOut, 1);
+    modchart.ease('z', 200, 8, -70, FlxEase.cubeInOut, 0);
+    modchart.set('tipsy', 201, 0.5);
+    modchart.set('tipsy', 328, 0.4);
+    modchart.set('wiggle', 328, 1);
+
+    modchart.ease('alpha', 384, 1, 0, FlxEase.cubeOut);
+    modchart.ease('alpha', 392, 1, 1, FlxEase.cubeOut);
+    modchart.set('confusionoffset', 364, 0);
+
+    modchart.ease('alpha', 415, 2, 0.3, FlxEase.cubeOut, 0);
+    modchart.ease('opponentSwap', 415, 2, 0.5, FlxEase.cubeOut);
+    modchart.ease('opponentSwap', 424, 4, 1, FlxEase.cubeOut);
+    modchart.ease('alpha', 424, 2, 0.9, FlxEase.cubeOut, 0);
+
+    modchart.ease('y', 500, 10, downscroll ? 300 : -300, FlxEase.cubeInOut);
+
+
+    new FlxTimer().start(0.01, ()->{
+        holds.visible = false;
+        for(a in uiStuff) a.alpha = 0;
+    });
+}
+
 var time:Float = 0;
 function update(elapsed){
     
-    switch(iconP2.curCharacter){
-        case "icon-wigglytuff": vignette.alpha = lerp(vignette.alpha, 0, 0.05);
-        case "icon-wigglytuff1": vignette.alpha = lerp(vignette.alpha, 0.3, 0.05);
-        case "icon-wigglytuff2": vignette.alpha = lerp(vignette.alpha, 0.6, 0.05);
-        case "icon-wigglytuff3": vignette.alpha = lerp(vignette.alpha, 0.9, 0.05);
-
+    if(curStep < 800)
+    {
+        switch(iconP2.curCharacter){
+            case "icon-wigglytuff": vignette.alpha = lerp(vignette.alpha, 0, 0.05);
+            case "icon-wigglytuff1": vignette.alpha = lerp(vignette.alpha, 0.3, 0.05);
+            case "icon-wigglytuff2": vignette.alpha = lerp(vignette.alpha, 0.6, 0.05);
+            case "icon-wigglytuff3": vignette.alpha = lerp(vignette.alpha, 0.9, 0.05);
+        }
     }
 
     if(curCameraTarget == 1 && curStep < 790) camera.zoom = lerp(camera.zoom, 1.25, 0.05);
@@ -82,6 +130,7 @@ function stepHit(s){
         case 11: FlxTween.tween(bf, {x: 1048}, 2, {ease: FlxEase.cubeOut});
 
         case 32: 
+            for(a in uiStuff) a.alpha = 1;
             strumLines.members[1].characters[0].setColorTransform();
             strumLines.members[0].characters[0].setColorTransform();
             bl.destroy();
@@ -150,12 +199,14 @@ function stepHit(s){
 
         case 1309:
             dad.scrollFactor.set(0.59, 0.59);
+        
+        case 1312: FlxTween.tween(vignette, {alpha: 0.4}, 1);
     }
 
     
 }
 
-cpu.onNoteUpdate.add(function(e){
+cpu.onNoteUpdate.add(function(e){       // This is so fucking laggy :sob:
     if(e.note.isSustainNote) e.note.avoid = true;
     e.cancelPositionUpdate();
 });
