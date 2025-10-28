@@ -55,7 +55,7 @@ function postCreate(){
     modchart.set('tipsy', 136, 0.2);
     modchart.ease('alpha', 173, 2, 0.1, FlxEase.cubeOut);
     modchart.ease('alpha', 176, 2, 1, FlxEase.cubeOut);
-    modchart.ease('alpha', 200, 2, 0.3, FlxEase.cubeOut, 0);
+    modchart.ease('alpha', 200, 2, 0.2, FlxEase.cubeOut, 0);
     modchart.ease('opponentSwap', 200, 8, 0.5, FlxEase.cubeInOut);
     modchart.ease('opponentSwap', 264, 8, 1, FlxEase.cubeInOut);
     modchart.ease('alpha', 264, 2, 0.9, FlxEase.cubeOut, 0);
@@ -69,7 +69,7 @@ function postCreate(){
     modchart.ease('alpha', 392, 1, 1, FlxEase.cubeOut);
     modchart.set('confusionoffset', 364, 0);
 
-    modchart.ease('alpha', 415, 2, 0.3, FlxEase.cubeOut, 0);
+    modchart.ease('alpha', 415, 2, 0.2, FlxEase.cubeOut, 0);
     modchart.ease('opponentSwap', 415, 2, 0.5, FlxEase.cubeOut);
     modchart.ease('opponentSwap', 424, 4, 1, FlxEase.cubeOut);
     modchart.ease('alpha', 424, 2, 0.9, FlxEase.cubeOut, 0);
@@ -101,7 +101,7 @@ function update(elapsed){
 
 function onDadHit(e){
     var n = e.note;
-    e.preventDeletion();
+    e.preventDeletion();    // This is so fucking laggy :sob:
     if(curBeat < 196){
         switch(e.noteType){
             case null: 
@@ -119,7 +119,7 @@ function onDadHit(e){
 
     modchart.setPercent('vibrate', 0.5, 0);
     new FlxTimer().start(0.05, ()->{modchart.setPercent('vibrate', 0, 0);});
-    new FlxTimer().start(0.3, ()->{n.destroy;}); // Idk if this solves the lag, I hope yes
+    new FlxTimer().start(0.3, ()->{n.destroy();}); // Idk if this solves the lag, I hope yes
 }
 
 function stepHit(s){
@@ -180,6 +180,7 @@ function stepHit(s){
             dad.scrollFactor.set(0.59, 0.59);
             FlxTween.tween(dad, {x: 908}, 2, {ease: FlxEase.cubeOut});
 
+        case 805: for(i in uiStuff) FlxTween.tween(i, {alpha: 0}, 0.5);
         case 815:
             	// Thanks to BASHIR for flipping the healthbar
 	        healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
@@ -196,6 +197,7 @@ function stepHit(s){
 		        iconP1.health = healthBar.percent / 100;
 		        iconP2.health = 1 - (healthBar.percent / 100);
 	        }
+        case 825: for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 1);
 
         case 1309:
             dad.scrollFactor.set(0.59, 0.59);
@@ -206,7 +208,7 @@ function stepHit(s){
     
 }
 
-cpu.onNoteUpdate.add(function(e){       // This is so fucking laggy :sob:
+cpu.onNoteUpdate.add(function(e){       // Sorry cpu.onNoteUpdate.add(function(e){ the lag wasnt your fault :)
     if(e.note.isSustainNote) e.note.avoid = true;
     e.cancelPositionUpdate();
 });
