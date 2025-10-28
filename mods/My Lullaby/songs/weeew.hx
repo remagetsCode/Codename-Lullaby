@@ -27,6 +27,7 @@ function create(){
 	modchart.addModifier('drunk');
 	//modchart.addModifier('Schmovindrunk');
 	//modchart.addModifier('drugged');
+	//modchart.set('drugged', 1, 1);
 	modchart.addModifier('tipsy');
 	//modchart.addModifier('Schmovintipsy');
 	modchart.addModifier('wiggle');

@@ -57,3 +57,4 @@ next:
 - Fixed jumpscare in Frostbite not showing up in the latest update
 - Improved freeplay, now its not lagging while showing the song covers.
 - Removed arrow bounce due to bad reputation
+

@@ -1,6 +1,56 @@
+var bg1;
+var bg2;
+var placebf;
+var placedad;
+
+introLength = 0;
+
 function create(){
-    placebf = stage.getSprite("place-bf");
-    placedad = stage.getSprite("place-dad");
+
+    if(FlxG.save.data.lullabyShaders){
+        FlxG.game.addShader(aberration);
+        aberration.iTime = 6.5;
+
+        bg1 = stage.getSprite("BG1");
+        bg2 = stage.getSprite("BG2");
+        bg1.shader = missingno;
+        bg2.shader = missingno;
+        placebf = stage.getSprite("place-bf");
+        placedad = stage.getSprite("place-dad");
+
+        missingno.GLITCH_THR = 0.0;
+    }
+
+    bl = new FlxSprite().makeGraphic(FlxG.width*2, FlxG.height, FlxColor.BLACK);
+    bl.scrollFactor.set(0);
+    insert(8,bl);
+
+    wh = new FlxSprite().makeGraphic(FlxG.width*2, FlxG.height, FlxColor.WHITE);
+    wh.scrollFactor.set(0);
+    insert(9,wh);
+
+    FlxTween.tween(wh, {alpha: 0}, 0.5, {type:4});
+        
+    strumLines.members[1].characters[0].colorTransform.color = FlxColor.ORANGE;
+    strumLines.members[0].characters[0].colorTransform.color = FlxColor.PURPLE;
+        
+    dad.x = -500;
+    bf.x = 2500;
+}
+
+var time:Float = 0;
+function update(elapsed){
+    
+    switch(iconP2.curCharacter){
+        case "icon-wigglytuff": vignette.alpha = lerp(vignette.alpha, 0, 0.05);
+        case "icon-wigglytuff1": vignette.alpha = lerp(vignette.alpha, 0.3, 0.05);
+        case "icon-wigglytuff2": vignette.alpha = lerp(vignette.alpha, 0.6, 0.05);
+        case "icon-wigglytuff3": vignette.alpha = lerp(vignette.alpha, 0.9, 0.05);
+
+    }
+
+    if(curCameraTarget == 1 && curStep < 790) camera.zoom = lerp(camera.zoom, 1.25, 0.05);
+    else if(curStep < 540) camera.zoom = lerp(camera.zoom, 1, 0.1);
 }
 
 function onDadHit(e){
@@ -25,7 +75,34 @@ function onDadHit(e){
 }
 
 function stepHit(s){
+    missingno.iTime = FlxG.random.float(1,10);
     switch(s){
+        case 9: FlxTween.tween(dad, {x: 300}, 2, {ease: FlxEase.cubeOut});
+    
+        case 11: FlxTween.tween(bf, {x: 1048}, 2, {ease: FlxEase.cubeOut});
+
+        case 32: 
+            strumLines.members[1].characters[0].setColorTransform();
+            strumLines.members[0].characters[0].setColorTransform();
+            bl.destroy();
+            wh.destroy();
+        case 128: missingno.GLITCH_THR = 0.0001;
+        case 140: missingno.GLITCH_THR = 0.00001;
+        case 272: missingno.GLITCH_THR = 0.0001;
+        case 274: missingno.GLITCH_THR = 0.001;
+        case 278: missingno.GLITCH_THR = 0.004;
+        case 278: missingno.GLITCH_THR = 0.008;
+        case 278: missingno.GLITCH_THR = 0.01;
+        case 285: missingno.GLITCH_THR = 0.15;
+        case 288: missingno.GLITCH_THR = 0.0;
+
+        case 416: missingno.GLITCH_THR = 0.001;
+
+        case 544: 
+            bg1.destroy();
+            missingno.GLITCH_THR = 0.15;
+            missingno.GLITCH_RECT_DIVISION = 20;
+
         case 697: dad.playAnim("idle1");
         case 698: dad.playAnim("idle2");
         case 699: dad.playAnim("idle3");
@@ -39,6 +116,8 @@ function stepHit(s){
         case 813:
             FlxTween.tween(placebf, {x: 568}, 2, {ease: FlxEase.cubeOut});
             FlxTween.tween(placedad, {x: -80}, 2, {ease: FlxEase.cubeOut});
+
+            FlxTween.num(6.5, 8, 2, {onUpdate: (v)->{aberration.iTime = v.value;}});
 
             bf.y = 300;
             bf.x = -1000;

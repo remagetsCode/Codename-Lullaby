@@ -7,3 +7,4 @@ isotope
 monochrome
 missingno
 purin
+amusia

@@ -18,7 +18,11 @@ function onSongEnd(e) {
         money.animation.play('idle');
         money.cameras = [moneyCam];
         money.animation.onFinish.add(function(){
-            endSong();
+            if(FlxG.random.bool(1)){
+                FlxG.switchState(PlayState.loadSong('shinte', 'drah'));
+			    FlxG.switchState(new PlayState()); 
+            }
+            else endSong();
         });
         add(money); 
 
@@ -33,7 +37,10 @@ function onSongEnd(e) {
         new FlxTimer().start(1.2, ()->{
             FlxTween.tween(m, {y: 800}, 0.2);
         });
+
+        
     }
+
         
     
 }
