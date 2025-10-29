@@ -7,8 +7,8 @@
 // 3 : inverse
 // 4 : uv shift glitch
 // 5 : rgb shift
-#define ENABLE_MODE 0
-#define MODE 5
+uniform int ENABLE_MODE = 0;
+uniform int MODE = 1;
 
 
 #define iChannel0 bitmap

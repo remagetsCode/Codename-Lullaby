@@ -13,11 +13,14 @@ function create(){
 
     if(FlxG.save.data.lullabyShaders){
         FlxG.game.addShader(aberration);
+        FlxG.camera.addShader(heat1);
         aberration.iTime = 6.5;
 
         bg1.shader = missingno;
         bg2.shader = missingno;
         missingno.GLITCH_THR = 0.0;
+        missingno.ENABLE_MODE = 1;
+        missingno.MODE = 1;
     }
 
     bl = new FlxSprite().makeGraphic(FlxG.width*2, FlxG.height, FlxColor.BLACK);
@@ -33,8 +36,8 @@ function create(){
     strumLines.members[1].characters[0].colorTransform.color = FlxColor.ORANGE;
     strumLines.members[0].characters[0].colorTransform.color = FlxColor.PURPLE;
         
-    dad.x = -500;
-    bf.x = 2500;
+    bf.x = -500;
+    dad.x = 2500;
 }
 
 function postCreate(){
@@ -69,10 +72,13 @@ function postCreate(){
     modchart.ease('alpha', 392, 1, 1, FlxEase.cubeOut);
     modchart.set('confusionoffset', 364, 0);
 
+    modchart.set('tipsy', 415, 0);
     modchart.ease('alpha', 415, 2, 0.2, FlxEase.cubeOut, 0);
     modchart.ease('opponentSwap', 415, 2, 0.5, FlxEase.cubeOut);
     modchart.ease('opponentSwap', 424, 4, 1, FlxEase.cubeOut);
     modchart.ease('alpha', 424, 2, 0.9, FlxEase.cubeOut, 0);
+    modchart.set('tipsy', 424, 0.4);
+
 
     modchart.ease('y', 500, 10, downscroll ? 300 : -300, FlxEase.cubeInOut);
 
@@ -80,6 +86,26 @@ function postCreate(){
     new FlxTimer().start(0.01, ()->{
         holds.visible = false;
         for(a in uiStuff) a.alpha = 0;
+
+        redStatic = new FlxSprite();
+        redStatic.frames = Paths.getFrames("stages/disabled/images/static-overlay");
+        redStatic.animation.addByPrefix('xd', 'static', 24, true);
+        redStatic.animation.play('xd');
+        redStatic.cameras = [camHUD];
+        redStatic.alpha = 0;
+        add(redStatic);
+
+        bStatic = new FlxSprite();
+        bStatic.frames = Paths.getFrames("stages/disabled/images/static");
+        bStatic.animation.addByPrefix('xd', 'static', 24, true);
+        bStatic.animation.play('xd');
+        bStatic.cameras = [camHUD];
+        bStatic.setGraphicSize(FlxG.width+50, FlxG.height+35);
+        bStatic.updateHitbox();
+        bStatic.screenCenter();
+        bStatic.alpha = 0;
+        add(bStatic);
+        
     });
 }
 
@@ -91,7 +117,7 @@ function update(elapsed){
             case "icon-wigglytuff": vignette.alpha = lerp(vignette.alpha, 0, 0.05);
             case "icon-wigglytuff1": vignette.alpha = lerp(vignette.alpha, 0.3, 0.05);
             case "icon-wigglytuff2": vignette.alpha = lerp(vignette.alpha, 0.6, 0.05);
-            case "icon-wigglytuff3": vignette.alpha = lerp(vignette.alpha, 0.9, 0.05);
+            case "icon-wigglytuff3": vignette.alpha = lerp(vignette.alpha, 0.8, 0.05);
         }
     }
 
@@ -125,9 +151,9 @@ function onDadHit(e){
 function stepHit(s){
     missingno.iTime = FlxG.random.float(1,10);
     switch(s){
-        case 9: FlxTween.tween(dad, {x: 300}, 2, {ease: FlxEase.cubeOut});
+        case 11: FlxTween.tween(dad, {x: 300}, 1, {ease: FlxEase.cubeOut});
     
-        case 11: FlxTween.tween(bf, {x: 1048}, 2, {ease: FlxEase.cubeOut});
+        case 21: FlxTween.tween(bf, {x: 1048}, 1, {ease: FlxEase.cubeOut});
 
         case 32: 
             for(a in uiStuff) a.alpha = 1;
@@ -137,22 +163,37 @@ function stepHit(s){
             wh.destroy();
         case 128: missingno.GLITCH_THR = 0.0001;
         case 140: missingno.GLITCH_THR = 0.00001;
-        case 272: missingno.GLITCH_THR = 0.0001;
+        case 272: 
+            FlxTween.num(0, 1, 1, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.tween(redStatic, {alpha: 0.9}, 1);
+            FlxTween.tween(bStatic, {alpha: 0.9}, 1);
+            missingno.GLITCH_THR = 0.0001;
         case 274: missingno.GLITCH_THR = 0.001;
-        case 278: missingno.GLITCH_THR = 0.004;
-        case 278: missingno.GLITCH_THR = 0.008;
-        case 278: missingno.GLITCH_THR = 0.01;
+        case 276: missingno.GLITCH_THR = 0.004;
+        case 279: missingno.GLITCH_THR = 0.008;
+        case 282: missingno.GLITCH_THR = 0.01;
         case 285: missingno.GLITCH_THR = 0.15;
-        case 288: missingno.GLITCH_THR = 0.0;
+
+        case 288: 
+            FlxTween.num(1, 0, 0.5, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.tween(redStatic, {alpha: 0.05}, 0.5);
+            FlxTween.tween(bStatic, {alpha: 0.05}, 0.5);
+            missingno.GLITCH_THR = 0.0;
 
         case 416: missingno.GLITCH_THR = 0.001;
 
-        case 544: 
+        case 540: FlxTween.tween(bStatic, {alpha: 0.9}, 0.5);
+        case 545: 
+            FlxTween.tween(redStatic, {alpha: 0.2}, 1);
+            FlxTween.tween(bStatic, {alpha: 0.1}, 1);
             bg1.destroy();
-            missingno.GLITCH_THR = 0.15;
+            missingno.GLITCH_THR = 0.08;
             missingno.GLITCH_RECT_DIVISION = 20;
 
-        case 697: dad.playAnim("idle1");
+        case 697: 
+            FlxTween.tween(redStatic, {alpha: 0.3}, 1);
+            FlxTween.tween(bStatic, {alpha: 0.2}, 1);
+            dad.playAnim("idle1");
         case 698: dad.playAnim("idle2");
         case 699: dad.playAnim("idle3");
 
@@ -199,10 +240,23 @@ function stepHit(s){
 	        }
         case 825: for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 1);
 
+        case 1296:
+            FlxTween.num(0, 1, 0.8, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.tween(redStatic, {alpha: 1}, 0.8);
         case 1309:
+            FlxTween.tween(redStatic, {alpha: 0.1}, 0.5);
+            FlxTween.num(1, 0, 1, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(8, 6.5, 2, {onUpdate: (v)->{aberration.iTime = v.value;}});
             dad.scrollFactor.set(0.59, 0.59);
         
         case 1312: FlxTween.tween(vignette, {alpha: 0.4}, 1);
+
+        case 1534: 
+            FlxTween.tween(redStatic, {alpha: 0.1}, 1);
+            FlxTween.tween(bStatic, {alpha: 0.05}, 1);
+        case 1568:
+            FlxTween.tween(redStatic, {alpha: 0.25}, 1);
+            FlxTween.tween(bStatic, {alpha: 0.15}, 1);
     }
 
     
