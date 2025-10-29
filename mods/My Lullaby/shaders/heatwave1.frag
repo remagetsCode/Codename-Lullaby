@@ -26,7 +26,7 @@ void main()
      col = texture2D(bitmap, uv).rgb;
      
      //play with the colours a bit
-     col = mix(col, vec3(1.0,1.0,0.5), (1.0 - col.b)/10.0);
+     //col = mix(col, vec3(1.0,1.0,0.5), (1.0 - col.b)/10.0);
      
     
     // Output to screen

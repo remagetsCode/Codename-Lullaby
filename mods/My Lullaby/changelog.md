@@ -87,5 +87,6 @@ v0.8
 - Fixed moneybag position on downscroll
 - Fixed the change sound not playing sometimes in shop
 - Fixed item text bugging when buying
+- Pixel arrows in missingno
 - added ???drah
 

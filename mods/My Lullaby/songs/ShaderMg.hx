@@ -43,7 +43,7 @@ function stepHit(step){
 	
 }
 
-function beatHit() if(curSong == "missingno") missingno.MODE = FlxG.random.int(0,5);
+function beatHit(b) if(curSong == "missingno" && b > 70) missingno.MODE = FlxG.random.int(0,5);
 
 function update(elapsed){
 	i += elapsed;

@@ -3,7 +3,7 @@
 	<girlfriend x="1050" y="700"/>
 	<sprite type="none" sprite="8floor" name="Floor"/>
 	<sprite type="none" sprite="7backlayer" name="Backlayer"/>
-	<sprite x="1269.6216556129" sprite="6nursejoy" y="696.536684966279" type="none" name="..."/>
+	<sprite x="1269.6216556129" sprite="6nursejoy" y="686.536684966279" type="none" name="..."/>
 	<sprite type="none" sprite="5table" name="Table"/>
 	<sprite type="none" sprite="4toplayer" name="hall"/>
 	<sprite type="none" sprite="3window" name="Window"/>

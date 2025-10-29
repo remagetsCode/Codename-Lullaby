@@ -13,7 +13,7 @@ function create(){
 
     if(FlxG.save.data.lullabyShaders){
         FlxG.game.addShader(aberration);
-        FlxG.camera.addShader(heat1);
+        FlxG.game.addShader(heat1);
         aberration.iTime = 6.5;
 
         bg1.shader = missingno;
@@ -124,6 +124,7 @@ function postCreate(){
     scare.visible = false;
     scare.scrollFactor.set(0,0);
     scare.screenCenter();
+    scare.antialiasing = true;
     add(scare);
 
     qu = new FlxSprite().loadGraphic(Paths.image("stages/disabled/images/questionare"));
@@ -143,6 +144,7 @@ function postCreate(){
     wig.scrollFactor.set(0,0);
     wig.screenCenter();
     wig.visible = false;
+    wig.antialiasing = true;
     add(wig);
 
     gimiursing = new FlxSprite();
@@ -154,6 +156,7 @@ function postCreate(){
     gimiursing.y -= 100;
     gimiursing.x += 50;
     gimiursing.visible = false;
+    gimiursing.antialiasing = true;
     add(gimiursing);
     gimiursing.animation.onFinish.addOnce(function(e){
         gimiursing.animation.play('idle', true);
@@ -163,31 +166,31 @@ function postCreate(){
     dialogBox.screenCenter();
     dialogBox.y += 250;
     dialogBox.x -= 100;
-    dialogBox.cameras = [camHUD];
+    dialogBox.scrollFactor.set(0,0);
     dialogBox.visible = false;
     add(dialogBox);
 
     dialogBox2 = new FlxSprite().loadGraphic(Paths.image("UI/base/amusia/questionareAnswerBox"));
     dialogBox2.screenCenter();
-
+    dialogBox2.scrollFactor.set(0,0);
     dialogBox2.x += 350;
     dialogBox2.y += 250;
     dialogBox2.visible = false;
-    dialogBox2.cameras = [camHUD];
+
     add(dialogBox2);
 
     sel = new FlxSprite(dialogBox2.x, dialogBox2.y).loadGraphic(Paths.image("UI/pixel/selector"));
     sel.scale.set(2,2);
     sel.x += 25;
     sel.y += 40;
-    sel.cameras = [camHUD];
+    sel.scrollFactor.set(0,0);
     sel.visible = false;
     add(sel);
 
     talk = new FunkinText(dialogBox.x+30, dialogBox.y+30, 680, "", 28, false);
 	talk.wordWrap = true;
 	talk.setFormat(Paths.font("pokefont.ttf"), 24, 0x000000);
-    talk.cameras = [camHUD];
+    talk.scrollFactor.set(0,0);
 	add(talk);
 }
 
@@ -249,7 +252,7 @@ function stepHit(s){
         case 128: missingno.GLITCH_THR = 0.0001;
         case 140: missingno.GLITCH_THR = 0.00001;
         case 272: 
-            FlxTween.num(0, 1, 1, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(0, 0.3, 1, {onUpdate: (v)->{heat1.intensity = v.value;}});
             FlxTween.tween(redStatic, {alpha: 0.7}, 1);
             FlxTween.tween(bStatic, {alpha: 0.1}, 1);
             missingno.GLITCH_THR = 0.0001;
@@ -260,7 +263,7 @@ function stepHit(s){
         case 285: missingno.GLITCH_THR = 0.15;
 
         case 288: 
-            FlxTween.num(1, 0, 0.5, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(0.3, 0, 0.2, {onUpdate: (v)->{heat1.intensity = v.value;}});
             FlxTween.tween(redStatic, {alpha: 0.05}, 0.5);
             FlxTween.tween(bStatic, {alpha: 0.05}, 0.5);
             missingno.GLITCH_THR = 0.0;
@@ -330,7 +333,7 @@ function stepHit(s){
             FlxTween.tween(redStatic, {alpha: 0.7}, 0.8);
         case 1309:
             FlxTween.tween(redStatic, {alpha: 0.1}, 0.5);
-            FlxTween.num(1, 0, 1, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(1, 0, 0.3, {onUpdate: (v)->{heat1.intensity = v.value;}});
             FlxTween.num(8, 6.5, 2, {onUpdate: (v)->{aberration.iTime = v.value;}});
             dad.scrollFactor.set(0.59, 0.59);
         
@@ -377,13 +380,13 @@ function stepHit(s){
             gimiursing.visible = true;
             gimiursing.animation.play('up');
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing. Nitro.");
+            dialogue("Give me your sing.");
         case 2330:
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing. Michi.");
+            dialogue("Give me your sing.");
         case 2360:
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing. Michelle.");
+            dialogue("Give me your sing.");
         case 2390:
             FlxG.sound.play(Paths.sound("confirmMenu"));
             dialogue("Sing.");
