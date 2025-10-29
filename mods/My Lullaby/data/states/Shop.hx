@@ -14,7 +14,7 @@ var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var items:Array = ["2GameBoy Advanced SP", "4Lit Candle"];
+var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "6Broken Note"];
 var itemsGrp:FlxTypedGroup;
 var pricesGrp:FlxTypedGroup;
 var prices:Array = [];
@@ -136,8 +136,9 @@ function create(){
 		spr.extra.set('price', d.itemDetail.price);
 		itemsGrp.add(spr);
 
-		price = new FunkinText(spr.x+spr.width/8, 275, 0, d.itemDetail.price, 24, false);
+		price = new FunkinText(250+150*i, 275, 130, d.itemDetail.price, 24, false);
 		price.color = FlxColor.BLACK;
+		price.alignment = "center";
 		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
 		pricesGrp.add(price);
 
@@ -353,7 +354,7 @@ function selectItem(){
 
 		if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney >= item.extra.get('price')){
 			FlxG.save.data.lullabyMoney -= item.extra.get('price');
-			ptext = "OWNED";
+			pricesGrp.members[curSelected].text = "OWNED";
 			FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
 			canMove = true;
 			

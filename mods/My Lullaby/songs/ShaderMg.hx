@@ -10,6 +10,10 @@ heat1.intensity = 0;
 public var desat = new CustomShader('desaturation');
 public var shader = new CustomShader('glitch');
 public var missingno = new CustomShader('glitch1');
+missingno.ENABLE_MODE = 0;
+missingno.MODE = 5;
+missingno.GLITCH_RECT_DIVISION = 10;
+missingno.GLITCH_THR = 0.06;
 public var frostbite = new CustomShader('snow');
 public var aberration = new CustomShader('aberration');
 public var fireflies = new CustomShader('fireflies');
@@ -25,14 +29,21 @@ function create(){
 	if(FlxG.save.data.lullabyShaders) FlxG.game.addShader(shader);
 
 	if(curSong == "missingno"){ 
+		trace('aer');
 		FlxG.game.addShader(missingno);
+		missingno.ENABLE_MODE = 1;
+		missingno.GLITCH_THR = 0.01;
+
 		if(FlxG.save.data.lullabyShaders) FlxG.game.addShader(desat);
 	}
 }
 
 function stepHit(step){
 	shader.iTime = 0-health*0.01;
+	
 }
+
+function beatHit() if(curSong == "missingno") missingno.MODE = FlxG.random.int(0,5);
 
 function update(elapsed){
 	i += elapsed;
