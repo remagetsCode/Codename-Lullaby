@@ -377,13 +377,13 @@ function stepHit(s){
             gimiursing.visible = true;
             gimiursing.animation.play('up');
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing.");
+            dialogue("Give me your sing. Nitro.");
         case 2330:
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing.");
+            dialogue("Give me your sing. Michi.");
         case 2360:
             FlxG.sound.play(Paths.sound("confirmMenu"));
-            dialogue("Give me your sing.");
+            dialogue("Give me your sing. Michelle.");
         case 2390:
             FlxG.sound.play(Paths.sound("confirmMenu"));
             dialogue("Sing.");
