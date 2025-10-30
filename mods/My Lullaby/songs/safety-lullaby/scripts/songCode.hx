@@ -3,7 +3,7 @@ importScript("data/scripts/FeelingTired.hx");
 var pressed = false;
 var startedTimer = false;
 var counter = 1;
-var t:Float = 60/Conductor.bpm;
+var t:Float = 60/Conductor.instance.bpm;
 var songStarted = false;
 var healthDrain:Float = 0.15;
 var reactionTime = 0.5;

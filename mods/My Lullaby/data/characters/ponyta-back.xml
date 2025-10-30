@@ -2,8 +2,8 @@
 <character x="-1" y="1" sprite="ponyta_perspective" camx="260" camy="-45" icon="icon-ponyta" color="#FFBE00">
 	<anim name="idle" anim="Ponyta Idle"/>
 	<anim name="singDOWN" anim="Ponyta down" x="-5" y="-25"/>
-	<anim name="singRIGHT" anim="Ponyta right" x="1" y="-1"/>
-	<anim name="singLEFT" anim="Ponyta left" x="12" y="-15"/>
+	<anim name="singLEFT" anim="Ponyta right" x="1" y="-1"/>
+	<anim name="singRIGHT" anim="Ponyta left" x="12" y="-15"/>
 	<anim name="singUP" anim="Ponyta up" x="12" y="4"/>
 	<anim name="singUPmiss" anim="ponyta up mis" x="-6" y="-5"/>
 	<anim name="singDOWNmiss" anim="ponyta down miss" x="-21" y="-39"/>

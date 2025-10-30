@@ -1,4 +1,5 @@
 var amnt:Float = 1;
+
 function create(){
     if(FlxG.save.data.lullabyShaders){
         FlxG.camera.addShader(blur);
@@ -17,6 +18,13 @@ function postCreate(){
     modchart.setPercent('alpha', 0);
     modchart.ease('alpha', 61, 40, 0.5, FlxEase.cubeOut, 0);
     modchart.ease('alpha', 88, 2.5, 1, FlxEase.cubeOut, 1);
+
+    nurse = stage.getSprite("...");
+    nurse.origin.set(nurse.width/2, 0);
+    FlxTween.angle(nurse, 5, -5, 2, {
+		ease: FlxEase.sineInOut,
+        type: 4
+	});
 }
 
 var a:Float = 0.0;
@@ -58,23 +66,6 @@ function stepHit(step){
 
         case 1856: FlxTween.tween(black, {alpha: 1}, 10);
     }
-}
-
-function beatHit(beat){
-    //switch(beat){
-    //case 502:         money = new FlxSprite(FlxG.width-150, -30);
-    //    money.frames = Paths.getFrames('UI/base/moneybag');
-    //    money.animation.addByPrefix('idle', 'Moneybag final', 24, false);
-    //    money.animation.play('idle');
-    //    money.cameras = [camHUD];
-    //    add(money); 
-//
-    //    m = new FunkinText(money.x+20, 690, 0, "", 24, false);
-    //    m.color = FlxColor.YELLOW;
-    //    m.text = "+";
-    //    m.cameras = [camHUD];
-    //    add(m);
-    //}
 }
 
 function onDadHit(){
