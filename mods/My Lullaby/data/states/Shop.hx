@@ -1,6 +1,7 @@
 import sys.io.File;
 import haxe.Json;
 import flixel.math.FlxRect;
+import funkin.backend.utils.DiscordUtil;
 
 FlxG.game.setFilters([]);
 
@@ -220,6 +221,10 @@ function create(){
 	});
 
 	changeItem(1);
+	
+	DiscordUtil.config.clientID = "1433852304745824318";
+	DiscordUtil.config.logoKey = "unknown";
+	DiscordUtil.changePresence("Shop", "Getting some songs...");
 }
 
 function postCreate(){
@@ -242,6 +247,7 @@ function postCreate(){
 
 var canMove:Bool = true;
 function update(elapsed){
+	DiscordUtil.changePresence("Shop", "''" + talk.text + "''");
 	var leftP = controls.LEFT_P;
 	var upP = controls.UP_P;
 	var downP = controls.DOWN_P;

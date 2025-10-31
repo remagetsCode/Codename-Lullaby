@@ -90,3 +90,7 @@ v0.8
 - Pixel arrows in missingno
 - added ???drah
 
+v0.9 
+
+- Added Discord RPC states
+

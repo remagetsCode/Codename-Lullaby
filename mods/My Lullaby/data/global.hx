@@ -7,7 +7,6 @@ import funkin.backend.MusicBeatTransition;
 import funkin.options.OptionsMenu;
 import funkin.menus.credits.CreditsMain;
 import funkin.backend.MusicBeatState;
-
 import funkin.backend.system.Controls.Control;
 import funkin.backend.system.Controls;
 
