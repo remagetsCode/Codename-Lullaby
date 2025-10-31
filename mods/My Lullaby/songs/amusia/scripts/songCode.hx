@@ -56,7 +56,10 @@ function postCreate(){
     modchart.setPercent('z', 70, 0);
     modchart.setPercent('z', -70, 1);
 
-    modchart.ease('alpha', 5, 2, 1, FlxEase.cubeOut);
+    modchart.ease('alpha', 5, 2, cpu.cpu ? 1 : 0.05, FlxEase.cubeOut, 1);
+    modchart.ease('alpha', 5, 2, player.cpu ? 1 : 0.05, FlxEase.cubeOut, 0);
+    modchart.ease('alpha', 30, 2, 1, FlxEase.cubeOut);
+
     modchart.set('tipsy', 136, 0.2);
     modchart.ease('alpha', 173, 2, 0.1, FlxEase.cubeOut);
     modchart.ease('alpha', 174, 2, 0.9, FlxEase.cubeOut);
