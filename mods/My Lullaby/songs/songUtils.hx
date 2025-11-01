@@ -1,5 +1,6 @@
 PauseSubState.script = 'data/scripts/pause';
 GameOverSubstate.script = "data/scripts/gameover";
+import funkin.backend.utils.DiscordUtil;
 
 function create(){
 	camera.zoom = defaultCamZoom;
@@ -18,12 +19,14 @@ function postCreate(){
 	uiStuff.add(accuracyTxt);
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);
+
+	DiscordUtil.config.clientID = "1433852304745824318";
 }
 
 function onSongEnd(){
 	var exists:Bool = FlxG.save.data.unlockedSongs.exists(curSong);
 	
-	if(!exists){ 
+	if(!exists && curSong != "shinte"){ 
 		FlxG.save.data.unlockedSongs.set(curSong, "unlocking");
 		FlxG.save.flush();
 	}

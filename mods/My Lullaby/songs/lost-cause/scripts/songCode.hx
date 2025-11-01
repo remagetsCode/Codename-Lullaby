@@ -119,7 +119,11 @@ if(songStarted && step == (counter*7)+(counter-1)){
 			vibration = FlxTween.shake(pendelum, 0.05, 10, FlxAxes.XY, {
 				ease: FlxTween.cubeInOut
 			});
-		case 1088: FlxG.sound.play(Paths.sound('breaking'),2);
+		case 1088: 
+			FlxG.sound.play(Paths.sound('breaking'),2);
+			if(healthHypno != null) FlxTween.num(healthHypno, 2, 2, {
+				onUpdate:function(v){healthHypno = v.value;}
+			});
 		case 1090:
 			pendelum.alpha = 0;
 			pendelumBr.alpha = 1;

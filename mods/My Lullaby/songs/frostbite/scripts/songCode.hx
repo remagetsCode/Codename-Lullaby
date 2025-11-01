@@ -194,6 +194,10 @@ function update(elapsed){
     }
 }
 
+function postUpdate(){
+	freakachu.y = freakachu.animation.name == "bite" ? 585 : 620;
+}
+
 function beatHit(beat){
 	if(freezeVal < 30) thermo.animation.play('t1');
 	else if(freezeVal >= 30 && freezeVal < 70) thermo.animation.play('t2');

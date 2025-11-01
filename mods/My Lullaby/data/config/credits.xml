@@ -9,5 +9,6 @@
 	<credit portrait="false" name="DonGT" desc="Helped improving the overworld and make it compatible with vanilla codename, Thanks!" icon="" size="130" url=""/>
 	<credit portrait="false" name="Breninho" desc="Had the initiative to make a mobile build." icon="" size="130" url=""/>
 	<credit portrait="false" name="teotm" desc="Got all the assets from this repo, dunno why, but thanks anyways!" icon="" size="130" url="https://github.com/teotm/hypnos-lullaby-source-code-archive"/>
+	<credit portrait="false" name="Ne_Eo" desc="Used his ndll to make the window transparent." icon="" size="130" url=""/>
 	<credit portrait="false" name="nebulastellanova" desc="Move camera with the notes script used in insomnia." icon="" size="130" url=""/>
 </menu>

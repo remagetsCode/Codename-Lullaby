@@ -1,3 +1,5 @@
+import funkin.backend.utils.DiscordUtil;
+
 var bgMusic = FlxG.sound.music;
 var windowTitle = "Friday Night Funkin' - Options Menu";
 
@@ -13,4 +15,8 @@ function create(){
 				FlxTween.tween(bgMusic, {volume:0.35},1);
 			}
 		});
+
+	DiscordUtil.config.clientID = "1433852304745824318";
+	DiscordUtil.config.logoKey = "unknown";
+	DiscordUtil.changePresence("Options Menu", "Adjusting the gears.");
 }
