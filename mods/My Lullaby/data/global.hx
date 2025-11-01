@@ -9,6 +9,7 @@ import funkin.menus.credits.CreditsMain;
 import funkin.backend.MusicBeatState;
 import funkin.backend.system.Controls.Control;
 import funkin.backend.system.Controls;
+import funkin.backend.utils.NdllUtil;
 
 public static var playerSpawnPos:Array<Int> = [12,9];
 
@@ -19,6 +20,7 @@ var overwriteStates:Map<String, String> = [
     "funkin.menus.StoryMenuState" => "MyMainMenu"
 ];
 
+static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
 function new() {
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
@@ -34,8 +36,6 @@ function new() {
 	if(!FlxG.save.data.unlockedSongs.exists("frostbite")) FlxG.save.data.unlockedSongs.set("frostbite", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
 	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
-
-
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = true;

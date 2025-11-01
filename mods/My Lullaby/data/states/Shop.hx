@@ -137,7 +137,7 @@ function create(){
 		spr.extra.set('price', d.itemDetail.price);
 		itemsGrp.add(spr);
 
-		price = new FunkinText(250+150*i, 275, 130, d.itemDetail.price, 24, false);
+		price = new FunkinText(245+150*i, 275, 130, d.itemDetail.price, 24, false);
 		price.color = FlxColor.BLACK;
 		price.alignment = "center";
 		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
@@ -247,7 +247,7 @@ function postCreate(){
 
 var canMove:Bool = true;
 function update(elapsed){
-	DiscordUtil.changePresence("Shop", "''" + talk.text + "''");
+	DiscordUtil.changePresence("Shop - Money: " + FlxG.save.data.lullabyMoney, "''" + talk.text + "''");
 	var leftP = controls.LEFT_P;
 	var upP = controls.UP_P;
 	var downP = controls.DOWN_P;

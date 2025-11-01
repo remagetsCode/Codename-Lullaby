@@ -24,7 +24,7 @@ function postCreate(){
 }
 
 function update(){
-	
+	if(staticHypno.alpha > 0.95) staticHypno.alpha = 0.95;
 	if(healthHypno < 1 && healthHypno > 0.3 && (shesHypno || !maybeShesHypno)){
 	// Cambiar el 'idle' del personaje en tiempo real
 		shesHypno = false;
@@ -48,9 +48,10 @@ function update(){
 		staticHypno.alpha = 0;
 		
 	}
+
 }
 function stepHit(){
 	// I think placing this here will improve the performance, than staying in update()
-	if(staticHypno != null)	staticHypno.alpha = 1-healthHypno;
-	if(trance != null) trance.volume = 1-healthHypno;
+	if(staticHypno != null)	staticHypno.alpha = 0.95-healthHypno;
+	if(trance != null) trance.volume = 0.9-healthHypno;
 }

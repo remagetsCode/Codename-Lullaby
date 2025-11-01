@@ -26,7 +26,7 @@ function postCreate(){
 function onSongEnd(){
 	var exists:Bool = FlxG.save.data.unlockedSongs.exists(curSong);
 	
-	if(!exists){ 
+	if(!exists && curSong != "shinte"){ 
 		FlxG.save.data.unlockedSongs.set(curSong, "unlocking");
 		FlxG.save.flush();
 	}

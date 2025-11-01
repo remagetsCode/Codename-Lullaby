@@ -1,5 +1,3 @@
-importScript("data/scripts/FeelingTired.hx");
-
 var pressed = false;
 var startedTimer = false;
 var counter = 1;
@@ -12,6 +10,7 @@ var both:Array = [];
 
 public var healthHypno:Float = 1.5;
 
+importScript("data/scripts/FeelingTired.hx");
 function postCreate(){
 	lil = new FlxSprite();
 	lil.frames = Paths.getFrames('UI/base/hypno/Pendelum');
@@ -141,10 +140,10 @@ function stepHit(step){
 
 function pend(){
 	for(pend in both){
-		FlxTween.angle(pend, -40, 40, t*2, { 
+		FlxTween.angle(pend, -50, 30, t*2, { 
     	    ease: FlxEase.quadInOut, 
     	    onComplete: function(){
-				FlxTween.angle(pend, 40, -40, t*2, { 
+				FlxTween.angle(pend, 30, -50, t*2, { 
     	    		ease: FlxEase.quadInOut, 
     			});
 			}

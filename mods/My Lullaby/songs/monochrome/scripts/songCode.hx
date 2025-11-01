@@ -1,6 +1,8 @@
 import flixel.tweens.FlxTween.FlxTweenType;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
+import funkin.backend.utils.NdllUtil;
+import funkin.backend.system.framerate.Framerate;
 
 var reverse:Bool = false;
 var limit:Float = 0;
@@ -13,7 +15,15 @@ var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
 FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
 introLength = 7;
 
+
+
+Framerate.codenameBuildField.visible = false;
+Framerate.memoryCounter.visible = false;
+Framerate.fpsCounter.visible = false;
 function create(){
+
+	SET_TRANSPARENT(true, 5, 5, 5);
+	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
 	if(FlxG.save.data.lullabyShaders){ 
 		FlxG.game.addShader(desat);
 		FlxG.game.addShader(aberration);
@@ -88,15 +98,20 @@ function postCreate(){
 	
 	new FlxTimer().start(0.01, ()->{
 		modchart.setPercent('alpha', 0, 1);
-		for(u in uiStuff.members) u.alpha = 0;
+		for(u in uiStuff.members) {u.alpha = 0; u.y -= 50;}
+		ljBar.y -= 50;
 	});
+
+	modchart.setPercent('y', downscroll ? -30 : 30);
 }
 
 function onCountdown(event) event.cancel();
 
 function onSongStart(){
+	window.borderless = true;
+	window.fullscreen = true;
 	modchart.ease('alpha', 44, 1, 1, FlxEase.cubeOut, 1);
-	modchart.ease('wiggle', 92, 3, 0.5, FlxEase.smoothStep, 1);
+	modchart.ease('wiggle', 92, 3, 0.8, FlxEase.smoothStep, 1);
 	modchart.ease('tipsyX', 92, 3, 0.2, FlxEase.smoothStep, 1);
 	modchart.ease('tipsy', 92, 3, 0.1, 	FlxEase.smoothStep, 1);
 	modchart.ease('tipsyZ', 92, 3, 0.2, FlxEase.smoothStep, 1);
@@ -104,12 +119,12 @@ function onSongStart(){
 	modchart.ease('alpha', 385, 2, 0, FlxEase.cubeOut, 1);
 	modchart.ease('alpha', 444, 2, 1, FlxEase.cubeOut, 1);
 
-	modchart.ease('wiggle', 400, 1, 0.7, FlxEase.cubeOut, 1);
+	modchart.ease('wiggle', 400, 1, 1.2, FlxEase.cubeOut, 1);
 	modchart.ease('tipsyX', 400, 1, 0.7, FlxEase.cubeOut, 1);
 	modchart.ease('tipsy', 400, 1, 0.2,  FlxEase.cubeOut, 1);
 	modchart.ease('tipsyZ', 400, 1, 0.5, FlxEase.cubeOut, 1);
 
-	modchart.ease('wiggle', 544, 1, 1.5, FlxEase.cubeOut, 1);
+	modchart.ease('wiggle', 544, 1, 2.5, FlxEase.cubeOut, 1);
 
 	modchart.ease('y', 681, 1, downscroll ? 300 : -300, FlxEase.cubeIn, 1);
 }
@@ -302,4 +317,16 @@ function jumpscare1(){
 function onGameOver(event){
 	//event.cancel();
 	//dad.animation.play('spawn',true,true);
+}
+
+function destroy(){
+	window.fullscreen = false;
+	window.borderless = false;
+
+	SET_TRANSPARENT(false, 5, 5, 5);
+
+	//setTransparency(false, 255, 0, 254);
+
+	Framerate.memoryCounter.visible = true;
+	Framerate.fpsCounter.visible = true;
 }

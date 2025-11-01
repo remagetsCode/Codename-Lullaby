@@ -90,7 +90,11 @@ v0.8
 - Pixel arrows in missingno
 - added ???drah
 
-v0.9 
+v0.8.1
 
-- Added Discord RPC states
+- Added Discord RPC statuses
+- Fixed safety lullaby not working properly in 0.8
+- Fixed freakachu anim position
+- Some other minor changes
+- Changed Monochrome, try it
 
