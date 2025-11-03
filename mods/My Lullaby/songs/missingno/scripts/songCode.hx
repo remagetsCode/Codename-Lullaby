@@ -20,8 +20,8 @@ function create(){
 	bgWave.setGraphicSize(bgSky.width*sc, bgSky.height*sc);
 	bgWave.screenCenter();
 	bgWave.y += 300;
-	bgWave.scrollFactor.set(1.1,1.25);
-	bf.scrollFactor.set(1.1,1.25);
+	bgWave.scrollFactor.set(1.1,1.3);
+	bf.scrollFactor.set(1.1,1.31);
 	insert(3, bgWave);
 
 	bg = new FlxSprite().loadGraphic(Paths.image('stages/missingno/images/bg'));
@@ -39,11 +39,14 @@ function create(){
 }
 
 function postCreate(){
-	camera.zoom = 1.6;
+	camera.zoom = 1;
 	
-	new FlxTimer().start(0.1, ()->{for(obj in uiStuff) obj.alpha = 0;});
+	new FlxTimer().start(0.03, ()->{for(obj in uiStuff) obj.alpha = 0; black.alpha = 1;});
+	
 	FlxTween.tween(dad, {y: dad.y+30}, 1, {ease: FlxEase.sineInOut, type: 4});
 }
+
+function onSongStart() new FlxTimer().start(0.3, ()->black.alpha -= 0.1,10);
 
 var crazy:Bool = false;
 function update(){

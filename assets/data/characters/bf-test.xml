@@ -1,0 +1,18 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="bf">
+	<anim name="idle" anim="BF idle dance"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT"/>
+	<anim name="singUP" anim="BF NOTE UP"/>
+	<anim name="BF hit" anim="BF hit"/>
+	<anim name="BF HEY!!" anim="BF HEY!!"/>
+	<anim name="bf pre attack" anim="bf pre attack"/>
+	<anim name="BF idle shaking" anim="BF idle shaking"/>
+	<anim name="boyfriend dodge" anim="boyfriend dodge"/>
+	<anim name="BF NOTE UP MISS" anim="BF NOTE UP MISS"/>
+	<anim name="boyfriend attack" anim="boyfriend attack"/>
+	<anim name="BF NOTE DOWN MISS" anim="BF NOTE DOWN MISS"/>
+	<anim name="BF NOTE LEFT MISS" anim="BF NOTE LEFT MISS"/>
+	<anim name="BF NOTE RIGHT MISS" anim="BF NOTE RIGHT MISS"/>
+</character>

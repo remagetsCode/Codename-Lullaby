@@ -10,6 +10,9 @@ function postCreate(){
 	coolEnabled = false;
 
 	var back = stage.getSprite("Back");
+	var tree = stage.getSprite("Tree");
+	tree.scrollFactor.set(0.7, 1);
+	tree.zoomFactor = 0.8;
 	if(FlxG.save.data.lullabyShaders){
 		FlxG.camera.addShader(fireflies1);
 		FlxG.game.addShader(aberration);
@@ -19,21 +22,19 @@ function postCreate(){
 	aberration.iTime = 5;
 	gf.alpha = 1;
 
-	new FlxTimer().start(0.01, ()->{
-		//blk = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		//blk.cameras = [camHUD];
-		//blk.alpha = 0;
-		//add(blk);
-		
-		for(i in 0...4) modchart.setPercent('y'+i, downscroll ? 200 : -200);}
-	);
+
+	for(i in 0...4) {
+		modchart.setPercent('y'+i, downscroll ? 200 : -200);
+		modchart.ease('y'+i, 15, 2+(i*0.4), 0, FlxEase.cubeOut, 0);
+		modchart.ease('y'+i, 45, 2+(i*0.5), 0, FlxEase.quadOut, 1);
+	}
 }
+
 
 function onSongStart(){
 	
 	for(i in 0...4){
-		modchart.ease('y'+i, 15, 2+(i*0.4), 0, FlxEase.cubeOut, 0);
-		modchart.ease('y'+i, 45, 2+(i*0.5), 0, FlxEase.quadOut, 1);
+
 	}
 	modchart.set('x', 25, -300, 1);
 	modchart.ease('z', 45, 1.8, -300, FlxEase.cubeOut, 0);

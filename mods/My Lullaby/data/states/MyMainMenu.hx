@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxRect;
 import funkin.backend.system.Control;
 import funkin.options.PlayerSettings;
+import flixel.addons.display.FlxBackdrop;
 
 import funkin.backend.utils.DiscordUtil;
 
@@ -73,7 +74,11 @@ function create(){
     }	
 
 	window.title = windowTitle;		
-		
+	var ocean = new FlxBackdrop(Paths.image("overworld/ocean"));
+	add(ocean);
+
+	FlxTween.tween(ocean, {x: ocean.x+10}, 2, {ease: FlxEase.sineInOut, type: 4});
+
 	var bg = new FlxSprite(0, 0, "images/overworld/cinnabar.png");
 	bg.scale.set(1, 1);
 	bg.immovable = true;

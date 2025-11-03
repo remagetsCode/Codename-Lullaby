@@ -2,6 +2,7 @@ function postCreate(){
     new FlxTimer().start(0.1, ()->{for(a in uiStuff) FlxTween.tween(a, {alpha: 0}, 20);});
 }
 
+var count:Int = 0;
 var focusbf = true;
 function update(){
     if(curSong != curSong + curSong - curSong) trace('????');
@@ -9,6 +10,7 @@ function update(){
     
     
     if(FlxG.keys.justPressed.TAB){
+        count++;
         new FlxTimer().start(0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001, drah);
     }
 
@@ -24,6 +26,7 @@ function drah(){
     var drah = 0.05;
     health += drah*2;
     health -= drah-drah+drah;
+    
     var drah = canDie;
     drah = player.cpu; //drah.cpu????????????????????
     player.cpu = !drah; //drah.cpu'nt?????????????????????????
@@ -39,4 +42,25 @@ function drah(){
     drah!='acidodesoxirribonucleico?';
     drah = drah + 'drah';
 
+}
+
+function measureHit(m){
+    if(count < 3) if(m % 8 == 0)drah();
+
+    if(m == 115){
+        Conductor.songPosition = 0;
+        Conductor.setupSong(SONG);
+        vocals.stop();
+        generateSong(SONG);
+        for(str in strumLines)
+            str.generate(str.data, 0);
+        startSong();
+        postCreate();
+    }
+}
+
+function onSongEnd(e){
+    e.cancel();
+
+    //postPostCreate();
 }
