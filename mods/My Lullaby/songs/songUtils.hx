@@ -19,6 +19,8 @@ function postCreate(){
 	uiStuff.add(accuracyTxt);
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);
+
+	setMarginColor(0x000000, 0.5);
 }
 
 function onSongEnd(){
