@@ -195,6 +195,8 @@ function postCreate(){
 	talk.setFormat(Paths.font("pokefont.ttf"), 24, 0x000000);
     talk.scrollFactor.set(0,0);
 	add(talk);
+
+    setMarginColor(0x000000, 0.5);
 }
 
 function update(elapsed){
@@ -247,6 +249,7 @@ function stepHit(s){
         case 21: FlxTween.tween(bf, {x: 1048}, 1, {ease: FlxEase.cubeOut});
 
         case 28: 
+            setMarginColor(0x14b38d);
             for(a in uiStuff) a.alpha = 1;
             strumLines.members[1].characters[0].setColorTransform();
             strumLines.members[0].characters[0].setColorTransform();
@@ -275,6 +278,7 @@ function stepHit(s){
 
         case 540: FlxTween.tween(bStatic, {alpha: 0.7}, 0.5);
         case 545: 
+            setMarginColor(0x4B0155);
             FlxTween.tween(redStatic, {alpha: 0.2}, 1);
             FlxTween.tween(bStatic, {alpha: 0.1}, 1);
             bg1.destroy();
@@ -358,7 +362,8 @@ function stepHit(s){
             talk.visible = true;      
             wig.visible = true;      
             qu.visible = true;  
-            blackbg.visible = true;      
+            blackbg.visible = true;  
+            setMarginColor(0x000000);    
 
         case 2080: dialogue("I just wanted to sing...");
         case 2105: dialogue("Why... why... why... can't I sing?");
@@ -407,6 +412,7 @@ function stepHit(s){
             gimiursing.visible = false;  
         
         case 2540:
+            setMarginColor(0x700000);
             FlxG.sound.play(Paths.sound("WigglyTuffJumpscare"));
             scare.visible = true;
     }

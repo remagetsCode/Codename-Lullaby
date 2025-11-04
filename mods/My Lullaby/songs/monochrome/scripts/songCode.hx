@@ -24,6 +24,18 @@ Framerate.codenameBuildField.visible = false;
 Framerate.memoryCounter.visible = false;
 Framerate.fpsCounter.visible = false;
 function create(){
+	aspect = getAspectRatio(curDisplayWidth, curDisplayHeight);
+
+	Main.scaleMode.width = aspect[0];
+    Main.scaleMode.height = aspect[1];
+
+	FlxG.width = aspect[0]; 
+	FlxG.height = aspect[1];
+    
+    for(c in FlxG.cameras.list){
+        c.width = aspect[0];
+        c.height = aspect[1];
+    }	
 
 	SET_TRANSPARENT(true, 5, 5, 5);
 	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
@@ -31,7 +43,7 @@ function create(){
 	if(FlxG.save.data.lullabyShaders){ 
 		FlxG.game.addShader(desat);
 		FlxG.game.addShader(aberration);
-		desat.desaturationAmount = 0;
+		desat.desaturationAmount = 0.1;
 		aberration.iTime = 5;
 	}
 	dad.alpha = 0;
@@ -81,6 +93,7 @@ function create(){
 	graphicCache.cache(Paths.image('jumpscares/Gold1'));
 	graphicCache.cache(Paths.image('UI/base/Unown_Alphabet'));
 	
+	setMarginColor(0x050505, 0.5);
 }
 
 function postCreate(){
@@ -101,7 +114,7 @@ function postCreate(){
 	});
 	
 	new FlxTimer().start(0.01, ()->{
-		modchart.setPercent('alpha', 0, 1);
+		modchart.setPercent('alpha', 0);
 		for(u in uiStuff.members) {u.alpha = 0; u.y -= 50;}
 		ljBar.y -= 50;
 	});
@@ -170,7 +183,9 @@ function stepHit(step){
 	switch(step){
 		case 0: dad.alpha = 1;
 
-		case 1: holds.visible = false;
+		case 1: 
+			marginTween(false);
+			holds.visible = false;
 
 		case 128: for(i=>u in uiStuff.members) FlxTween.tween(u, {alpha: 0.9}, 1+i*0.3);
 
@@ -329,9 +344,20 @@ function destroy(){
 
 	SET_TRANSPARENT(false, 5, 5, 5);
 
+	Main.scaleMode.width = 1280;
+    Main.scaleMode.height = 720;
+
+	FlxG.width = 1280; 
+	FlxG.height = 720;
+    
+    for(c in FlxG.cameras.list){
+        c.width = 1280;
+        c.height = 720;
+    }
 	//setTransparency(false, 255, 0, 254);
 	Framerate.memoryCounter.visible = true;
 	Framerate.fpsCounter.visible = true;
+	marginTween(true);
 }
 
 
@@ -339,11 +365,11 @@ function getAspectRatio(?width, ?height){
 	var ratio:Float = width/height; 
 	var mulWidth = 1280/16;
 	var mulHeight = 720/9;
-	trace(width, height);
-	trace(ratio);
+	trace("screen width: " + width + ", screen height: " + height);
+	trace("ratio: " + ratio);
 	var result:Array;
 
-	if(Math.abs(ratio - 16/9) < 0.01) result = [1280, 720];
+	if(Math.abs(ratio - 16/9) < 0.01) result = [1280, 720, 1];
 	
 	else if(Math.abs(ratio - 4/3) < 0.01) result = [1280, 960];
 	
@@ -355,7 +381,7 @@ function getAspectRatio(?width, ?height){
 
 	else if(Math.abs(ratio - 16/10) < 0.01) result = [1280, 800];
 
-	else result = [1280, 720];
-		
+	else result = [1280, 720, 2];
+	trace("output: " + result);
 	return result;	
 }

@@ -58,15 +58,18 @@ function preStateSwitch() {
 		if(Std.isOfType(FlxG.game._state, CreditsMain))playerSpawnPos = [6, 14];
 		if(Std.isOfType(FlxG.game._state, MusicBeatState) && FlxG.game._state.scriptName == "Shop")playerSpawnPos = [15, 16];	
 	}
+	trace(windowBorderBg);
 	initMarginCamera();
 }
 
-public static var twen = new FlxTween();
+public static var twen;
 public static var windowBorderBg:Sprite;
 public static var targColor = 0xa50505;
-public function initMarginCamera()
+static function initMarginCamera()
     {
 		if(windowBorderBg == null) windowBorderBg = new Sprite();
+
+		if(twen != null) twen.destroy();
 		twen = FlxTween.num(0.05, 0.7, 5, {
 			type: 4,
 			onUpdate: function(v){
@@ -84,26 +87,25 @@ public function initMarginCamera()
 		});
 
         Main.instance.addChildAt(windowBorderBg, 0);
-
 }
 
-static function setMarginColor(color, vel){
-	twen.active = false;
+static function setMarginColor(color, ?vel){
 	color ??= FlxColor.BLACK;
 	vel ??= 1;
 
-	var ct = new ColorTransform();
-	windowBorderBg.transform.colorTransform = ct;
+	FlxTween.color(null, vel, targColor, color, {
+		onUpdate: (tween)->{
+			windowBorderBg.graphics.clear();
+			windowBorderBg.graphics.beginFill(tween.color);
+			windowBorderBg.graphics.drawRect(0, 0, window.width, window.height);
+			windowBorderBg.graphics.endFill();
 
-	tim = new FlxTimer().start(0.05, ()->{
-	    var newColor = CoolUtil.lerpColor(targColor, color, 0.05*vel);
+			targColor = tween.color;
+		}
+	});
+}
 
-		if(targColor == newColor) {tim.cancel(); twen.active = true;}
-
-	    ct.color = newColor;
-	    windowBorderBg.transform.colorTransform = ct;
-		targColor = newColor;
-		windowBorderBg.alpha = 0.5;
-		
-	},0);
+static function marginTween(?status:Bool){
+	status ??= !twen.active;
+	twen.active = status;
 }
