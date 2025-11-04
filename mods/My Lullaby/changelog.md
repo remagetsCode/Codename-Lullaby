@@ -100,5 +100,8 @@ v0.8.1
 
 v 0.9
 
+- ADDED BYGONE PURPOSE SONG
 - The overworld finally has ocean :p
-- Fixed aspect ratio problems with the window in monochrome, now there'll be fixed aspect ratio settings, if you see black bars maybe its because your screen has a weird aspect ratio
+- Fixed aspect ratio problems with the window in monochrome, now there'll be fixed aspect ratio settings, if you see black bars maybe its because your screen has an uncommon aspect ratio
+- Added some experimental color borders
+- Other minor changes i dont remember

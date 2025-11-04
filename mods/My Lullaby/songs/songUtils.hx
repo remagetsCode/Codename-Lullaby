@@ -20,6 +20,7 @@ function postCreate(){
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);
 
+	setMarginColor(0x000000, 0.5);
 	DiscordUtil.config.clientID = "1433852304745824318";
 }
 
