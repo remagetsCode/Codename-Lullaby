@@ -223,10 +223,6 @@ function create(){
 	});
 
 	changeItem(1);
-	
-	DiscordUtil.config.clientID = "1433852304745824318";
-	DiscordUtil.config.logoKey = "unknown";
-	DiscordUtil.changePresence("Shop", "Getting some songs...");
 }
 
 function postCreate(){

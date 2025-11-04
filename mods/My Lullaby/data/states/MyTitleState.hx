@@ -55,9 +55,6 @@ function create(){
 	
 	window.title = windowTitle;
 
-	DiscordUtil.config.clientID = "1433852304745824318";
-	DiscordUtil.config.logoKey = "unknown";
-	DiscordUtil.changePresence("Title", "Starting the journey.");
 }
 function postCreate(){
 	bgMusic = FlxG.sound.playMusic(Paths.music('freakyMenu'), 1.5, true);

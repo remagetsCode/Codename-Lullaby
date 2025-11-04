@@ -76,10 +76,6 @@ function create(){
 	camera.zoom = 5;
 	camera.minScrollY = 35;camera.maxScrollY = 320;
 	camera.minScrollX = 16;camera.maxScrollX = 400;
-
-	DiscordUtil.config.clientID = "1433852304745824318";
-	DiscordUtil.config.logoKey = "unknown";
-	DiscordUtil.changePresence("Exploring...", "In the Overworld");
 }
 
 function update(){

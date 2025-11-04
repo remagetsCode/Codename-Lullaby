@@ -19,8 +19,6 @@ function postCreate(){
 	uiStuff.add(accuracyTxt);
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);
-
-	DiscordUtil.config.clientID = "1433852304745824318";
 }
 
 function onSongEnd(){
