@@ -24,19 +24,6 @@ Framerate.codenameBuildField.visible = false;
 Framerate.memoryCounter.visible = false;
 Framerate.fpsCounter.visible = false;
 function create(){
-	aspect = getAspectRatio(curDisplayWidth, curDisplayHeight);
-
-	Main.scaleMode.width = aspect[0];
-    Main.scaleMode.height = aspect[1];
-
-	FlxG.width = aspect[0]; 
-	FlxG.height = aspect[1];
-    
-    for(c in FlxG.cameras.list){
-        c.width = aspect[0];
-        c.height = aspect[1];
-    }	
-
 	SET_TRANSPARENT(true, 5, 5, 5);
 	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
 	
@@ -344,16 +331,6 @@ function destroy(){
 
 	SET_TRANSPARENT(false, 5, 5, 5);
 
-	Main.scaleMode.width = 1280;
-    Main.scaleMode.height = 720;
-
-	FlxG.width = 1280; 
-	FlxG.height = 720;
-    
-    for(c in FlxG.cameras.list){
-        c.width = 1280;
-        c.height = 720;
-    }
 	//setTransparency(false, 255, 0, 254);
 	Framerate.memoryCounter.visible = true;
 	Framerate.fpsCounter.visible = true;
