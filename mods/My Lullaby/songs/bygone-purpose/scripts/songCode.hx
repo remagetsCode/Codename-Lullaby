@@ -1,4 +1,9 @@
 function postCreate(){
+    if(FlxG.save.data.lullabyShaders){
+        FlxG.game.addShader(desat);
+        desat.desaturationAmount = 1;
+    }
+
     modchart.setPercent('opponentSwap', 1);
     modchart.setPercent('alpha', 0, 0);
 
@@ -27,7 +32,7 @@ function postCreate(){
     iconP2.visible = false;
 
     modchart.ease('alpha', 38, 2, 0, FlxEase.cubeOut);
-    modchart.ease('alpha', 46, 2, 1, FlxEase.cubeOut);
+    modchart.ease('alpha', 46, 2, 1, FlxEase.cubeOut, 1);
     modchart.ease('alpha', 143, 2, 0, FlxEase.cubeOut);
     modchart.set('tipsy', 156, 0.1, 1);
     modchart.set('tipsyx', 156, 0.25, 1);
@@ -53,20 +58,23 @@ function stepHit(s){
     player.members[3].scrollSpeed = 2.3;
     switch(s){
         case 156: for(i in uiStuff) FlxTween.tween(i, {alpha: 0}, 2);
-        case 180: for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 2);
+        case 180: 
+            setMarginColor(0xA1A100, 1);
+            for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 2);
 
         case 588: 
             for(i in uiStuff) FlxTween.tween(i, {alpha: 0}, 4);
             FlxTween.tween(pic, {alpha: 1}, 5);
         case 634: 
-            setMarginColor(0xFFFF00, 1);
+            FlxTween.num(1, 0.5, 4, {onUpdate: function(v){desat.desaturationAmount = v.value;}});
+            setMarginColor(0x444400, 1);
             big.alpha = 1;
             smol.alpha = 0;
             iconP1.setIcon('icon-hypno');
             FlxTween.tween(pic, {alpha: 0}, 5);
             for(i in uiStuff) FlxTween.tween(i, {alpha: 0.5}, 4);
         case 714: 
-            setMarginColor(0x13DCFF, 1);
+            setMarginColor(0x1097AF, 1);
             FlxTween.tween(alexis, {alpha: 0.9}, 1);
         case 720: iconP1.setIcon('icon-alexis');
         case 1236:
@@ -76,7 +84,11 @@ function stepHit(s){
             pass.alpha = 1;
 
         case 1240: 
-            setMarginColor(0xFF0000, 1);
+            setMarginColor(0x444400, 1);
             iconP1.setIcon('icon-hypno');
     }
+}
+
+function destroy(){
+    setMarginColor(0xC20202, 1);
 }
