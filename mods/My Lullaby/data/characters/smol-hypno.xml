@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character y="350" sprite="Smol_Hypno_Sprites" camx="-200" camy="100" icon="smolhypno" color="#fffb08">
+	<anim name="idle" anim="Smol H Idle"/>
+	<anim name="singDOWN" anim="Smol H Down" x="-12" y="-12" indices="1..32"/>
+	<anim name="singRIGHT" anim="Smol H Right" x="-22" y="-13" indices="1..30"/>
+	<anim name="singLEFT" anim="Smol H Left" x="27" y="-13" indices="1..30"/>
+	<anim name="singUP" anim="Smol H Up" x="10" y="-4" indices="1..30"/>
+	<anim name="singUPmiss" anim="Smol H Up Miss" x="55" y="82"/>
+	<anim name="singDOWNmiss" anim="Smol H Down Miss" x="97" y="54"/>
+	<anim name="singLEFTmiss" anim="Smol H Left Miss" x="210" y="52"/>
+	<anim name="singRIGHTmiss" anim="Smol H Right Miss" x="70" y="75"/>
+</character>

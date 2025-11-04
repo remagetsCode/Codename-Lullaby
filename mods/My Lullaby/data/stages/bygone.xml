@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/bygone/images/" name="bygone">
+	<dad/>
+	<girlfriend/>
+	<sprite type="none" sprite="BG1 Clouds" name="clouds"/>
+	<sprite type="none" sprite="BG1 Moon" name="moon"/>
+	<sprite type="none" sprite="BG1 Buildings" name="buildings1"/>
+	<boyfriend x="793.784142300054" flipX="false" y="77.3484359047098"/>
+	<sprite x="360.96117591999" sprite="BridgeRope" y="-140.074486177907" type="none" name="rope"/>
+	<sprite x="629.807427828644" sprite="BigHypno" y="140.360394504767" type="none" name="bighipno"/>
+	<sprite x="-194.803451218192" sprite="Bridge" y="4.25416146754287e-10" type="none" name="bridge"/>
+	<sprite sprite="AlexisTransition" type="none" name="Transition" scroll="0"/>
+</stage>

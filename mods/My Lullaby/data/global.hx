@@ -10,9 +10,16 @@ import funkin.backend.MusicBeatState;
 import funkin.backend.system.Controls.Control;
 import funkin.backend.system.Controls;
 import funkin.backend.utils.NdllUtil;
+import openfl.geom.ColorTransform;
+
+import flixel.FlxG;
+import flixel.FlxCamera;
+import flixel.FlxBasic;
+import lime.app.Application;
+import openfl.display.Sprite;
+import openfl.display.GradientType;
 
 public static var playerSpawnPos:Array<Int> = [12,9];
-
 var overwriteStates:Map<String, String> = [
     "funkin.menus.TitleState" => "MyTitleState",
     "funkin.menus.MainMenuState" => "MyMainMenu",
@@ -22,6 +29,7 @@ var overwriteStates:Map<String, String> = [
 
 static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
 function new() {
+	
     MusicBeatTransition.script = 'data/scripts/customTransition';
     trace("Transition script path: " + MusicBeatTransition.script);
 
@@ -50,4 +58,52 @@ function preStateSwitch() {
 		if(Std.isOfType(FlxG.game._state, CreditsMain))playerSpawnPos = [6, 14];
 		if(Std.isOfType(FlxG.game._state, MusicBeatState) && FlxG.game._state.scriptName == "Shop")playerSpawnPos = [15, 16];	
 	}
+	initMarginCamera();
+}
+
+public static var twen = new FlxTween();
+public static var windowBorderBg:Sprite;
+public static var targColor = 0xa50505;
+public function initMarginCamera()
+    {
+		if(windowBorderBg == null) windowBorderBg = new Sprite();
+		twen = FlxTween.num(0.05, 0.7, 5, {
+			type: 4,
+			onUpdate: function(v){
+				windowBorderBg.alpha = FlxMath.lerp(windowBorderBg.alpha, v.value, 0.1);
+			}
+		});
+
+        FlxG.signals.gameResized.add((w, h) -> {
+			//windowBorderBg = new Sprite();
+			//windowBorderBg.graphics.beginGradientFill(GradientType.LINEAR, [targColor, 0x00000000], [1,0], [100, 255]);
+			windowBorderBg.graphics.clear();
+			windowBorderBg.graphics.beginFill(targColor);
+			windowBorderBg.graphics.drawRect(0, 0, window.width, window.height);
+			windowBorderBg.graphics.endFill();
+		});
+
+        Main.instance.addChildAt(windowBorderBg, 0);
+
+}
+
+static function setMarginColor(color, vel){
+	twen.active = false;
+	color ??= FlxColor.BLACK;
+	vel ??= 1;
+
+	var ct = new ColorTransform();
+	windowBorderBg.transform.colorTransform = ct;
+
+	tim = new FlxTimer().start(0.05, ()->{
+	    var newColor = CoolUtil.lerpColor(targColor, color, 0.05*vel);
+
+		if(targColor == newColor) {tim.cancel(); twen.active = true;}
+
+	    ct.color = newColor;
+	    windowBorderBg.transform.colorTransform = ct;
+		targColor = newColor;
+		windowBorderBg.alpha = 0.5;
+		
+	},0);
 }

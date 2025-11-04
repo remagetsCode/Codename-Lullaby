@@ -332,11 +332,11 @@ function stepHit(s){
         case 825: for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 1);
 
         case 1296:
-            FlxTween.num(0, 1, 0.6, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(0, 0.4, 0.6, {onUpdate: (v)->{heat1.intensity = v.value;}});
             FlxTween.tween(redStatic, {alpha: 0.7}, 0.8);
         case 1309:
             FlxTween.tween(redStatic, {alpha: 0.1}, 0.5);
-            FlxTween.num(1, 0, 0.2, {onUpdate: (v)->{heat1.intensity = v.value;}});
+            FlxTween.num(0.4, 0, 0.8, {onUpdate: (v)->{heat1.intensity = v.value;}});
             FlxTween.num(8, 6.5, 2, {onUpdate: (v)->{aberration.iTime = v.value;}});
             dad.scrollFactor.set(0.59, 0.59);
         

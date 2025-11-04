@@ -15,7 +15,10 @@ var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
 FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
 introLength = 7;
 
-
+var curDisplayHeight = window.display.bounds.height;
+var curDisplayWidth = window.display.bounds.width;
+var curDisplayX = window.display.bounds.x;
+var curDisplayY = window.display.bounds.y;
 
 Framerate.codenameBuildField.visible = false;
 Framerate.memoryCounter.visible = false;
@@ -24,6 +27,7 @@ function create(){
 
 	SET_TRANSPARENT(true, 5, 5, 5);
 	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
+	
 	if(FlxG.save.data.lullabyShaders){ 
 		FlxG.game.addShader(desat);
 		FlxG.game.addShader(aberration);
@@ -81,7 +85,7 @@ function create(){
 
 function postCreate(){
 	ljBar = new FlxBar(
-		FlxG.width*0.25, FlxG.height-70,
+		FlxG.width*0.25, healthBar.y-2,
 		FlxBarFillDirection.RIGHT_TO_LEFT,
 		623, 15
 	);
@@ -326,7 +330,32 @@ function destroy(){
 	SET_TRANSPARENT(false, 5, 5, 5);
 
 	//setTransparency(false, 255, 0, 254);
-
 	Framerate.memoryCounter.visible = true;
 	Framerate.fpsCounter.visible = true;
+}
+
+
+function getAspectRatio(?width, ?height){
+	var ratio:Float = width/height; 
+	var mulWidth = 1280/16;
+	var mulHeight = 720/9;
+	trace(width, height);
+	trace(ratio);
+	var result:Array;
+
+	if(Math.abs(ratio - 16/9) < 0.01) result = [1280, 720];
+	
+	else if(Math.abs(ratio - 4/3) < 0.01) result = [1280, 960];
+	
+	else if(Math.abs(ratio - 21/9) < 0.01) result = [1281,549];
+
+	else if(Math.abs(ratio - 3/2) < 0.01) result = [1281, 854];
+
+	else if(Math.abs(ratio - 3/4) < 0.01) result = [1200, 1600];
+
+	else if(Math.abs(ratio - 16/10) < 0.01) result = [1280, 800];
+
+	else result = [1280, 720];
+		
+	return result;	
 }
