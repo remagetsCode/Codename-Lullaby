@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="GGirl Alexis Full Spritesheet" x="240" y="-60" icon="icon-alexis" color="#000000">
+	<anim name="idle" anim="GGirl Idle"/>
+	<anim name="singDOWN" anim="GGirl Down" x="29" y="-11" indices="1..20"/>
+	<anim name="singRIGHT" anim="GGirl Right" x="-26" y="28" indices="1..20"/>
+	<anim name="singLEFT" anim="GGirl Left" x="31" y="-3" indices="1..20"/>
+	<anim name="singUP" anim="GGirl Up" x="-41" y="17" indices="1..20"/>
+	<anim name="singUPmiss" anim="GGirl Up Miss" x="110" y="107"/>
+	<anim name="singDOWNmiss" anim="GGirl Down Miss" x="29" y="17"/>
+	<anim name="singLEFTmiss" anim="GGirl left Miss" x="26" y="10"/>
+	<anim name="singRIGHTmiss" anim="GGirl Right Miss" x="-10" y="33"/>
+</character>

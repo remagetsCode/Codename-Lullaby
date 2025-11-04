@@ -102,4 +102,3 @@ v 0.9
 
 - The overworld finally has ocean :p
 - Fixed aspect ratio problems with the window in monochrome, now there'll be fixed aspect ratio settings, if you see black bars maybe its because your screen has a weird aspect ratio
-- Added ocean to the overworld

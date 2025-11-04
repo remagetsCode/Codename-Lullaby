@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#9271FD",
+	"opponentModeAllowed": false,
+	"icon": "icon-alexis",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "bygone-purpose",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 85
+}

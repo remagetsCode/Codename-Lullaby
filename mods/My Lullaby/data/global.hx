@@ -10,6 +10,7 @@ import funkin.backend.MusicBeatState;
 import funkin.backend.system.Controls.Control;
 import funkin.backend.system.Controls;
 import funkin.backend.utils.NdllUtil;
+import openfl.geom.ColorTransform;
 
 import flixel.FlxG;
 import flixel.FlxCamera;
@@ -59,7 +60,7 @@ function preStateSwitch() {
 	initMarginCamera();
 }
 
-public static var twen;
+public static var twen = new FlxTween();
 public static var windowBorderBg:Sprite;
 public static var targColor = 0xa50505;
 public function initMarginCamera()
@@ -68,7 +69,7 @@ public function initMarginCamera()
 		twen = FlxTween.num(0.05, 0.7, 5, {
 			type: 4,
 			onUpdate: function(v){
-				windowBorderBg.alpha = v.value;
+				windowBorderBg.alpha = FlxMath.lerp(windowBorderBg.alpha, v.value, 0.1);
 			}
 		});
 
@@ -83,4 +84,25 @@ public function initMarginCamera()
 
         Main.instance.addChildAt(windowBorderBg, 0);
 
-    }
+}
+
+static function setMarginColor(color, vel){
+	twen.active = false;
+	color ??= FlxColor.BLACK;
+	vel ??= 1;
+
+	var ct = new ColorTransform();
+	windowBorderBg.transform.colorTransform = ct;
+
+	tim = new FlxTimer().start(0.05, ()->{
+	    var newColor = CoolUtil.lerpColor(targColor, color, 0.05*vel);
+
+		if(targColor == newColor) {tim.cancel(); twen.active = true;}
+
+	    ct.color = newColor;
+	    windowBorderBg.transform.colorTransform = ct;
+		targColor = newColor;
+		windowBorderBg.alpha = 0.5;
+		
+	},0);
+}

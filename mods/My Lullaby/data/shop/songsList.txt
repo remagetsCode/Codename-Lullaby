@@ -8,3 +8,4 @@ monochrome
 missingno
 purin
 amusia
+bygone-purpose

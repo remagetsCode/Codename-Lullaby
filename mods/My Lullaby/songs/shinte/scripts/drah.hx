@@ -24,7 +24,7 @@ function update(){
 
 function drah(){
     var drah = 0.05;
-    health += drah*2;
+    health += drah*4;
     health -= drah-drah+drah;
     
     var drah = canDie;
