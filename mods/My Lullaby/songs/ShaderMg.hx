@@ -16,6 +16,7 @@ missingno.GLITCH_RECT_DIVISION = 10;
 missingno.GLITCH_THR = 0.06;
 public var frostbite = new CustomShader('snow');
 public var aberration = new CustomShader('aberration');
+aberration.amount = 1;
 public var fireflies = new CustomShader('fireflies');
 public var fireflies1 = new CustomShader('fireflies1');
 public var blur = new CustomShader('blur');
@@ -40,15 +41,9 @@ function create(){
 
 function stepHit(step){
 	shader.iTime = 0-health*0.01;
-	
 }
 
 function beatHit(b) if(curSong == "missingno" && b > 70) missingno.MODE = FlxG.random.int(0,5);
-
-function update(elapsed){
-	i += elapsed;
-	//heat1.iTime = i;
-}
 
 function destroy(){
 	FlxG.game.setFilters([]);

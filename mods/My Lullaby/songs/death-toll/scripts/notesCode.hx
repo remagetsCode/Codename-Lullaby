@@ -1,9 +1,17 @@
 function postCreate(){
+	modchart.setPercent('opponentSwap', 1);
+	modchart.setPercent('x', 100);
+	modchart.setPercent('x', 250,0);
+	modchart.setPercent('z', -300,0);
 	modchart.setPercent('x0', -85,1);
     modchart.setPercent('x1', -85,1);
     modchart.setPercent('x4', -260,1);
     modchart.setPercent('x2', 135,1);
     modchart.setPercent('x3', 135,1);
+
+    for(i in 328...451){
+        modchart.ease('alpha', i, 0.3, i%2 ==0 ? 0.8 : 1, FlxEase.cubeInOut, 1);
+    }
     
     playerStrums.members[0].getPressed = () -> { return controls.NOTE_LEFT; }
     playerStrums.members[0].getJustPressed = () -> { return controls.NOTE_LEFT_P; }
@@ -25,6 +33,8 @@ function postCreate(){
     playerStrums.members[4].getJustPressed = () -> { return controls.getJustPressed("mechanic"); }
     playerStrums.members[4].getJustReleased = () -> { return controls.getJustReleased("mechanic"); }
 
+    modchart.ease('z', 313, 2, -100, FlxEase.backIn, 0);
+    modchart.ease('x', 313, 2, 130, FlxEase.backIn, 0);
     if(!FlxG.save.data.lullabyMechanics){
         modchart.setPercent('vibrate', 0.5, 1);
         modchart.ease('vibrate', 5, 5, 0, FlxEase.smoothStep, 1);
@@ -39,7 +49,6 @@ function postCreate(){
 
 function onStrumCreation(e){
     if(e.strumID == 4){
-        trace('e');
         e.cancel();
         var strum = e.strum;
 		strum.frames = Paths.getFrames("UI/base/hellbell/Bronzong_Gong_mechanic");
@@ -55,6 +64,10 @@ function onStrumCreation(e){
 }
 
 function onNoteCreation(event) {
+    if(event.strumLineID == 0){
+        event.note.camera = camGame;
+        event.note.scrollFactor.set(3,3);
+    }
 	if ((event.strumID != 4)) return;
 	event.cancel();
 

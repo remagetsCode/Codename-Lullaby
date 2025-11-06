@@ -1,8 +1,8 @@
-
 public var bell;
 function postCreate(){
+    player.cpu = true;
     if(FlxG.save.data.lullabyShaders){
-    FlxG.camera.addShader(aberration);
+    FlxG.game.addShader(aberration);
     FlxG.game.addShader(heat1);
     aberration.iTime = 6.5;
     }
@@ -42,6 +42,13 @@ function postCreate(){
 	}
 
     pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
+
+    cpu.camera = camGame;
+    for(strum in cpu.members){
+        strum.cameras = [camGame];
+        strum.camera = camGame;     // Sadly this doesnt work well with modchart
+        strum.scrollFactor.set(1,1);
+    }
 }
 
 var shaderVel:Float = 1;
@@ -53,18 +60,20 @@ function update(e){
 var amount:Float = 0.1;
 function postUpdate(){
     dawnbf.alpha = 1-dawn.alpha;
-    inst.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.7 : 1, amount);
+    inst.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.6 : 1, amount);
     vocals.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.8 : 1, amount);
     pitio.volume = lerp(pitio.volume, 0, 0.005); 
 
     if(curBeat > 7) modchart.setPercent('vibrate', modchart.getPercent('vibrate', 1) > 0 ? modchart.getPercent('vibrate', 1)-0.01 : 0, 1);
 }
 
+var getFreaky:Bool = false;
 function beatHit(){
-    //FlxTween.num(7, 10, 0.07, {
-    //    onUpdate: (v)->aberration.iTime = v.value,
-    //    onComplete: ()->FlxTween.num(10, 7, 0.1, {onUpdate: (v2)->aberration.iTime = v2.value})
-    //});
+    if(getFreaky)
+        FlxTween.num(3, 20, 0.001, {
+            onUpdate: (v)->aberration.amount = v.value,
+            onComplete: ()->FlxTween.num(20, 3, 0.35, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.quadOut})
+        });
 }
 
 var transTween:FlxTween;
@@ -76,16 +85,19 @@ function stepHit(s){
         case 248: heat1.intensity = 0.04;
         case 256: heat1.intensity = 0.06;
 
-        case 768: 
+        case 768:
+            setMarginColor(0x000000); 
             FlxTween.num(1, 0.5, 3, {onUpdate: (v)->shaderVel = v.value});
             FlxTween.tween(drama, {alpha: 0.8}, 3);
-        case 896: FlxTween.tween(drama, {alpha: 0}, 1.5);
+        case 896: 
+            setMarginColor(0xfd831a);
+            FlxTween.tween(drama, {alpha: 0}, 1.5);
 
         case 1000: shaderVel = 1;
 
         case 1290:
+            setMarginColor(0xff0000);
             FlxTween.num(1, 1.8, 2, {onUpdate: (v)->shaderVel = v.value});
-            //heat1.intensity = 0.1;
             contract.alpha = 1;
             FlxTween.tween(contract, {y: contract.y+10}, 1, {ease: FlxEase.quadInOut, type: 4});
             
@@ -94,6 +106,7 @@ function stepHit(s){
                 FlxTween.tween(contract, {alpha: 0}, 1);
                 FlxTween.tween(contract.scale, {x: 0.1, y: 0.1}, 1, {ease: FlxEase.backIn});
             });
+        case 1296: getFreaky = true;
         
         case 1320:
             contract.animation.play('e');
@@ -107,13 +120,22 @@ function stepHit(s){
 
         case 1350: transAmount = 0.3;
 
-        case 1550: dawn.playAnim("morphingTrans", true);
+        case 1550: 
+            getFreaky = false;
+            dawn.playAnim("morphingTrans", true);
             dawn.idleSuffix = "-morph";
+        case 1556: getFreaky = true;
 
-        case 1800: 
+        case 1800:
+            getFreaky = false;
+            //FlxTween.num(20, 4, 2, {onUpdate: (v)->aberration.amount = v.value}); 
             FlxTween.num(1.8, 1, 2, {onUpdate: (v)->shaderVel = v.value});
             transTween.cancel();
             FlxTween.tween(dawn, {alpha: 0}, 2);
+
+        case 1809: 
+            setMarginColor(0x693609);
+            iconP1.setIcon('bf');
     }
     
     if(dawn.idleSuffix == "") dawn.singAnims = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
