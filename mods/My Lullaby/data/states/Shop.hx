@@ -15,7 +15,7 @@ var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "6Broken Note", "8Trainer Bow"];
+var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow"];
 var itemsGrp:FlxTypedGroup;
 var pricesGrp:FlxTypedGroup;
 var prices:Array = [];

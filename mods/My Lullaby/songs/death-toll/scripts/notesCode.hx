@@ -34,7 +34,6 @@ function postCreate(){
     playerStrums.members[4].getJustReleased = () -> { return controls.getJustReleased("mechanic"); }
 
     modchart.ease('z', 313, 2, -100, FlxEase.backIn, 0);
-    modchart.ease('x', 313, 2, 130, FlxEase.backIn, 0);
     if(!FlxG.save.data.lullabyMechanics){
         modchart.setPercent('vibrate', 0.5, 1);
         modchart.ease('vibrate', 5, 5, 0, FlxEase.smoothStep, 1);
@@ -64,10 +63,6 @@ function onStrumCreation(e){
 }
 
 function onNoteCreation(event) {
-    if(event.strumLineID == 0){
-        event.note.camera = camGame;
-        event.note.scrollFactor.set(3,3);
-    }
 	if ((event.strumID != 4)) return;
 	event.cancel();
 

@@ -25,7 +25,7 @@ public var portraitOffset:Map<String, FlxPoint> = [
 	'monochrome' => FlxPoint.get(1),
 	'missingno' => FlxPoint.get(12),
 	'brimstone' => FlxPoint.get(0, 115),
-	'death-toll' => FlxPoint.get(160, 165),
+	'death-toll' => FlxPoint.get(129, -4),
 	'isotope' => FlxPoint.get(12, 1),
 	'shitno' => FlxPoint.get(72, 90)
 ];

@@ -43,18 +43,15 @@ function postCreate(){
 
     pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
 
-    cpu.camera = camGame;
-    for(strum in cpu.members){
-        strum.cameras = [camGame];
-        strum.camera = camGame;     // Sadly this doesnt work well with modchart
-        strum.scrollFactor.set(1,1);
-    }
+
 }
 
 var shaderVel:Float = 1;
 var time:Float = 0;
 function update(e){
     heat1.iTime = time += e*shaderVel;
+    modchart.setPercent('x', 1550-(camera.scroll.x*0.95), 0);
+    modchart.setPercent('y', -452-camera.scroll.y, 0);
 }
 
 var amount:Float = 0.1;
@@ -79,6 +76,7 @@ function beatHit(){
 var transTween:FlxTween;
 var transAmount:Float = 1;
 function stepHit(s){
+     //1477, -452
     switch(s){
         case 5: setMarginColor(0xfd831a);
         case 240: heat1.intensity = 0.02;
