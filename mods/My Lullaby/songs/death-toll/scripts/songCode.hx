@@ -1,0 +1,168 @@
+
+public var bell;
+function postCreate(){
+    if(FlxG.save.data.lullabyShaders){
+    FlxG.camera.addShader(aberration);
+    FlxG.game.addShader(heat1);
+    aberration.iTime = 6.5;
+    }
+    gf.alpha = 1;
+
+    drama = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+    drama.scrollFactor.set(0);
+    drama.zoomFactor = 0;
+    drama.alpha = 0;
+    insert(14, drama);
+
+    dawnbf = player.characters[1];
+    dawn = player.characters[0];
+    bell = strumLines.members[2].characters[0];
+
+    contract = new FlxSprite(dad.x-260, dad.y+450);
+    contract.frames = Paths.getFrames("characters/ContractBF");
+    contract.animation.addByPrefix('e', 'Contract', 4, false);
+    contract.alpha = 0;
+    contract.antialiasing = true;
+    add(contract);
+
+    // Thanks to BASHIR for flipping the healthbar
+	healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
+	updateIconPositions = function(){
+		var iconOffset:Int = 26;
+
+		var center:Float = healthBar.x + healthBar.width * FlxMath.remapToRange(100-healthBar.percent, 0, 100, 1, 0);
+
+		iconP2.x = center - iconOffset;
+		iconP1.x = center - (iconP1.width - iconOffset);
+
+		health = FlxMath.bound(health, 0, maxHealth);
+
+		iconP1.health = healthBar.percent / 100;
+		iconP2.health = 1 - (healthBar.percent / 100);
+	}
+
+    pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
+}
+
+var shaderVel:Float = 1;
+var time:Float = 0;
+function update(e){
+    heat1.iTime = time += e*shaderVel;
+}
+
+var amount:Float = 0.1;
+function postUpdate(){
+    dawnbf.alpha = 1-dawn.alpha;
+    inst.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.7 : 1, amount);
+    vocals.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.8 : 1, amount);
+    pitio.volume = lerp(pitio.volume, 0, 0.005); 
+
+    if(curBeat > 7) modchart.setPercent('vibrate', modchart.getPercent('vibrate', 1) > 0 ? modchart.getPercent('vibrate', 1)-0.01 : 0, 1);
+}
+
+function beatHit(){
+    //FlxTween.num(7, 10, 0.07, {
+    //    onUpdate: (v)->aberration.iTime = v.value,
+    //    onComplete: ()->FlxTween.num(10, 7, 0.1, {onUpdate: (v2)->aberration.iTime = v2.value})
+    //});
+}
+
+var transTween:FlxTween;
+var transAmount:Float = 1;
+function stepHit(s){
+    switch(s){
+        case 5: setMarginColor(0xfd831a);
+        case 240: heat1.intensity = 0.02;
+        case 248: heat1.intensity = 0.04;
+        case 256: heat1.intensity = 0.06;
+
+        case 768: 
+            FlxTween.num(1, 0.5, 3, {onUpdate: (v)->shaderVel = v.value});
+            FlxTween.tween(drama, {alpha: 0.8}, 3);
+        case 896: FlxTween.tween(drama, {alpha: 0}, 1.5);
+
+        case 1000: shaderVel = 1;
+
+        case 1290:
+            FlxTween.num(1, 1.8, 2, {onUpdate: (v)->shaderVel = v.value});
+            //heat1.intensity = 0.1;
+            contract.alpha = 1;
+            FlxTween.tween(contract, {y: contract.y+10}, 1, {ease: FlxEase.quadInOut, type: 4});
+            
+            contract.animation.onFinish.add(function(){
+                contract.color = FlxColor.RED;
+                FlxTween.tween(contract, {alpha: 0}, 1);
+                FlxTween.tween(contract.scale, {x: 0.1, y: 0.1}, 1, {ease: FlxEase.backIn});
+            });
+        
+        case 1320:
+            contract.animation.play('e');
+            FlxTween.num(1, 0.1, 35, {onUpdate: (v)->transAmount = v.value});
+            transTween = FlxTween.num(0,1, 2.4, {
+                type: 4, 
+                onUpdate: (v)->{
+                    dawn.alpha = v.value + transAmount;
+                }
+            });
+
+        case 1350: transAmount = 0.3;
+
+        case 1550: dawn.playAnim("morphingTrans", true);
+            dawn.idleSuffix = "-morph";
+
+        case 1800: 
+            FlxTween.num(1.8, 1, 2, {onUpdate: (v)->shaderVel = v.value});
+            transTween.cancel();
+            FlxTween.tween(dawn, {alpha: 0}, 2);
+    }
+    
+    if(dawn.idleSuffix == "") dawn.singAnims = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
+    else if(dawn.idleSuffix == "-cover") dawn.singAnims = ["singLEFT-cover", "singDOWN-cover", "singUP-cover", "singRIGHT-cover"];
+    else if(dawn.idleSuffix == "-morph") dawn.singAnims = ["singLEFT-morph", "singDOWN-morph", "singUP-morph", "singRIGHT-morph"];
+
+    if(dawnbf.idleSuffix == "") dawnbf.singAnims = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
+    else if(dawnbf.idleSuffix == "-cover") dawnbf.singAnims = ["singLEFT-cover", "singDOWN-cover", "singUP-cover", "singRIGHT-cover"];
+}
+
+var coverTime:FlxTimer = new FlxTimer();
+function onPlayerHit(e){
+    if(e.note.strumID == 4) {
+        e.preventAnim();
+        if(dawn.idleSuffix == "")
+        {
+            dawn.playAnim('coveringTrans', true);
+            dawn.idleSuffix = "-cover";
+        }
+
+        if(dawnbf.idleSuffix == "")
+        {
+            dawnbf.playAnim('coveringTrans', true);
+            dawnbf.idleSuffix = "-cover";
+        }
+        
+        coverTime.cancel();
+        coverTime = new FlxTimer().start(0.25, ()->{
+            if(dawn.idleSuffix != "-morph") dawn.idleSuffix = "";
+            dawnbf.idleSuffix = "";
+        });
+
+    }
+}
+
+var missTime:FlxTimer = new FlxTimer();
+function onPlayerMiss(e){
+    if(e.note.strumID == 4){
+        e.preventVocalsMute();
+        e.healthGain = -0.2;
+
+        inst.volume = 0;
+        vocals.volume = 0;
+        pitio.volume = 1;
+        amount = 0.005;
+
+        missTime.cancel();
+        missTime = new FlxTimer().start(5.25, ()->{
+            amount = 0.1;
+        });
+    }
+}

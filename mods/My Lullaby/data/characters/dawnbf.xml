@@ -1,0 +1,18 @@
+<!DOCTYPE codename-engine-character>
+<character y="480" icon="bf" color="#30B0D1">
+	<anim name="idle" anim="dawn bf/DawnBF Idle Dance"/>
+	<anim name="singDOWN" anim="dawn bf/DawnBF DOWN NOTE normal"/>
+	<anim name="singDOWNmiss" anim="dawn bf/DawnBF DOWN NOTE normal"/>
+	<anim name="singRIGHT" anim="dawn bf/DawnBF RIGHT NOTE"/>
+	<anim name="singRIGHTmiss" anim="dawn bf/DawnBF RIGHT NOTE miss"/>
+	<anim name="singLEFT" anim="dawn bf/DawnBF LEFT NOTE"/>
+	<anim name="singLEFTmiss" anim="dawn bf/DawnBF LEFT NOTE miss"/>
+	<anim name="singUP" anim="dawn bf/DawnBF UP NOTE"/>
+	<anim name="singUPmiss" anim="dawn bf/DawnBF UP NOTE miss"/>
+	<anim name="coveringTrans" anim="dawn bf/DawnBF TRANSITIO"/>
+	<anim name="idle-cover" anim="dawn bf covered/DawnBF Idle Dance covered"/>
+	<anim name="singRIGHT-cover" anim="dawn bf covered/DawnBF RIGHT NOTE covered"/>
+	<anim name="singUP-cover" anim="dawn bf covered/DawnBF UP NOTE covered"/>
+	<anim name="singDOWN-cover" anim="dawn bf covered/DawnBF DOWN NOTE covered"/>
+	<anim name="singLEFT-cover" anim="dawn bf covered/DawnBF LEFT NOTE cover"/>
+</character>

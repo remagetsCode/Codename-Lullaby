@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="beelze_ooscaryface" x="-100" y="330" icon="icon-beelze" color="#000000">
+	<anim name="idle" anim="OldMan_Creepy_Idle"/>
+	<anim name="singDOWN" anim="OldMan_Creepy_Down" x="61" y="-19"/>
+	<anim name="singRIGHT" anim="OldMan_Creepy_Right" x="-28" y="-8"/>
+	<anim name="singLEFT" anim="OldMan_Creepy_Left" x="138" y="-6"/>
+	<anim name="singUP" anim="OldMan_Creepy_Up" x="72" y="11"/>
+</character>

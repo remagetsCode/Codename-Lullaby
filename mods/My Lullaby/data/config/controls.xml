@@ -1,0 +1,5 @@
+<controls>
+    <category name="MECHANICS Button">
+        <control name="mechanic" saveName="mechanic" menuName="MECHANIC" keyP1="SPACE" keyP2=""/>
+    </category>
+</controls>
