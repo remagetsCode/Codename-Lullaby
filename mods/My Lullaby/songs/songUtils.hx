@@ -24,6 +24,9 @@ function postCreate(){
 	DiscordUtil.config.clientID = "1433852304745824318";
 }
 
+public var smooth;
+function update() healthBar.percent = smooth = lerp(smooth, health*50, 0.05);
+
 function onSongEnd(){
 	var exists:Bool = FlxG.save.data.unlockedSongs.exists(curSong);
 	

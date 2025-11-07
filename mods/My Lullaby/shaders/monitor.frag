@@ -1,14 +1,14 @@
 #pragma header
 
-float zoom = 1.15;
+float zoom = 1.0;
 void main()
 {
     vec2 uv = openfl_TextureCoordv;
     uv = (uv-.5)*2.;
     uv *= zoom;
     
-    uv.x *= 1. + pow(abs(uv.y/2.),3.);
-    uv.y *= 1. + pow(abs(uv.x/2.),3.);
+    uv.x *= 1. + pow(abs(uv.y/2.),3.3);
+    uv.y *= 1. + pow(abs(uv.x/2.),3.3);
     uv = (uv + 1.)*.5;
     
     vec4 tex = vec4( 

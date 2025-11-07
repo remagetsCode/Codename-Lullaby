@@ -4,7 +4,7 @@
         "name": "Mysterious Letter",
         "price": 666,
         "animName": "Death Toll Item Final instance 1",
-        "songUnlock": "death-Toll",
+        "songUnlock": "death-toll",
         "songDescription": "This envelope has your name on it.",
         "unlockRequirements": [""],
         "xOffset": 0,

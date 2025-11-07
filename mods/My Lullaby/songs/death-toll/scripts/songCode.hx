@@ -1,6 +1,6 @@
 public var bell;
 function postCreate(){
-    player.cpu = true;
+    //player.cpu = true;
     if(FlxG.save.data.lullabyShaders){
     FlxG.game.addShader(aberration);
     FlxG.game.addShader(heat1);

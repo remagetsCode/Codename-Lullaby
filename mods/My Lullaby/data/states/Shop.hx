@@ -244,9 +244,14 @@ function postCreate(){
 	});
 
 }
-
+	import flixel.text.FlxText.FlxTextFormat;
+	import flixel.text.FlxText.FlxTextFormatMarkerPair;
 var canMove:Bool = true;
 function update(elapsed){
+
+	talk.applyMarkup("rnadm |txt|",[
+                new FlxTextFormatMarkerPair(new FlxTextFormat(0xFFFF0000), "|")
+            ]);
 	DiscordUtil.changePresence("Shop - Money: " + FlxG.save.data.lullabyMoney, "''" + talk.text + "''");
 	var leftP = controls.LEFT_P;
 	var upP = controls.UP_P;
@@ -262,7 +267,6 @@ function update(elapsed){
 				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
 
 			if(rightP && !buying) {
-				onSubstate = true;
 				right.animation.play('push');
 				new FlxTimer().start(0.1, (_)->{right.animation.play('idle');});
 				openSubState(new ModSubState('RealFreePlay'));
@@ -275,9 +279,6 @@ function update(elapsed){
 		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 
-	}
-	else{
-		if(leftP) onSubstate = false;
 	}
 
 	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
@@ -428,3 +429,6 @@ function showNextLetter(timer:FlxTimer){
 }
 
 // WE REACHED THE 4 HUNDRED LINES LETS GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+subStateOpened.add(function(){onSubstate = true;});
+subStateClosed.add(function(){onSubstate = false;});
