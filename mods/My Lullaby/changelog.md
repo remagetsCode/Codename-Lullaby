@@ -110,4 +110,4 @@ v0.10
 
 - ADDED DEATH TOLL SONG
 - Fixed bygone purpose name not displaying correctly
-- Improvements in code to the freeplay && faster transition
+- Improvements to the freeplay && faster transition

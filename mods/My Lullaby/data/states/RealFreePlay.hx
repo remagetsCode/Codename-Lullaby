@@ -165,6 +165,7 @@ function startEverything(){
 
 var time:Float = 0;
 function update(e){
+	//trace(mini.y);
 	missingno.iTime = time += e;
 	//trace(mini.x, mini.y);
 	status = FlxG.save.data.unlockedSongs;
@@ -200,6 +201,8 @@ function update(e){
 
 var mini:FunkinSprite = new FunkinSprite();
 var twn:FlxTween = new FlxTween();
+var floating:FlxTween = new FlxTween();
+var floating2:FlxTween = new FlxTween();
 function changeItem(huh:Int = 0, ?mouse:Bool = false){		
 	//if(mini != null) mini.visible = false;
 
@@ -235,9 +238,15 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false){
 			mini.screenCenter();
 			mini.x = FlxG.width/1.5;
 			if(offs != null) mini.setPosition(mini.x-offs.x, mini.y-offs.y);
-			
+			//miniBG.x = 850;
+			miniBG.y = 159;
 
 			twn = FlxTween.tween(mini, {alpha: 1}, 0.3, {ease: FlxEase.cubeIn});
+
+			floating.cancel();
+			floating = FlxTween.tween(mini, {y: mini.y+10}, 2, {type: 4, ease: FlxEase.sineInOut});
+			floating2.cancel();
+			floating2 = FlxTween.tween(miniBG, {y: miniBG.y+10}, 2, {type: 4, ease: FlxEase.sineInOut});
 
 		}
 	});

@@ -244,14 +244,9 @@ function postCreate(){
 	});
 
 }
-	import flixel.text.FlxText.FlxTextFormat;
-	import flixel.text.FlxText.FlxTextFormatMarkerPair;
+
 var canMove:Bool = true;
 function update(elapsed){
-
-	talk.applyMarkup("rnadm |txt|",[
-                new FlxTextFormatMarkerPair(new FlxTextFormat(0xFFFF0000), "|")
-            ]);
 	DiscordUtil.changePresence("Shop - Money: " + FlxG.save.data.lullabyMoney, "''" + talk.text + "''");
 	var leftP = controls.LEFT_P;
 	var upP = controls.UP_P;
