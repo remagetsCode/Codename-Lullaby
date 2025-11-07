@@ -1,11 +1,19 @@
 public var bell;
+introLength = 10;
+function onCountdown(e){
+    e.cancel();
+}
 function postCreate(){
+    camDS = new FlxCamera(0, 0);
+    camDS.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(camDS, false);
     //player.cpu = true;
     if(FlxG.save.data.lullabyShaders){
     FlxG.game.addShader(aberration);
     FlxG.game.addShader(heat1);
     aberration.iTime = 6.5;
     }
+    camDS.setFilters([]);
     gf.alpha = 1;
 
     drama = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -25,6 +33,62 @@ function postCreate(){
     contract.antialiasing = true;
     add(contract);
 
+    white = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
+    white.scrollFactor.set(0);
+    white.camera = camDS;
+    white.zoomFactor = 0;
+    add(white);
+
+    dStart = new FunkinSprite();
+    dStart.frames = Paths.getFrames("UI/base/hellbell/bimbembo");
+    dStart.animation.addByPrefix('start', 'dsintro', 24, false);
+    dStart.animation.play('start');
+    dStart.animation.onFinish.add(function(){
+        FlxTween.tween(dStart, {alpha: 0}, 1);
+        FlxTween.tween(white, {alpha: 0}, 1);
+        FlxTween.tween(dsi, {alpha: 0}, 0.3);
+        FlxTween.tween(camDS, {zoom: 1}, 2, {ease: FlxEase.backIn});
+        FlxTween.tween(camHUD, {zoom: 0.9}, 2, {ease: FlxEase.quadInOut});
+    });
+    dStart.scrollFactor.set(0);
+    dStart.zoomFactor = 0.5;
+    dStart.camera = camDS;
+    dStart.antialiasing = true;
+    dStart.screenCenter();
+    add(dStart);
+
+    dsi = new FunkinSprite().loadGraphic(Paths.image("UI/base/hellbell/i"));
+    dsi.scrollFactor.set(0);
+    dsi.zoomFactor = 0.5;
+    dsi.screenCenter();
+    dsi.x += 500;
+    dsi.y -= 150;
+    dsi.camera = camDS;
+    dsi.antialiasing = true;
+    add(dsi);
+
+    dsBF = new FunkinSprite().loadGraphic(Paths.image("UI/base/hellbell/ds_03"));
+    dsBF.scrollFactor.set(0);
+    dsBF.zoomFactor = 0.5;
+    dsBF.screenCenter();
+    dsBF.camera = camDS;
+    dsBF.alpha = 0;
+    dsBF.antialiasing = true;
+    add(dsBF);
+
+
+    ds = new FunkinSprite().loadGraphic(Paths.image("UI/base/hellbell/ds_01"));
+    ds.scrollFactor.set(0);
+    ds.zoomFactor = 0.5;
+    ds.screenCenter();
+    ds.camera = camDS;
+    ds.antialiasing = true;
+    add(ds);
+
+    FlxTween.tween(camDS, {zoom: 0.4}, 0.5, {ease: FlxEase.quadInOut});
+    FlxTween.tween(camHUD, {zoom: 0.6}, 0.5, {ease: FlxEase.quadInOut});
+
+    new FlxTimer().start(0.2, ()->FlxG.sound.play(Paths.sound("bimbembodsi")));
     // Thanks to BASHIR for flipping the healthbar
 	healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
 	updateIconPositions = function(){
@@ -81,12 +145,12 @@ function stepHit(s){
         case 5: setMarginColor(0xfd831a);
         case 240: heat1.intensity = 0.02;
         case 248: heat1.intensity = 0.04;
-        case 256: heat1.intensity = 0.06;
+        case 256: FlxTween.tween(camDS, {zoom: 1.3}, 0.5, {ease: FlxEase.quadInOut});
 
         case 768:
             setMarginColor(0x000000); 
             FlxTween.num(1, 0.5, 3, {onUpdate: (v)->shaderVel = v.value});
-            FlxTween.tween(drama, {alpha: 0.8}, 3);
+            FlxTween.tween(drama, {alpha: 0.9}, 3);
         case 896: 
             setMarginColor(0xfd831a);
             FlxTween.tween(drama, {alpha: 0}, 1.5);
@@ -109,7 +173,7 @@ function stepHit(s){
         case 1320:
             contract.animation.play('e');
             FlxTween.num(1, 0.1, 35, {onUpdate: (v)->transAmount = v.value});
-            transTween = FlxTween.num(0,1, 2.4, {
+            transTween = FlxTween.num(0,0.8, 2.4, {
                 type: 4, 
                 onUpdate: (v)->{
                     dawn.alpha = v.value + transAmount;
@@ -134,6 +198,15 @@ function stepHit(s){
         case 1809: 
             setMarginColor(0x693609);
             iconP1.setIcon('bf');
+
+        case 2336: 
+            FlxTween.num(0.06, 0.0, 2, {onUpdate: (v)->heat1.intensity = v.value});
+            FlxTween.tween(camDS, {zoom: 0.5}, 4, {ease: FlxEase.quadInOut});
+        case 2370: 
+            setMarginColor(0x000000);
+            FlxTween.tween(black, {alpha: 1}, 0.5, {ease: FlxEase.quadInOut});
+            FlxTween.tween(dsBF, {alpha: 0.15}, 1, {ease: FlxEase.quadInOut});
+        case 2375: FlxG.sound.play(Paths.sound("bimbembooff"));
     }
     
     if(dawn.idleSuffix == "") dawn.singAnims = ["singLEFT", "singDOWN", "singUP", "singRIGHT"];
