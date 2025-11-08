@@ -1,7 +1,7 @@
 import funkin.menus.FreeplayState.FreeplaySonglist;
 import flixel.math.FlxPoint;
 import funkin.menus.ui.effects.WaveEffect;
-
+import flixel.effects.FlxFlicker;
 
 using StringTools;
 
@@ -67,8 +67,7 @@ function create(){
 	left.antialiasing = true;
 	add(left);
 
-	add(grpSongs);
-	add(locks);
+
 
 	for (i => song in songs){
 		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
@@ -140,6 +139,8 @@ function create(){
 		}
 	}
 
+	add(grpSongs);
+	add(locks);
 	//for(i => song in songs){
 	//	if(!status.exists(song.name)){
 	//		var tmr = new FlxTimer().start(0.1, ()->grpSongs.members[i].text = shuffleText(grpSongs.members[i].text),0);
@@ -176,17 +177,15 @@ function update(e){
 		var downP = controls.DOWN_P;
 		var scroll = FlxG.mouse.wheel;
 
-		if(leftP) preClose();
-
 		if (upP || downP || scroll != 0)
 			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
 	
 		if(controls.ACCEPT) selectItem();
-		if (controls.BACK) FlxG.switchState(new MainMenuState());
+		if (controls.BACK || leftP) preClose();
 
 	}
 	for (a in grpSongs) {
-        var s = 0.9 + (a.ID == curSelected ? 0.1 : 0);
+        var s = 0.8 + (a.ID == curSelected ? 0.2 : 0);
         a.scale.x = lerp(a.scale.x, s, 0.2);
         a.scale.y = lerp(a.scale.y, s, 0.2);
         a.updateHitbox();
@@ -270,8 +269,13 @@ function selectItem(){
 	if(curSelected != null && isUnlocked){
 		var selected = curSelected;
 		FlxG.sound.play(Paths.sound("confirmMenu"));
-
-		new FlxTimer().start(0.3, ()->{
+		FlxFlicker.flicker(grpSongs.members[curSelected], 1, Options.flashingMenu ? 0.06 : 0.15, true, false);
+		FlxTween.tween(grpSongs.members[curSelected], {x: 640-grpSongs.members[curSelected].width/2}, 0.8, {ease: FlxEase.quintOut});
+		new FlxTimer().start(1.0, ()->{
+			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.quadOut});
+			FlxTween.tween(FlxG.camera, {zoom: 5}, 2, {ease: FlxEase.quadOut});
+			});
+		new FlxTimer().start(2.0, ()->{
 			FlxG.switchState(PlayState.loadSong(songs[selected].name, 'hard'));
 			FlxG.switchState(new PlayState());
 		});

@@ -26,5 +26,5 @@ function postCreate(event) {
 }
 
 function onPostFinish(){
-		FlxG.camera.flash(FlxColor.BLACK, 0.5);
+		FlxG.camera.flash(FlxColor.BLACK, 0.4);
 }

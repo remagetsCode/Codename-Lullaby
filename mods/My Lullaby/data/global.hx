@@ -61,7 +61,8 @@ function preStateSwitch() {
 	initMarginCamera();
 }
 
-public static var twen;
+public static var twen:FlxTween;
+public static var colTween:FlxTween;
 public static var windowBorderBg:Sprite;
 public static var targColor = 0xa50505;
 static function initMarginCamera()
@@ -77,8 +78,6 @@ static function initMarginCamera()
 		});
 
         FlxG.signals.gameResized.add((w, h) -> {
-			//windowBorderBg = new Sprite();
-			//windowBorderBg.graphics.beginGradientFill(GradientType.LINEAR, [targColor, 0x00000000], [1,0], [100, 255]);
 			windowBorderBg.graphics.clear();
 			windowBorderBg.graphics.beginFill(targColor);
 			windowBorderBg.graphics.drawRect(0, 0, window.width, window.height);
@@ -92,7 +91,8 @@ static function setMarginColor(color, ?vel){
 	color ??= FlxColor.BLACK;
 	vel ??= 1;
 
-	FlxTween.color(null, vel, targColor, color, {
+	if(colTween != null) colTween.destroy();
+	colTween = FlxTween.color(null, vel, targColor, color, {
 		onUpdate: (tween)->{
 			windowBorderBg.graphics.clear();
 			windowBorderBg.graphics.beginFill(tween.color);

@@ -111,3 +111,5 @@ v0.10
 - ADDED DEATH TOLL SONG
 - Fixed bygone purpose name not displaying correctly
 - Improvements to the freeplay && faster transition
+- Added select song animation
+- Health bar moves smooth

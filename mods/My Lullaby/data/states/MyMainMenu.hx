@@ -34,12 +34,12 @@ function create(){
 		onComplete: ()->{
 			FlxG.sound.playMusic(Paths.music('CinnabarOverworld'),0);
 			curMusic = FlxG.sound.music;
-			FlxTween.tween(curMusic, {volume:0.6},1);
+			FlxTween.tween(curMusic, {volume:0.5},5);
 		}
 	});
 	}
 	else{
-		FlxG.sound.playMusic(Paths.music('CinnabarOverworld'), 0.6, true);
+		FlxG.sound.playMusic(Paths.music('CinnabarOverworld'), 0.5, true);
 		curMusic = FlxG.sound.music;
 	}
 		
@@ -93,6 +93,37 @@ function create(){
 	walls = new FlxGroup();
 	add(walls);
 	mapLayout();
+
+	camBoy = new FlxCamera();
+	camBoy.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(camBoy, false);
+	black = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+	black.camera = camBoy;
+	black.alpha = 1;
+	black.zoomFactor = 0;
+	add(black);
+
+	caca = new FunkinSprite(550,400).makeGraphic(200, 200, FlxColor.fromRGB(110, 124, 0));
+	caca.camera = camBoy;
+	caca.alpha = 1;
+	add(caca);
+
+	gamboy = new FlxSprite().loadGraphic(Paths.image("overworld/gameboy_graphic"));
+	gamboy.camera = camBoy;
+	
+	gamboy.origin.set(gamboy.width/2, gamboy.height/4);
+	gamboy.scale.set(1,1);
+	gamboy.updateHitbox();
+	gamboy.screenCenter();
+	gamboy.y = 248;
+	gamboy.x -= 4;
+	add(gamboy);
+
+	new FlxTimer().start(0.5, ()->FlxTween.tween(camBoy, {zoom: 7.1}, 1, {ease: FlxEase.backIn}));
+	new FlxTimer().start(1.5, ()->{
+		black.kill();
+		FlxTween.tween(caca, {alpha: 0}, 0.5);
+	});
 	
 	camera.follow(player,FlxCamera.STYLE_LOCKON);
 	camera.zoom = 5;
@@ -326,7 +357,7 @@ class Player extends FlxSprite
 		
 		flipX = dir == "right"; //Flips the side sprite instead of having 2 copies
 		animation.play((isMoving?'walk_':'idle_')+((dir == "left" || dir == "right")?"side":dir)); //Plays idle/walk anims
-		if(!startingTrigger)FlxG.overlap(cast(this,FlxObject), walls, OverlapWallTriggers); //Triggers walk over triggers
+		if(!startingTrigger)FlxG.overlap(this, walls, OverlapWallTriggers); //Triggers walk over triggers
 	}
 	
 	//Triggers that require an input

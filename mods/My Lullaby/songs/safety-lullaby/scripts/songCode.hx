@@ -51,14 +51,9 @@ function postCreate(){
 	both.push(lil);
 
 	if(downscroll){
-		pendelum.y += 200;
-		extras.y -= 100;
-	}
-	else{
-		pendelum.y -= 200;
-		extras.y += 100;
-	}
-	
+		pendelum.y += downscroll ? 200 : -200;
+		extras.y += downscroll ? -100 : 100;
+	}	
 }
 
 function onSongStart(){

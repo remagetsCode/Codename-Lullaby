@@ -5,8 +5,8 @@ import funkin.backend.utils.DiscordUtil;
 
 FlxG.game.setFilters([]);
 
-var shaderCrt = new CustomShader('monitor');
-var aberration = new CustomShader('aberration');
+public var shaderCrt = new CustomShader('monitor');
+public static var aberration = new CustomShader('aberration');
 var options:Array = [];
 var curSelected = -1;
 
@@ -30,7 +30,8 @@ function create(){
 	if(FlxG.save.data.lullabyShaders){
 		FlxG.game.addShader(shaderCrt);
 		FlxG.game.addShader(aberration);
-		aberration.iTime = 6;
+		aberration.iTime = 7;
+		aberration.amount = 0.5;
 	}
 
 	itemsGrp = new FlxTypedGroup();
@@ -277,9 +278,9 @@ function update(elapsed){
 	}
 
 	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
-	if(textBox.visible){ upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
-	aberration.iTime = 5.5+curMusic.amplitude;
-	}
+	if(textBox.visible) upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
+
+	
 }
 
 var curMoney:Int;

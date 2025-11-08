@@ -47,7 +47,7 @@ function postCreate(){
         FlxTween.tween(dStart, {alpha: 0}, 1);
         FlxTween.tween(white, {alpha: 0}, 1);
         FlxTween.tween(dsi, {alpha: 0}, 0.3);
-        FlxTween.tween(camDS, {zoom: 1}, 2, {ease: FlxEase.backIn});
+        FlxTween.tween(camDS, {zoom: 1}, 1.5, {ease: FlxEase.backIn});
         FlxTween.tween(camHUD, {zoom: 0.9}, 2, {ease: FlxEase.quadInOut});
     });
     dStart.scrollFactor.set(0);
