@@ -113,3 +113,6 @@ v0.10
 - Improvements to the freeplay && faster transition
 - Added select song animation
 - Health bar moves smooth
+- Added animation when entering to the overworld
+- Fixed some bugs in mobile
+- Fixed blur shader making the game brighten

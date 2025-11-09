@@ -14,8 +14,10 @@ function postCreate(){
 
     if(FlxG.save.data.lullabyShaders)
     {
+        FlxG.game.addShader(blur);
         FlxG.game.addShader(aberration);
         FlxG.game.addShader(heat1);
+        blur.Size = 0;
         aberration.iTime = 6.5;
     }
     camDS.setFilters([]);
@@ -117,8 +119,11 @@ function postCreate(){
 
 var shaderVel:Float = 1;
 var time:Float = 0;
+public var bruh;
 function update(e){
     heat1.iTime = time += e*shaderVel;
+    blur.Size = bruh;
+    bruh = lerp(bruh, 0, 0.009);
     modchart.setPercent('x', 1550-(camera.scroll.x*0.95), 0);
     modchart.setPercent('y', -452-camera.scroll.y, 0);
 }
@@ -258,6 +263,7 @@ function onPlayerMiss(e){
         pitio.volume = 1;
         amount = 0.005;
 
+        bruh = 10;
         missTime.cancel();
         missTime = new FlxTimer().start(5.25, ()->{
             amount = 0.1;
