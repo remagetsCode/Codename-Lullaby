@@ -8,10 +8,12 @@ function postCreate(){
     camDS.bgColor = FlxColor.TRANSPARENT;
     FlxG.cameras.add(camDS, false);
     //player.cpu = true;
-    if(FlxG.save.data.lullabyShaders){
-    FlxG.game.addShader(aberration);
-    FlxG.game.addShader(heat1);
-    aberration.iTime = 6.5;
+    
+    if(FlxG.save.data.lullabyShaders)
+    {
+        FlxG.game.addShader(aberration);
+        FlxG.game.addShader(heat1);
+        aberration.iTime = 6.5;
     }
     camDS.setFilters([]);
     gf.alpha = 1;
