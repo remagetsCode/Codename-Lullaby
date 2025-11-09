@@ -16,7 +16,7 @@ void main()
      
      //customisation variables
      float wiggle_speed = 2.5;
-     float vertical_compression = 40.0;
+     float vertical_compression = 30.0;
      float effect_intensity = 0.05*intensity;
      
      float x_off = sin((iTime * wiggle_speed) + (uv.y * vertical_compression));//offset the x part of the uv based on y and propagate up based on time

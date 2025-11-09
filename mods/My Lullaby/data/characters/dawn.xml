@@ -1,0 +1,28 @@
+<!DOCTYPE codename-engine-character>
+<character y="400" icon="icon-dawn" color="#FFFFFF">
+	<anim name="idle" anim="dawn normal sprites/Dawn Idle Dance NORMAL"/>
+	<anim name="singLEFT" anim="dawn normal sprites/Dawn LEFT NOTE normal"/>
+	<anim name="singLEFTmiss" anim="dawn normal sprites/Dawn LEFT miss noote"/>
+	<anim name="singRIGHT" anim="dawn normal sprites/Dawn RIGHT NOTE normal"/>
+	<anim name="singRIGHTmiss" anim="dawn normal sprites/Dawn RIGHT miss NOTE"/>
+	<anim name="singUP" anim="dawn normal sprites/Dawn UP NOTE normal"/>
+	<anim name="singUPmiss" anim="dawn normal sprites/Dawn UP miss noat"/>
+	<anim name="singDOWN" anim="dawn normal sprites/Dawn DOWN NOTE normal"/>
+	<anim name="singDOWNmiss" anim="dawn normal sprites/Dawn DOWN miss note"/>
+	<anim name="coveringTrans" anim="dawn normal sprites/Dawn TRANSITION"/>
+	<anim name="idle-cover" anim="dawn sprites cover/Dawn Idle Dance"/>
+	<anim name="singLEFT-cover" anim="dawn sprites cover/Dawn LEFT NOTE"/>
+	<anim name="singRIGHT-cover" anim="dawn sprites cover/Dawn RIGHT NOTE" y="-2"/>
+	<anim name="singUP-cover" anim="dawn sprites cover/Dawn UP NOTE"/>
+	<anim name="singDOWN-cover" anim="dawn sprites cover/Dawn DOWN NOTE"/>
+	<anim name="morphingTrans" anim="dawn normal sprites/Dawn Idle Dance morph NORMAL"/>
+	<anim name="idle-morph" anim="dawn morphed/Dawn Idle Dance morphed"/>
+	<anim name="singLEFT-morph" anim="dawn morphed/Dawn LEFT NOTe morphed"/>
+	<anim name="singLEFTmiss-morph" anim="dawn morphed/Dawn LEFT miss noote morphed"/>
+	<anim name="singRIGHT-morph" anim="dawn morphed/Dawn RIGHT NOTE normal morphed"/>
+	<anim name="singRIGHTmiss-morph" anim="dawn morphed/Dawn RIGHT NOTE normal morphed miss"/>
+	<anim name="singUP-morph" anim="dawn morphed/Dawn UP NOTE normal morphed"/>
+	<anim name="singUPmiss-morph" anim="dawn morphed/Dawn UP miss noat morphed" y="-1"/>
+	<anim name="singDOWN-morph" anim="dawn morphed/Dawn DOWN NOTE morphed"/>
+	<anim name="singDOWNmiss-morph" anim="dawn morphed/Dawn DOWN miss note morphed"/>
+</character>

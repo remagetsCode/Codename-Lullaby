@@ -42,9 +42,11 @@ function stepHit(){
 }
 
 function onPlayerHit(event){
+	if(event.direction > 3) return;
+
 	var d = event.direction;
 	var milk = holds.members[event.direction];
-
+	
 	if(event.note.isSustainNote){ 
 		milk.visible = true;
 

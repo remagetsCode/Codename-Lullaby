@@ -196,7 +196,12 @@ function endBullshit():Void
 				FlxG.switchState(new PlayState());
 			});
 		});
-		if(gf) gf.animation.play('wake');
+		try{
+			if(gf) gf.animation.play('wake');
+		}
+		catch(e:Dynamic){
+			trace("no hay gf en este gameover");
+		}
 	}
 
 

@@ -8,4 +8,5 @@ monochrome
 missingno
 purin
 amusia
+death-toll
 bygone-purpose

@@ -15,6 +15,8 @@ var curDisplayWidth = window.display.bounds.width;
 var curDisplayX = window.display.bounds.x;
 var curDisplayY = window.display.bounds.y;
 
+var transitioning:Bool = false;
+
 var windowTitle = "Friday Night Funkin' Lullaby";
 FlxG.game.setFilters([]);
 
@@ -35,7 +37,7 @@ function create(){
 	startScreen = new FlxSprite();
 	startScreen.frames = Paths.getFrames('menus/title/Start_Screen_Assets');
 	startScreen.animation.addByPrefix('idle', 'logo bumpin', 24);
-	startScreen.animation.play('idle');
+	//startScreen.animation.play('idle');
 	startScreen.setGraphicSize(startScreen.width/1.5, startScreen.height/1.5);
 	startScreen.screenCenter();
 	startScreen.y -= 50;
@@ -82,7 +84,9 @@ function postCreate(){
 	
 }
 function update(){
-	if(FlxG.mouse.justPressed || controls.ACCEPT) {
+	if((FlxG.mouse.justPressed || controls.ACCEPT) && !transitioning) {
+		transitioning = true;
+
 		FlxG.sound.play(Paths.sound("confirmMenu"));
 		FlxG.camera.flash(FlxColor.RED, 1);
 		new FlxTimer().start(1, (_) -> {
@@ -90,11 +94,15 @@ function update(){
 		});
 		
 	}
-	//trace(window.width);
+
 }
 
 function floatingLogo(){
 	FlxTween.tween(startScreen, {y: startScreen.y + 125}, 4, {
+		ease: FlxEase.smoothStepInOut,
+		type: FlxTween.PINGPONG
+	});
+	FlxTween.angle(startScreen, 5, -5, 6, {
 		ease: FlxEase.smoothStepInOut,
 		type: FlxTween.PINGPONG
 	});

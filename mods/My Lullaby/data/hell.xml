@@ -1,0 +1,17 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/hell/images/" name="hell">
+	<girlfriend x="731.330034613125" y="-247.123616632825"/>
+	<sprite x="1076.49967697109" sprite="wall" y="-1039.01596398181" type="none" scale="2" name="wall"/>
+	<sprite type="none" sprite="lavabottom" name="lavabot"/>
+	<sprite x="1892.54345952523" sprite="floorbot" y="190.981987939647" type="none" scalex="2.00053167673023" scaley="2" name="floorbg"/>
+	<sprite x="1137.10851515584" sprite="rocks" y="240.106581938945" type="none" scale="2" name="rocks"/>
+	<sprite sprite="lavatop" name="lavatop"/>
+	<sprite x="877.908738778582" sprite="floor" y="100.363753709592" type="none" scale="2" name="floor"/>
+	<sprite x="-403.083114915728" sprite="glowleft" y="-363.899391765085" name="glowleft"/>
+	<sprite x="2446.25701887301" sprite="glowright" y="-551.722756843416" type="none" name="glowright"/>
+	<dad x="2496" flipX="false" y="-622"/>
+	<sprite x="1318.33376403855" sprite="pil" y="-341.576266591015" type="none" scale="2" name="pil"/>
+	<boyfriend camxoffset="350" x="1093" camyoffset="-70" y="-196" flipX="false"/>
+	<sprite x="3522.5007880638" sprite="pilfor" y="245.120075215702" type="none" scale="2" scrollx="1.5" name="pilfor"/>
+	<sprite x="1043.50226120239" sprite="roof" y="-996.023602802055" type="none" scale="2" name="roof"/>
+</stage>

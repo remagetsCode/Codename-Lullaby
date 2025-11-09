@@ -1,15 +1,25 @@
 import funkin.menus.FreeplayState.FreeplaySonglist;
 import flixel.math.FlxPoint;
+import funkin.menus.ui.effects.WaveEffect;
+import flixel.effects.FlxFlicker;
+
+using StringTools;
 
 var songList:FreeplaySonglist;//= CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
 var curSelected = -1;
 
 var canChange:Bool = false;
+var missingno = new CustomShader('missingno');
+missingno.ENABLE_MODE = 0;
+missingno.MODE = 5;
+missingno.GLITCH_RECT_DIVISION = 10;
+missingno.GLITCH_THR = 0.06;
 
 var txtfile = CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
 public var songs:Array<ChartMetaData> = [];
-public var grpSongs:FlxTypedGroup<Alphabet>;
-public var locks:FlxTypedGroup<FlxSprite>;
+public var grpSongs:FlxTypedGroup<Alphabet> = new FlxTypedGroup<Alphabet>();
+public var locks:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+public var tmrs:FlxTypedGroup = new FlxTypedGroup();
 var status:Array = [];
 
 var camera;
@@ -25,10 +35,11 @@ public var portraitOffset:Map<String, FlxPoint> = [
 	'monochrome' => FlxPoint.get(1),
 	'missingno' => FlxPoint.get(12),
 	'brimstone' => FlxPoint.get(0, 115),
-	'death-toll' => FlxPoint.get(160, 165),
+	'death-toll' => FlxPoint.get(129, -4),
 	'isotope' => FlxPoint.get(12, 1),
 	'shitno' => FlxPoint.get(72, 90)
 ];
+var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 function create(){
 	status = FlxG.save.data.unlockedSongs;
@@ -53,18 +64,17 @@ function create(){
 	left.screenCenter();
 	left.x = FlxG.width;
 	left.alpha = 0.5;
+	left.antialiasing = true;
 	add(left);
 
-	grpSongs = new FlxTypedGroup<Alphabet>();
-	add(grpSongs);
 
-	locks = new FlxTypedGroup<FlxSprite>();
-	add(locks);
 
 	for (i => song in songs){
 		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
 		songText.ID = i;
+		songText.effects = [new WaveEffect(0, 5, 5)];
 		grpSongs.add(songText);
+		if(song.name == "missingno") songText.shader = missingno;
 
 		var lock = new FlxSprite();
 		lock.frames = Paths.getFrames('UI/base/unlocked');
@@ -85,21 +95,24 @@ function create(){
 	add(miniBG);
 	add(mini);
 
-	FlxTween.tween(bg, {x:0},1.5, {
+	FlxTween.tween(bg, {x:0},1.2, {
 		ease: FlxEase.quintOut,
 		onStart: ()->{
 			startEverything();	
 			changeItem(1);	
 			mini.x += 1000;
 			miniBG.x += 1000;
-			trace(mini.name);
-			FlxTween.tween(mini, {x: status.exists('safety-lullaby') ? 768 : 853}, 1.5, {
+			FlxTween.tween(mini, {x: status.exists('safety-lullaby') ? 768 : 853}, 1.25, {
 				ease: FlxEase.quintOut
 			});
-			FlxTween.tween(miniBG, {x: 850}, 1.5, {
+			FlxTween.tween(miniBG, {x: 850}, 1.25, {
 				ease: FlxEase.quintOut,
 				onComplete: ()->{miniBG.alpha = 1;}
 			});
+
+			mini.y = 159;
+			//FlxTween.tween(mini, {y: mini.y+20}, 2, {type: 4, ease: FlxEase.sineInOut});
+			//FlxTween.tween(miniBG, {y: miniBG.y+20}, 2, {type: 4, ease: FlxEase.sineInOut});
 	
 		},
 		onComplete: ()->{canChange = true;}
@@ -119,7 +132,26 @@ function create(){
 					break;
 				}
 		}, unlockQueue);
+
+	for(i => song in songs){
+		if(!status.exists(song.name)){
+			for(letter in abc) grpSongs.members[i].text = grpSongs.members[i].text.toLowerCase().replace(letter, "?");
+		}
+	}
+
+	add(grpSongs);
+	add(locks);
+	//for(i => song in songs){
+	//	if(!status.exists(song.name)){
+	//		var tmr = new FlxTimer().start(0.1, ()->grpSongs.members[i].text = shuffleText(grpSongs.members[i].text),0);
+	//		tmrs.add(tmr);
+	//	}
+	//}
 }
+
+
+
+
 
 function startEverything(){
 	for(a in grpSongs){
@@ -128,10 +160,14 @@ function startEverything(){
 		});
 	}
 
-	FlxTween.tween(left, {x:5},1.5, {ease: FlxEase.quintOut});
+	FlxTween.tween(left, {x:5},1.2, {ease: FlxEase.quintOut});
+
 }
 
-function update(){
+var time:Float = 0;
+function update(e){
+	//trace(mini.y);
+	missingno.iTime = time += e;
 	//trace(mini.x, mini.y);
 	status = FlxG.save.data.unlockedSongs;
 	
@@ -141,17 +177,15 @@ function update(){
 		var downP = controls.DOWN_P;
 		var scroll = FlxG.mouse.wheel;
 
-		if(leftP) preClose();
-
 		if (upP || downP || scroll != 0)
 			changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
 	
 		if(controls.ACCEPT) selectItem();
-		if (controls.BACK) FlxG.switchState(new MainMenuState());
+		if (controls.BACK || leftP) preClose();
 
 	}
 	for (a in grpSongs) {
-        var s = 0.9 + (a.ID == curSelected ? 0.1 : 0);
+        var s = 0.8 + (a.ID == curSelected ? 0.2 : 0);
         a.scale.x = lerp(a.scale.x, s, 0.2);
         a.scale.y = lerp(a.scale.y, s, 0.2);
         a.updateHitbox();
@@ -161,10 +195,13 @@ function update(){
 		locks.members[i].x = grpSongs.members[i].x+grpSongs.members[i].width/3;
 		locks.members[i].y = grpSongs.members[i].y-30;
 	}
+
 }
 
 var mini:FunkinSprite = new FunkinSprite();
 var twn:FlxTween = new FlxTween();
+var floating:FlxTween = new FlxTween();
+var floating2:FlxTween = new FlxTween();
 function changeItem(huh:Int = 0, ?mouse:Bool = false){		
 	//if(mini != null) mini.visible = false;
 
@@ -200,9 +237,16 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false){
 			mini.screenCenter();
 			mini.x = FlxG.width/1.5;
 			if(offs != null) mini.setPosition(mini.x-offs.x, mini.y-offs.y);
-			
+			//miniBG.x = 850;
+			miniBG.y = 159;
 
 			twn = FlxTween.tween(mini, {alpha: 1}, 0.3, {ease: FlxEase.cubeIn});
+
+			floating.cancel();
+			floating = FlxTween.tween(mini, {y: mini.y+10}, 2, {type: 4, ease: FlxEase.sineInOut});
+			floating2.cancel();
+			floating2 = FlxTween.tween(miniBG, {y: miniBG.y+10}, 2, {type: 4, ease: FlxEase.sineInOut});
+
 		}
 	});
 
@@ -225,8 +269,14 @@ function selectItem(){
 	if(curSelected != null && isUnlocked){
 		var selected = curSelected;
 		FlxG.sound.play(Paths.sound("confirmMenu"));
+		FlxFlicker.flicker(grpSongs.members[curSelected], 1, Options.flashingMenu ? 0.06 : 0.15, true, false);
+		FlxTween.tween(grpSongs.members[curSelected], {x: 640-grpSongs.members[curSelected].width/2}, 0.8, {ease: FlxEase.quintOut});
 
-		new FlxTimer().start(0.3, ()->{
+		new FlxTimer().start(1.0, ()->{
+			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.cubeIn});
+			FlxTween.tween(FlxG.camera, {zoom: 5}, 2, {ease: FlxEase.cubeIn});
+			});
+		new FlxTimer().start(2.0, ()->{
 			FlxG.switchState(PlayState.loadSong(songs[selected].name, 'hard'));
 			FlxG.switchState(new PlayState());
 		});
@@ -257,28 +307,41 @@ function unlockAnim(?songName:String){
 function preClose(){
 	left.animation.play('push');
 	canChange = false;
+	for(tmr in tmrs.members) tmr.destroy();
 
-	FlxTween.tween(left, {x: FlxG.width}, 2, {
+	FlxTween.tween(left, {x: FlxG.width}, 0.8, {
 		ease: FlxEase.quintOut
 	});
 
-	FlxTween.tween(mini, {x: FlxG.width}, 0.5, {
+	FlxTween.tween(mini, {x: FlxG.width}, 0.2, {
 		ease: FlxEase.quintOut
 	});
-	FlxTween.tween(miniBG, {x: FlxG.width}, 0.5, {
+	FlxTween.tween(miniBG, {x: FlxG.width}, 0.2, {
 		ease: FlxEase.quintOut
 	});
 
 	for(a in grpSongs){
-		FlxTween.tween(a, {x: FlxG.width}, 1.5, {
+		FlxTween.tween(a, {x: FlxG.width}, 0.7, {
 			ease: FlxEase.quintOut
 		});
 	}
-	FlxTween.tween(bg, {x:FlxG.width},2, {
+	FlxTween.tween(bg, {x:FlxG.width},0.7, {
 		ease: FlxEase.quintOut,
 		onComplete: ()->{
 			close();
 		}
 	});
+	
 
+}
+
+function shuffleText(txt:String):String {
+	var chars = txt.split(""); 
+	for (i in 0...chars.length) {
+		var j = FlxG.random.int(0, chars.length - 1);
+		var temp = chars[i];
+		chars[i] = chars[j];
+		chars[j] = temp;
+	}
+	return chars.join("");
 }

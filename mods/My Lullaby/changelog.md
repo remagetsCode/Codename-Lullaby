@@ -105,3 +105,11 @@ v 0.9
 - Fixed aspect ratio problems with the window in monochrome, now there'll be fixed aspect ratio settings, if you see black bars maybe its because your screen has an uncommon aspect ratio
 - Added some experimental color borders
 - Other minor changes i dont remember
+
+v0.10
+
+- ADDED DEATH TOLL SONG
+- Fixed bygone purpose name not displaying correctly
+- Improvements to the freeplay && faster transition
+- Added select song animation
+- Health bar moves smooth

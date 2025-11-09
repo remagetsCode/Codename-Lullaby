@@ -5,8 +5,8 @@ import funkin.backend.utils.DiscordUtil;
 
 FlxG.game.setFilters([]);
 
-var shaderCrt = new CustomShader('monitor');
-var aberration = new CustomShader('aberration');
+public var shaderCrt = new CustomShader('monitor');
+public static var aberration = new CustomShader('aberration');
 var options:Array = [];
 var curSelected = -1;
 
@@ -15,7 +15,7 @@ var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "6Broken Note", "8Trainer Bow"];
+var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow"];
 var itemsGrp:FlxTypedGroup;
 var pricesGrp:FlxTypedGroup;
 var prices:Array = [];
@@ -30,7 +30,8 @@ function create(){
 	if(FlxG.save.data.lullabyShaders){
 		FlxG.game.addShader(shaderCrt);
 		FlxG.game.addShader(aberration);
-		aberration.iTime = 6;
+		aberration.iTime = 7;
+		aberration.amount = 0.5;
 	}
 
 	itemsGrp = new FlxTypedGroup();
@@ -126,9 +127,19 @@ function create(){
 	buyBox.y -= 50;
 	add(buyBox);
 
+	var posh:Int = 0;
+	var posw:Int = 0;
+
 	for(i => item in items) {
+
+		if (i % 4 == 0 && i != 0){ 
+			posw = 0;
+			posh++;
+		}
+		
+
 		var d:String = CoolUtil.parseJson(Paths.json("shop/items/" + item));
-		spr = new FunkinSprite((250+150*i)+d.itemDetail.xOffset, 150+d.itemDetail.yOffset);
+		spr = new FunkinSprite((270+150*posw), (150+160*posh));
 		spr.frames = Paths.getFrames("shop/" + item + "/item");
 		spr.animation.addByPrefix('idle', d.itemDetail.animName, 24, true);
 		spr.animation.play('idle');
@@ -137,13 +148,16 @@ function create(){
 		spr.extra.set('price', d.itemDetail.price);
 		itemsGrp.add(spr);
 
-		price = new FunkinText(245+150*i, 275, 130, d.itemDetail.price, 24, false);
+		price = new FunkinText(spr.x, spr.y+120, 130, d.itemDetail.price, 24, false);
 		price.color = FlxColor.BLACK;
 		price.alignment = "center";
 		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
 		pricesGrp.add(price);
 
 		prices.push(d.itemDetail.price);
+		posw++;
+		spr.x += d.itemDetail.xOffset;
+		spr.y += d.itemDetail.yOffset;
 	}
 	add(itemsGrp);
 	add(pricesGrp);
@@ -256,11 +270,10 @@ function update(elapsed){
 		if(canMove){
 			if ((upP || downP || scroll != 0) && textBox.visible && !buying)
 				changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
-			else if((leftP || rightP) && buying)
-				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
+			else if((leftP || rightP || upP || downP) && buying)
+				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0) + (downP ? 4 : 0) + (upP ? -4 : 0));
 
 			if(rightP && !buying) {
-				onSubstate = true;
 				right.animation.play('push');
 				new FlxTimer().start(0.1, (_)->{right.animation.play('idle');});
 				openSubState(new ModSubState('RealFreePlay'));
@@ -273,9 +286,6 @@ function update(elapsed){
 		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 
-	}
-	else{
-		if(leftP) onSubstate = false;
 	}
 
 	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
@@ -329,7 +339,9 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false)
 		//else if(!mouse && !buying){
 			switch(huh){
 				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = len;
+				case -4: curSelected-4 >= 0 ? curSelected-=4 : null;
 				case 1: curSelected+1 <= len ? curSelected++ : curSelected = 0;
+				case 4: curSelected+4 <= len ? curSelected+=4 : null;
 			}
 		//}
 		//else if(!mouse && buying){  //For later
@@ -433,3 +445,6 @@ function showNextLetter(timer:FlxTimer){
 #end
 
 // WE REACHED THE 4 HUNDRED LINES LETS GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+subStateOpened.add(function(){onSubstate = true;});
+subStateClosed.add(function(){onSubstate = false;});

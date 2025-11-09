@@ -245,7 +245,7 @@ function unownMechanic(?word:String){
 	//			ease: FlxEase.quintOut,
 	//			onUpdate: (v)->{health = v.value;}
 	//		});
-	//		if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill();}
+	//		if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill(); linesGrp.kill();}
 	//	});
 	//}
 }

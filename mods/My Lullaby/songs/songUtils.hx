@@ -23,6 +23,9 @@ function postCreate(){
 	setMarginColor(0x000000, 0.5);
 }
 
+public var smooth;
+function update() healthBar.percent = smooth = lerp(smooth, health*50, 0.1);
+
 function onSongEnd(){
 	var exists:Bool = FlxG.save.data.unlockedSongs.exists(curSong);
 	
