@@ -266,11 +266,14 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false){
 function selectItem(){
 	var isUnlocked:Bool;
 	if(status.exists(songs[curSelected].name)) isUnlocked = true;
-	if(curSelected != null && isUnlocked){
+
+	if(curSelected != null && isUnlocked)
+	{
 		var selected = curSelected;
 		FlxG.sound.play(Paths.sound("confirmMenu"));
-		FlxFlicker.flicker(grpSongs.members[curSelected], 1, Options.flashingMenu ? 0.06 : 0.15, true, false);
-		FlxTween.tween(grpSongs.members[curSelected], {x: 640-grpSongs.members[curSelected].width/2}, 0.8, {ease: FlxEase.quintOut});
+		FlxTween.cancelTweensOf(grpSongs.members[selected]);
+		FlxFlicker.flicker(grpSongs.members[selected], 1, Options.flashingMenu ? 0.06 : 0.15, true, false);
+		FlxTween.tween(grpSongs.members[selected], {x: 640-grpSongs.members[selected].width/2}, 0.8, {ease: FlxEase.quintOut});
 
 		new FlxTimer().start(1.0, ()->{
 			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.cubeIn});
@@ -281,7 +284,8 @@ function selectItem(){
 			FlxG.switchState(new PlayState());
 		});
 	}
-	else if (!isUnlocked){
+	else if (!isUnlocked)
+	{
 		FlxTween.shake(locks.members[curSelected], 0.1, 0.5, FlxAxes.XY);
 		FlxG.sound.play(Paths.sound('errorMenu'));
 	}

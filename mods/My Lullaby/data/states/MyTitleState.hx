@@ -55,6 +55,11 @@ function create(){
 		floatingLogo();
 	});
 	
+	FlxTween.angle(startScreen, 5, -5, 6, {
+		ease: FlxEase.smoothStepInOut,
+		type: FlxTween.PINGPONG
+	});
+	
 	window.title = windowTitle;
 
 	DiscordUtil.config.clientID = "1433852304745824318";
@@ -102,10 +107,6 @@ function update(){
 
 function floatingLogo(){
 	FlxTween.tween(startScreen, {y: startScreen.y + 125}, 4, {
-		ease: FlxEase.smoothStepInOut,
-		type: FlxTween.PINGPONG
-	});
-	FlxTween.angle(startScreen, 5, -5, 6, {
 		ease: FlxEase.smoothStepInOut,
 		type: FlxTween.PINGPONG
 	});
