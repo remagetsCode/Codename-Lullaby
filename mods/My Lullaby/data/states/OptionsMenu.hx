@@ -16,7 +16,12 @@ function create(){
 			}
 		});
 
-	DiscordUtil.config.clientID = "1433852304745824318";
-	DiscordUtil.config.logoKey = "unknown";
-	DiscordUtil.changePresence("Options Menu", "Adjusting the gears.");
+	try{
+		DiscordUtil.config.clientID = "1433852304745824318";
+		DiscordUtil.config.logoKey = "unknown";
+		DiscordUtil.changePresence("Options Menu", "Adjusting the gears.");
+	}
+	catch(e:Dynamic){
+		trace("fallo al hacer algo con discord :v");
+	}
 }

@@ -9,6 +9,9 @@ function postCreate(){
     FlxG.cameras.add(camDS, false);
     //player.cpu = true;
     
+    // MOBILE ONLY
+    if(FlxG.save.data.lullabyMechanics) Options.extraHints = 'SINGLE';
+
     if(FlxG.save.data.lullabyShaders)
     {
         FlxG.game.addShader(aberration);
@@ -260,4 +263,8 @@ function onPlayerMiss(e){
             amount = 0.1;
         });
     }
+}
+
+function destroy(){
+    Options.extraHints = 'NONE';
 }

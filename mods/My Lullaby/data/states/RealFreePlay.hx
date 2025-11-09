@@ -294,7 +294,7 @@ function unlockAnim(?songName:String){
 			l = locks.members[curSelected];
 			l.animation.play('unlocked');
 			l.animation.onFinish.addOnce(function(){
-				FlxTween.tween(l, {alpha: 0, }, 1);
+				FlxTween.tween(l, {alpha: 0}, 1);
 				FlxG.sound.play(Paths.sound('errorMenu'));
 			});
 			canChange = true;

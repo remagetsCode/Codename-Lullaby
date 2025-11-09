@@ -29,9 +29,9 @@ function postCreate(){
     playerStrums.members[3].getJustPressed = () -> { return controls.NOTE_RIGHT_P; }
     playerStrums.members[3].getJustReleased = () -> { return controls.NOTE_RIGHT_R; }
 
-    playerStrums.members[4].getPressed = () -> { return controls.getPressed("mechanic"); }
-    playerStrums.members[4].getJustPressed = () -> { return controls.getJustPressed("mechanic"); }
-    playerStrums.members[4].getJustReleased = () -> { return controls.getJustReleased("mechanic"); }
+    playerStrums.members[4].getPressed = () -> { return hitbox.buttonExtra.pressed; }
+    playerStrums.members[4].getJustPressed = () -> { return hitbox.buttonExtra.justPressed; }
+    playerStrums.members[4].getJustReleased = () -> { return hitbox.buttonExtra.justReleased; }
 
     modchart.ease('z', 313, 2, -100, FlxEase.backIn, 0);
     if(!FlxG.save.data.lullabyMechanics){
