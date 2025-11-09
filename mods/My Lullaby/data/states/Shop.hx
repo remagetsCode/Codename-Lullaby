@@ -127,9 +127,19 @@ function create(){
 	buyBox.y -= 50;
 	add(buyBox);
 
+	var posh:Int = 0;
+	var posw:Int = 0;
+
 	for(i => item in items) {
+
+		if (i % 4 == 0 && i != 0){ 
+			posw = 0;
+			posh++;
+		}
+		
+
 		var d:String = CoolUtil.parseJson(Paths.json("shop/items/" + item));
-		spr = new FunkinSprite((250+150*i)+d.itemDetail.xOffset, 150+d.itemDetail.yOffset);
+		spr = new FunkinSprite((270+150*posw), (150+160*posh));
 		spr.frames = Paths.getFrames("shop/" + item + "/item");
 		spr.animation.addByPrefix('idle', d.itemDetail.animName, 24, true);
 		spr.animation.play('idle');
@@ -138,13 +148,16 @@ function create(){
 		spr.extra.set('price', d.itemDetail.price);
 		itemsGrp.add(spr);
 
-		price = new FunkinText(245+150*i, 275, 130, d.itemDetail.price, 24, false);
+		price = new FunkinText(spr.x, spr.y+120, 130, d.itemDetail.price, 24, false);
 		price.color = FlxColor.BLACK;
 		price.alignment = "center";
 		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
 		pricesGrp.add(price);
 
 		prices.push(d.itemDetail.price);
+		posw++;
+		spr.x += d.itemDetail.xOffset;
+		spr.y += d.itemDetail.yOffset;
 	}
 	add(itemsGrp);
 	add(pricesGrp);
@@ -259,8 +272,8 @@ function update(elapsed){
 		if(canMove){
 			if ((upP || downP || scroll != 0) && textBox.visible && !buying)
 				changeItem((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
-			else if((leftP || rightP) && buying)
-				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0));
+			else if((leftP || rightP || upP || downP) && buying)
+				changeItem((leftP ? -1 : 0) + (rightP ? 1 : 0) + (downP ? 4 : 0) + (upP ? -4 : 0));
 
 			if(rightP && !buying) {
 				right.animation.play('push');
@@ -328,7 +341,9 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false)
 		//else if(!mouse && !buying){
 			switch(huh){
 				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = len;
+				case -4: curSelected-4 >= 0 ? curSelected-=4 : null;
 				case 1: curSelected+1 <= len ? curSelected++ : curSelected = 0;
+				case 4: curSelected+4 <= len ? curSelected+=4 : null;
 			}
 		//}
 		//else if(!mouse && buying){  //For later

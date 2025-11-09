@@ -271,9 +271,10 @@ function selectItem(){
 		FlxG.sound.play(Paths.sound("confirmMenu"));
 		FlxFlicker.flicker(grpSongs.members[curSelected], 1, Options.flashingMenu ? 0.06 : 0.15, true, false);
 		FlxTween.tween(grpSongs.members[curSelected], {x: 640-grpSongs.members[curSelected].width/2}, 0.8, {ease: FlxEase.quintOut});
+
 		new FlxTimer().start(1.0, ()->{
-			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.quadOut});
-			FlxTween.tween(FlxG.camera, {zoom: 5}, 2, {ease: FlxEase.quadOut});
+			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.cubeIn});
+			FlxTween.tween(FlxG.camera, {zoom: 5}, 2, {ease: FlxEase.cubeIn});
 			});
 		new FlxTimer().start(2.0, ()->{
 			FlxG.switchState(PlayState.loadSong(songs[selected].name, 'hard'));
