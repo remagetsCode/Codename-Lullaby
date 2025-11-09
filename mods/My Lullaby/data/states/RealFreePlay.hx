@@ -74,7 +74,7 @@ function create(){
 		songText.ID = i;
 		songText.effects = [new WaveEffect(0, 5, 5)];
 		grpSongs.add(songText);
-		if(song.name == "missingno") songText.shader = missingno;
+		if(song.name == "missingno" && FlxG.save.data.lullabyShaders) songText.shader = missingno;
 
 		var lock = new FlxSprite();
 		lock.frames = Paths.getFrames('UI/base/unlocked');
