@@ -11,6 +11,7 @@
 	<girlfriend camxoffset="230" x="1489" y="-457.959389821791" scale="0.75"/>
 	<dad camxoffset="-350" x="2400.7619047619" camyoffset="40" y="-623.904761904762"/>
 	<sprite x="1318" sprite="pil" y="-342" type="none" scale="1.5" name="pil"/>
+	<ratings x="1500" y="100"/>
 	<boyfriend camxoffset="250" x="1211.09387469225" camyoffset="-30" y="-300.333100519222"  flipX="false"/>
 	<sprite x="3466.09664142928" sprite="pilfor" y="256.460629667267" type="none" scale="1.5" scrollx="1.5" name="pilfor"/>
 	<sprite x="963.187796435823" sprite="roof" y="-850.538033584482" type="none" scale="1.5" scrolly="1.5" name="roof"/>

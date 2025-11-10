@@ -12,7 +12,6 @@ var ljBar:FlxBar;
 
 var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
 
-FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
 introLength = 7;
 
 var curDisplayHeight = window.display.bounds.height;
@@ -24,21 +23,23 @@ Framerate.codenameBuildField.visible = false;
 Framerate.memoryCounter.visible = false;
 Framerate.fpsCounter.visible = false;
 function create(){
-	aspect = getAspectRatio(curDisplayWidth, curDisplayHeight);
+	if(FlxG.save.data.monochromeWindow){
+		aspect = getAspectRatio(curDisplayWidth, curDisplayHeight);
 
-	Main.scaleMode.width = aspect[0];
-    Main.scaleMode.height = aspect[1];
+		Main.scaleMode.width = aspect[0];
+    	Main.scaleMode.height = aspect[1];
 
-	FlxG.width = aspect[0]; 
-	FlxG.height = aspect[1];
-    
-    for(c in FlxG.cameras.list){
-        c.width = aspect[0];
-        c.height = aspect[1];
-    }	
+		FlxG.width = aspect[0]; 
+		FlxG.height = aspect[1];
+		
+    	for(c in FlxG.cameras.list){
+    	    c.width = aspect[0];
+    	    c.height = aspect[1];
+    	}	
 
-	SET_TRANSPARENT(true, 5, 5, 5);
-	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
+		SET_TRANSPARENT(true, 5, 5, 5);
+		camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
+	}
 	
 	if(FlxG.save.data.lullabyShaders){ 
 		FlxG.game.addShader(desat);
@@ -47,6 +48,7 @@ function create(){
 		aberration.iTime = 5;
 	}
 	dad.alpha = 0;
+
 
 	nomore = new FlxSprite(dad.x, dad.y);
 	nomore.frames = Paths.getFrames('characters/gold/GOLD_NO_MORE');
@@ -97,6 +99,12 @@ function create(){
 }
 
 function postCreate(){
+	FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
+
+	unownCam = new FlxCamera(0, 0);
+    unownCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(unownCam, false);
+
 	ljBar = new FlxBar(
 		FlxG.width*0.25, healthBar.y-2,
 		FlxBarFillDirection.RIGHT_TO_LEFT,
@@ -125,8 +133,8 @@ function postCreate(){
 function onCountdown(event) event.cancel();
 
 function onSongStart(){
-	window.borderless = true;
-	window.fullscreen = true;
+	//window.borderless = true;
+	//window.fullscreen = true;
 	modchart.ease('alpha', 44, 1, 1, FlxEase.cubeOut, 1);
 	modchart.ease('wiggle', 92, 3, 0.8, FlxEase.smoothStep, 1);
 	modchart.ease('tipsyX', 92, 3, 0.2, FlxEase.smoothStep, 1);
@@ -152,10 +160,14 @@ function update(){
 
 	user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
 
-	switch(user){
-		case 'SLASH': user = '?';
-		case 'MINUS': user = '?';
-		case '1': user = '!';
+	if(FlxG.keys.pressed.SHIFT)
+	{
+		trace('shift pressed');
+		switch(user){
+			case 'SLASH': user = '?';
+			case 'MINUS': user = '?';
+			case '1': user = '!';
+		}
 	}
 	
 	if(unown){
@@ -171,6 +183,10 @@ function update(){
 				bg.kill();
 				unownGrp.kill();
 				linesGrp.kill();
+				timer.kill(); 
+				timeBar.kill(); 
+				anotherTimer.cancel();
+				unownTimer.cancel();
 			}
 		}
 	}
@@ -210,6 +226,12 @@ var unown:Bool = false;
 var unownGrp:FlxTypedGroup<FlxSprite>;
 var linesGrp:FlxTypedGroup<FlxSprite>;
 var curWord:String;
+var time:Int = 0;
+
+var unownTimer:FlxTimer;
+var anotherTimer:FlxTimer;
+var timer:FlxText;
+var timeBar:FlxBar;
 function unownMechanic(?word:String){
 
 	//IF TRYING TO PORT THIS TO MOBILE, JUST COMMENT ALL THIS CHUNK OR DISABLE THE MECHANICS.
@@ -225,6 +247,7 @@ function unownMechanic(?word:String){
 
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 20, 20, 150));
 		bg.scrollFactor.set(0);
+		bg.camera = unownCam;
 		add(bg);
 
 		var test = 1-curWord.length*0.055;
@@ -238,28 +261,60 @@ function unownMechanic(?word:String){
 				uAlpha.animation.play('this');
 				uAlpha.setGraphicSize((uAlpha.width*test)+20, uAlpha.height*test);
 				uAlpha.updateHitbox();
-				uAlpha.setPosition((420-curWord.length*26)+(uAlpha.width*1.5)*i, 250);
+				uAlpha.setPosition((420-curWord.length*26)+(uAlpha.width*1.5)*i, 150);
 				uAlpha.scrollFactor.set(0);
 				uAlpha.antialiasing = true;
+				uAlpha.camera = unownCam;
 				unownGrp.add(uAlpha);
 
 				var line = new FlxSprite().loadGraphic(Paths.image('UI/base/line'));
 				line.scrollFactor.set(0);
 				line.setGraphicSize(line.width*test, line.height*test);
-				line.setPosition(uAlpha.x-line.width/4, uAlpha.y+300);
+				line.setPosition(uAlpha.x-line.width/4, uAlpha.y+450);
+				line.camera = unownCam;
 				linesGrp.add(line);
 			}
 		}
 		add(unownGrp);
 		add(linesGrp);
 
-		new FlxTimer().start(6, ()->{
+		unownTimer = new FlxTimer().start(6, ()->{
 			FlxTween.num(health, health - (curWord.length - counter)*0.3, 0.75, {
 				ease: FlxEase.quintOut,
 				onUpdate: (v)->{health = v.value;}
 			});
-			if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill(); linesGrp.kill();}
+			if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill(); linesGrp.kill(); timer.kill(); timeBar.kill(); anotherTimer.kill();}
 		});
+
+		
+		timer = new FlxText(0, 0, 0, "6", 34, false);
+		timer.screenCenter();
+		timer.y += 100;
+		timer.camera = unownCam;
+		add(timer);
+
+		
+
+		timeBar = new FlxBar(
+			FlxG.width*0.06, FlxG.height*0.7,
+			FlxBarFillDirection.LEFT_TO_RIGHT,
+			1123, 15
+		);
+
+		timeBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.WHITE);
+    	timeBar.cameras = [camHUD];
+		timeBar.numDivisions = 200;
+		timeBar.camera = unownCam;
+		add(timeBar);
+
+		anotherTimer = new FlxTimer().start(0.03, ()->{
+			if(unownTimer.active) {
+				trace((6-unownTimer.elapsedTime)*(100/6));
+				timer.text = 6-Std.int(unownTimer.elapsedTime);
+				timeBar.percent = (6-unownTimer.elapsedTime)*(100/6);
+				timeBar.updateBar();
+			}
+			}, 0);
 	}
 }
 
@@ -342,22 +397,26 @@ function destroy(){
 	window.fullscreen = false;
 	window.borderless = false;
 
-	SET_TRANSPARENT(false, 5, 5, 5);
+	if(FlxG.save.data.monochromeWindow)
+	{
+		SET_TRANSPARENT(false, 5, 5, 5);
 
-	Main.scaleMode.width = 1280;
-    Main.scaleMode.height = 720;
+		Main.scaleMode.width = 1280;
+    	Main.scaleMode.height = 720;
 
-	FlxG.width = 1280; 
-	FlxG.height = 720;
-    
-    for(c in FlxG.cameras.list){
-        c.width = 1280;
-        c.height = 720;
-    }
-	//setTransparency(false, 255, 0, 254);
+		FlxG.width = 1280; 
+		FlxG.height = 720;
+		
+    	for(c in FlxG.cameras.list){
+    	    c.width = 1280;
+    	    c.height = 720;
+    	}
+	}
+
 	Framerate.memoryCounter.visible = true;
 	Framerate.fpsCounter.visible = true;
 	marginTween(true);
+	
 }
 
 

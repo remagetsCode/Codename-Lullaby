@@ -24,7 +24,7 @@ function postCreate(){
     drama.scrollFactor.set(0);
     drama.zoomFactor = 0;
     drama.alpha = 0;
-    insert(14, drama);
+    insert(15, drama);
 
     dawnbf = player.characters[1];
     dawn = player.characters[0];
@@ -228,6 +228,8 @@ var coverTime:FlxTimer = new FlxTimer();
 function onPlayerHit(e){
     if(e.note.strumID == 4) {
         e.preventAnim();
+        countAsCombo = false;
+        countScore = false;
         if(dawn.idleSuffix == "")
         {
             dawn.playAnim('coveringTrans', true);

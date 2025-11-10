@@ -8,4 +8,5 @@
 	<sprite x="768" sprite="Purple_place" y="127" scroll="0.6" type="none" scale="0.6" name="place-bf"/>
 	<dad x="300" y="1"/>
 	<boyfriend x="1048" scroll="0.59" y="-379"/>
+	<ratings x="930" y="250"/>
 </stage>

@@ -6,7 +6,7 @@ function create(){
         FlxG.game.addShader(desat);
         FlxG.game.addShader(heat);
         heat.intensity = 0;
-        heat.vel = 0;
+        heat.vel = 1;
         desat.desaturationAmount = amnt;
     }
 }
@@ -29,7 +29,7 @@ function postCreate(){
 
 var a:Float = 0.0;
 function update(elapsed){
-    heat.iTime = a += elapsed;
+    heat.iTime = a += elapsed * br;
     blur.Size = bruh;
 }
 
@@ -41,8 +41,8 @@ function stepHit(step){
     amnt = lerp(amnt, 1, 0.035);
     desat.desaturationAmount = amnt;
 
-    if(bru == 1) {heat.intensity = br = lerp(br, 1, 0.05); heat.vel = br;}
-    if(bru == 2) {heat.intensity = br = lerp(br, 0, 0.1); heat.vel = br;}
+    if(bru == 1) {heat.intensity = br = lerp(br, 1, 0.04);}
+    if(bru == 2) {heat.intensity = br = lerp(br, 0, 0.05);}
 
     switch(step){
         case 0: FlxTween.tween(black, {alpha: 0.2}, 25);

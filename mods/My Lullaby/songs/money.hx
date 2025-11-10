@@ -18,7 +18,7 @@ function onSongEnd(e) {
         money.animation.play('idle');
         money.cameras = [moneyCam];
         money.animation.onFinish.add(function(){
-            if(FlxG.random.bool(1)){
+            if(FlxG.random.bool(1) && (curSong != "safety-lullaby" || curSong != "left-unchecked" || curSong != "lost-cause")){
                 FlxG.switchState(PlayState.loadSong('shinte', 'drah'));
 			    FlxG.switchState(new PlayState()); 
             }
