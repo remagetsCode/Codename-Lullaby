@@ -285,15 +285,12 @@ function unownMechanic(?word:String){
 			});
 			if(bg.alive || unownGrp.alive) {bg.kill(); unownGrp.kill(); linesGrp.kill(); timer.kill(); timeBar.kill(); anotherTimer.kill();}
 		});
-
 		
 		timer = new FlxText(0, 0, 0, "6", 34, false);
 		timer.screenCenter();
 		timer.y += 100;
 		timer.camera = unownCam;
 		add(timer);
-
-		
 
 		timeBar = new FlxBar(
 			FlxG.width*0.06, FlxG.height*0.7,
@@ -309,12 +306,11 @@ function unownMechanic(?word:String){
 
 		anotherTimer = new FlxTimer().start(0.03, ()->{
 			if(unownTimer.active) {
-				trace((6-unownTimer.elapsedTime)*(100/6));
 				timer.text = 6-Std.int(unownTimer.elapsedTime);
 				timeBar.percent = (6-unownTimer.elapsedTime)*(100/6);
 				timeBar.updateBar();
 			}
-			}, 0);
+		}, 0);
 	}
 }
 

@@ -72,7 +72,7 @@ function create(){
 	for (i => song in songs){
 		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
 		songText.ID = i;
-		songText.effects = [new WaveEffect(0, 5, 5)];
+		songText.effects = [new WaveEffect(0, 3, 8)];
 		grpSongs.add(songText);
 		if(song.name == "missingno" && FlxG.save.data.lullabyShaders) songText.shader = missingno;
 
@@ -148,9 +148,6 @@ function create(){
 	//	}
 	//}
 }
-
-
-
 
 
 function startEverything(){
