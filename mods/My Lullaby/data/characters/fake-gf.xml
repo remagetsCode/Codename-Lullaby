@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="apparitiongf_assets" antialiasing="false">
+	<anim name="idle" anim="BAGF_Idle" loop="true"/>
+	<anim name="singDOWN" anim="BAGF_Down"/>
+	<anim name="singRIGHT" anim="BAGF_Right" x="4" y="-3"/>
+	<anim name="singLEFT" anim="BAGF_Left" x="-5" y="-2"/>
+	<anim name="singUP" anim="BAGF_Up" y="-2"/>
+	<anim name="the_lols" anim="the_lols"/>
+</character>

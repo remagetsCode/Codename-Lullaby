@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="Purin_Recolored" scale="0.5" camx="-100" camy="90">
+<character sprite="Purin_Recolored" scale="0.5" camx="-100" camy="90" icon="icon-jigglypuff" color="#000000">
 	<anim name="idle" anim="Body" loop="true"/>
 	<anim name="singDOWN" anim="Jigglypuff Down front" x="36" y="-37"/>
 	<anim name="singRIGHT" anim="Right pose" x="-50" y="16"/>

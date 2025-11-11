@@ -67,8 +67,6 @@ function create(){
 	left.antialiasing = true;
 	add(left);
 
-
-
 	for (i => song in songs){
 		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
 		songText.ID = i;

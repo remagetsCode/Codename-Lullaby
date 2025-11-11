@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/buried/images/" name="buried">
+	<girlfriend/>
+	<sprite antialiasing="false" sprite="brimstoneBack" type="none" scale="3" name="Back"/>
+	<sprite antialiasing="false" sprite="floor" type="none" scale="3" name="Floor"/>
+	<sprite antialiasing="false" sprite="graves" type="none" scale="3" name="Graves"/>
+	<dad x="109.610244745757" y="98.3982925423738"/>
+	<boyfriend x="766.796585084744" y="98.398292542374"/>
+</stage>

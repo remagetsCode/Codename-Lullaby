@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="WigglesTerrorUneashed" x="-370" y="530" scale="0.6">
+<character x="-370" y="530" sprite="WigglesTerrorUneashed" scale="0.6" icon="icon-wigglytuff3" color="#000000">
 	<anim name="idle" anim="WigglesTerror" y="1" indices="1..12"/>
 	<anim name="singLEFT" anim="WigglesTerror" y="2" indices="14..23"/>
 	<anim name="singUP" anim="WigglesTerror" x="-3" y="3" indices="29..37"/>

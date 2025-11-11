@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="buryman_assets" icon="icon-buried" color="#2A2A2A" antialiasing="false">
+	<anim name="idle" anim="buryman_idle"/>
+	<anim name="singDOWN" anim="buryman_down"/>
+	<anim name="singRIGHT" anim="buryman_right"/>
+	<anim name="singLEFT" anim="buryman_left"/>
+	<anim name="singUP" anim="buryman_up"/>
+	<anim name="buryman_laugh" anim="buryman_laugh"/>
+	<anim name="buryman_ground" anim="buryman_ground" loop="true"/>
+	<anim name="buryman_scream" anim="buryman_scream"/>
+</character>

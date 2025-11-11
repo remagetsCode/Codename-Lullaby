@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="gengar_assets" antialiasing="false" icon="gengar">
+	<anim name="idle" anim="gengar idle"/>
+	<anim name="singDOWN" anim="gengar down"/>
+	<anim name="singRIGHT" anim="gengar right"/>
+	<anim name="singLEFT" anim="gengar left"/>
+	<anim name="singUP" anim="gengar up"/>
+	<anim name="jolly" anim="jolly"/>
+	<anim name="gungar" anim="gungar"/>
+</character>

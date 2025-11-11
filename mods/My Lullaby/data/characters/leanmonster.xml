@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character antialiasing="false" icon="leanmonster">
+	<anim name="idle" anim="Muk_Idle"/>
+	<anim name="singDOWN" anim="Muk_Down"/>
+	<anim name="singRIGHT" anim="Muk_Right"/>
+	<anim name="singLEFT" anim="Muk_Left"/>
+	<anim name="singUP" anim="Muk_Up"/>
+	<anim name="Muk_Puke" anim="Muk_Puke"/>
+	<anim name="Muk_Intro" anim="Muk_Intro"/>
+</character>
