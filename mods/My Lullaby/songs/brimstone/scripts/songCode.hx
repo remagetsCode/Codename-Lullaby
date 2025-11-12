@@ -4,11 +4,15 @@ import flixel.ui.FlxBarFillDirection;
 var directions = ["LEFT", "DOWN", "UP", "RIGHT"];
 introLength = 0;
 function create(){
+    player.cpu = true;
+    camGame.addShader(heat1);
+    heat1.intensity = 1;
+    heat1.v_comp = 5.0;
+    
     buryman = cpu.characters[0];
     gengar = cpu.characters[1];
     fakegf = cpu.characters[2];
     loan = cpu.characters[3];
-    
 
     missingnobf = player.characters[0];
     bfxml = player.characters[1];
@@ -138,7 +142,7 @@ function postCreate(){
     wa.scale.set(3, 3);
     wa.alpha = 0;
     wa.updateHitbox();
-    add(wa);
+    insert(6, wa);
 
     waShad = new FlxSprite(wa.x, wa.y + 100).loadGraphic(Paths.image("characters/buried/shadow"));
     waShad.scale.set(3,3);
@@ -158,11 +162,13 @@ function postCreate(){
 var time:Float = 0;
 function update(e){
     missingno.iTime = time += e;
+    heat1.iTime = time;
     hpBar.percent = health*50;
     cpuBar.percent = (2.05-health)*50;
 }
 
 function stepHit(s){
+    hpBar.color = CoolUtil.lerpColor(hpBar.color, FlxColor.WHITE, 0.08);
     switch(s){
         case 1: holds.visible = false;
 
@@ -183,7 +189,7 @@ function stepHit(s){
             FlxTween.tween(nogega, {alpha: 0.3}, 5);
 
         case 1281:
-            FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 3, {ease: FlxEase.circInOut});
+            FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 2, {ease: FlxEase.circInOut});
 
         case 1593:
             FlxTween.tween(pkball, {x: 150, y: 200}, 0.1);
@@ -196,21 +202,22 @@ function stepHit(s){
             pkball.animation.play('final');
         case 1730: missingnobf.alpha = 1;
         case 2385:
+            FlxTween.tween(nogega, {alpha: 0}, 1, {onComplete: nogega.destroy});
             gengarEnt.alpha = 1;
             gengar.alpha = 0;
             gengarEnt.animation.play('enter', false, true);
         case 2390:
             gengarEnt.kill();
             gengar.kill();
-        case 2400: 
-            FlxTween.tween(missingnobf, {y: 1000}, 0.8, {ease: FlxEase.quintOut});
-            FlxTween.tween(bfxml, {x: bfxml.x + 100}, 1, {ease: FlxEase.quintOut});
+        case 2395: 
+            FlxTween.tween(missingnobf, {y: 1000}, 0.8, {ease: FlxEase.quintOut, onComplete: missingno.kill});
+            FlxTween.tween(bfxml, {x: bfxml.x + 120}, 1, {ease: FlxEase.quintOut});
 
         case 2700:
             loan.alpha = 1;
             loan.playAnim('Muk_Intro');
 
-        case 2964:
+        case 3240:
             wa.alpha = 1;
             wa.animation.play('intro');
             FlxTween.tween(waShad, {alpha: 1}, 1);
@@ -231,10 +238,19 @@ function onPlayerHit(e){
         case "geng note":
             e.preventAnim();
             bfxml.playAnim("BF_AURGH", true);
-            FlxG.sound.play(Paths.sound("errorMenu"), 3);
+            FlxG.sound.play(Paths.sound("errorMenu"), 2);
+            e.healthGain = -0.2;
+            hpBar.color = FlxColor.PURPLE;
+            FlxTween.shake(nogega, 0.07, 1);
         default:
             e.preventAnim();
             bfxml.playSingAnim(e.direction);
+    }
+}
+
+function onPlayerMiss(e){
+    if(e.note.noteType == "geng note"){
+        e.cancel();
     }
 }
 
@@ -261,10 +277,33 @@ inline function shake(){
 
     new FlxTimer().start(0.05, ()->{
         if(!window.fullscreen){
-            window.x += FlxG.random.int(-10, 10);
-            window.y += FlxG.random.int(-10, 10);
+            window.x += FlxG.random.int(-5, 5);
+            window.y += FlxG.random.int(-5, 5);
         }
-    }, 3);
+    }, 4);
     FlxTween.shake(buryman, 0.05, 0.5, FlxAxes.X);
+
+}
+
+function loanCums(){
+    loan.playAnim("Muk_Puke", true);
+    new FlxTimer().start(0.25, ()->{
+        var muk = new FlxSprite();
+        muk.frames = Paths.getFrames('characters/buried/muksludge');
+        muk.animation.addByPrefix('sludge', 'Sludge_0'+FlxG.random.int(1,3), 24, false);
+        muk.animation.play('sludge');
+        muk.camera = camExtra;
+        muk.scale.set(3,3);
+        muk.updateHitbox();
+        muk.screenCenter();
+        muk.alpha = 0;
+        add(muk);
+
+        FlxG.sound.play(Paths.sound('MukCums'), 3);
+        bfxml.playAnim("BF_AURGH", true);
+
+        FlxTween.tween(muk, {alpha: 1}, 0.1);
+        new FlxTimer().start(1, ()->FlxTween.tween(muk, {alpha: 0}, 4, {onComplete: muk.destroy}));
+    });
 
 }

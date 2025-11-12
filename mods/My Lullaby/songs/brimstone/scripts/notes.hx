@@ -43,6 +43,7 @@ function onNoteCreation(event) {
 		note.loadGraphic(Paths.image('UI/pixel/genga'), true, 32, 32);
 		var maxCol = Math.floor(note.graphic.width / 17);
 		note.animation.add("scroll", [0 + strumID%maxCol]);
+		
 	}	
 }
 

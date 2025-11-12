@@ -7,6 +7,7 @@ heat.intensity = 1;
 heat.vel = 1;
 public var heat1 = new CustomShader('heatwave1');
 heat1.intensity = 0;
+heat1.v_comp = 30.0;
 public var desat = new CustomShader('desaturation');
 public var shader = new CustomShader('glitch');
 public var missingno = new CustomShader('glitch1');
