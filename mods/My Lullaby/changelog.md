@@ -116,3 +116,11 @@ v0.10
 - Added animation when entering to the overworld
 - Fixed some bugs in mobile
 - Fixed blur shader making the game brighten
+
+v0.10.1
+
+- Reverted the monochrome feature, now you must enable it in options
+- Now you must be pressing shift to be able to type a ? or ! in monochrome
+- Added unown timer in monochrome
+- Placed the combo ratings correctly in all stages
+- Fixed Lost Cause crashing somehow

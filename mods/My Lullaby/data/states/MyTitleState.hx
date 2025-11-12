@@ -55,7 +55,7 @@ function create(){
 		floatingLogo();
 	});
 	
-	FlxTween.angle(startScreen, 5, -5, 6, {
+	FlxTween.angle(startScreen, 4, -4, 6, {
 		ease: FlxEase.smoothStepInOut,
 		type: FlxTween.PINGPONG
 	});

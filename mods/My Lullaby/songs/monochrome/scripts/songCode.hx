@@ -12,7 +12,6 @@ var ljBar:FlxBar;
 
 var data:String = CoolUtil.parseJson(Paths.json("unownTexts"));
 
-FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
 introLength = 7;
 
 var curDisplayHeight = window.display.bounds.height;
@@ -24,7 +23,7 @@ Framerate.codenameBuildField.visible = false;
 Framerate.memoryCounter.visible = false;
 Framerate.fpsCounter.visible = false;
 function create(){
-	SET_TRANSPARENT(true, 5, 5, 5);
+	
 	camGame.bgColor = FlxColor.fromRGB(5,5,5,255);
 	
 	if(FlxG.save.data.lullabyShaders){ 
@@ -34,6 +33,7 @@ function create(){
 		aberration.iTime = 5;
 	}
 	dad.alpha = 0;
+
 
 	nomore = new FlxSprite(dad.x, dad.y);
 	nomore.frames = Paths.getFrames('characters/gold/GOLD_NO_MORE');
@@ -84,6 +84,12 @@ function create(){
 }
 
 function postCreate(){
+	FlxG.sound.play(Paths.sound('gold/ImDead'+FlxG.random.int(1,7)));
+
+	unownCam = new FlxCamera(0, 0);
+    unownCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(unownCam, false);
+
 	ljBar = new FlxBar(
 		FlxG.width*0.25, healthBar.y-2,
 		FlxBarFillDirection.RIGHT_TO_LEFT,
@@ -112,8 +118,8 @@ function postCreate(){
 function onCountdown(event) event.cancel();
 
 function onSongStart(){
-	window.borderless = true;
-	window.fullscreen = true;
+	//window.borderless = true;
+	//window.fullscreen = true;
 	modchart.ease('alpha', 44, 1, 1, FlxEase.cubeOut, 1);
 	modchart.ease('wiggle', 92, 3, 0.8, FlxEase.smoothStep, 1);
 	modchart.ease('tipsyX', 92, 3, 0.2, FlxEase.smoothStep, 1);
@@ -139,10 +145,14 @@ function update(){
 
 	user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
 
-	switch(user){
-		case 'SLASH': user = '?';
-		case 'MINUS': user = '?';
-		case '1': user = '!';
+	if(FlxG.keys.pressed.SHIFT)
+	{
+		trace('shift pressed');
+		switch(user){
+			case 'SLASH': user = '?';
+			case 'MINUS': user = '?';
+			case '1': user = '!';
+		}
 	}
 	
 	if(unown){
@@ -158,6 +168,10 @@ function update(){
 				bg.kill();
 				unownGrp.kill();
 				linesGrp.kill();
+				timer.kill(); 
+				timeBar.kill(); 
+				anotherTimer.cancel();
+				unownTimer.cancel();
 			}
 		}
 	}
@@ -197,6 +211,12 @@ var unown:Bool = false;
 var unownGrp:FlxTypedGroup<FlxSprite>;
 var linesGrp:FlxTypedGroup<FlxSprite>;
 var curWord:String;
+var time:Int = 0;
+
+var unownTimer:FlxTimer;
+var anotherTimer:FlxTimer;
+var timer:FlxText;
+var timeBar:FlxBar;
 function unownMechanic(?word:String){
 
 	//IF TRYING TO PORT THIS TO MOBILE, JUST COMMENT ALL THIS CHUNK OR DISABLE THE MECHANICS.
@@ -329,12 +349,15 @@ function destroy(){
 	window.fullscreen = false;
 	window.borderless = false;
 
-	SET_TRANSPARENT(false, 5, 5, 5);
+	if(FlxG.save.data.monochromeWindow)
+	{
+		SET_TRANSPARENT(false, 5, 5, 5);
 
 	//setTransparency(false, 255, 0, 254);
 	Framerate.memoryCounter.visible = true;
 	Framerate.fpsCounter.visible = true;
 	marginTween(true);
+	
 }
 
 

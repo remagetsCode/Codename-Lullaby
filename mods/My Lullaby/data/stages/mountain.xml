@@ -4,6 +4,7 @@
 	<sprite x="-1250" scroll="0.8" sprite="Pokemons" y="-320" type="none" scale="0.3" name="pokemons"/>
 	<sprite x="-582" scroll="0.6" sprite="Charizard" y="-353" type="none" scale="0.8" name="charizard"/>
 	<dad x="1060" scroll="0.95" flipX="true" scale="0.85" y="250"/>
+	<ratings x="500" y="500"/>
 	<girlfriend x="50" scroll="1.06" y="591"/>
 	<boyfriend x="-51.3502886076703" scroll="1.12" flipX="false" y="390"/>
 </stage>

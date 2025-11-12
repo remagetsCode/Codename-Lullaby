@@ -10,5 +10,6 @@
 	<sprite type="none" sprite="2painting" name="Painting"/>
 	<dad x="765.95598440239" y="902.864722944135"/>
 	<boyfriend x="1538" flipX="false" y="900" camxoffset="-300" camyoffset="0"/>
+	<ratings x="1400" y="800"/>
 	<sprite type="none" sprite="1darknessoverlay" name="Ovlay"/>
 </stage>

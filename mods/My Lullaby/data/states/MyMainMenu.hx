@@ -15,7 +15,7 @@ import flixel.addons.display.FlxBackdrop;
 
 import funkin.backend.utils.DiscordUtil;
 
-var curMusic = FlxG.sound.music;
+public var curMusic = FlxG.sound.music;
 FlxG.game.setFilters([]);
 
 var windowTitle = "Friday Night Funkin' Lullaby - Main Menu";
@@ -29,15 +29,16 @@ function create(){
 		FlxTween.tween(curMusic, {volume: 0}, 1, {
 		onComplete: ()->{
 			FlxG.sound.playMusic(Paths.music('CinnabarOverworld'),0);
-			curMusic = FlxG.sound.music;
-			FlxTween.tween(curMusic, {volume:0.5},5);
+			
+			FlxTween.tween(curMusic, {volume:0.5},3);
 		}
 	});
 	}
 	else{
 		FlxG.sound.playMusic(Paths.music('CinnabarOverworld'), 0.5, true);
-		curMusic = FlxG.sound.music;
+		
 	}
+	curMusic = FlxG.sound.music;
 		
 	
 	Main.scaleMode.width = 1280;

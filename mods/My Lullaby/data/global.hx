@@ -48,6 +48,7 @@ function new() {
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = false;
 	Options.extraHints = 'NONE';
+	if(FlxG.save.data.monochromeWindow == null) FlxG.save.data.monochromeWindow = false;
 }
 
 function preStateSwitch() {
@@ -58,7 +59,6 @@ function preStateSwitch() {
 		if(Std.isOfType(FlxG.game._state, CreditsMain))playerSpawnPos = [6, 14];
 		if(Std.isOfType(FlxG.game._state, MusicBeatState) && FlxG.game._state.scriptName == "Shop")playerSpawnPos = [15, 16];	
 	}
-	trace(windowBorderBg);
 	initMarginCamera();
 }
 

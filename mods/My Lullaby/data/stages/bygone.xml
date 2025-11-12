@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-stage>
-<stage folder="stages/bygone/images/" name="bygone">
+<stage folder="stages/bygone/images/" name="bygone" startCamPosY="0" startCamPosX="300">
 	<dad/>
 	<girlfriend/>
 	<sprite type="none" sprite="BG1 Clouds" name="clouds"/>

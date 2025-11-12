@@ -5,6 +5,7 @@
 	<sprite x="-717.564941016503" sprite="ground" y="717.564941005956" type="none" name="Ground"/>
 	<sprite x="-474" sprite="tree" y="-158" type="none" scale="0.65" name="Tree"/>
 	<girlfriend x="-55" camxoffset="-100" scroll="0.9" y="128" camyoffset="0"/>
+	<ratings x="1200" y="640"/>
 	<dad x="721.462493558931" scroll="0.94" y="387.186340338987"/>
 	<boyfriend camxoffset="50" x="629" camyoffset="-690" y="914"/>
 </stage>
