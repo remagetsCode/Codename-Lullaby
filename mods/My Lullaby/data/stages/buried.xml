@@ -1,10 +1,7 @@
 <!DOCTYPE codename-engine-stage>
 <stage folder="stages/buried/images/" name="buried">
+	<sprite antialiasing="false" x="100" sprite="buuried" type="none" scale="3.5" name="buried"/>
 	<girlfriend/>
-	<sprite antialiasing="false" sprite="brimstoneBack" type="none" scale="3.5" name="Back"/>
-	<sprite antialiasing="false" sprite="floor" type="none" scale="3.5" name="Floor"/>
-	<sprite antialiasing="false" sprite="graves" type="none" scale="3.5" name="Graves"/>
-	<dad x="680.610244745757" y="-30.3982925423738" camxoffset="-380" camyoffset="150"/>
-	<ratings x="200" y="160"/>
-	<boyfriend x="50.796585084744" y="518.398292542374" flipX="false" scrollx="0.4" scrolly="0.1" camxoffset="100" camyoffset="-300"/>
+	<dad camxoffset="-380" x="680.610244745757" camyoffset="150" y="-30.3982925423738"/>
+	<boyfriend scrolly="0.1" camxoffset="100" x="50.796585084744" camyoffset="-300" y="518.398292542374" scrollx="0.4" flipX="false"/>
 </stage>

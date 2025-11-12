@@ -39,10 +39,11 @@ function onNoteCreation(event) {
 	note.updateHitbox();
 	note.antialiasing = false;
 
-	if((event.note.noteType == "geng note" || event.note.noteType == "gengar") && !event.note.isSustainNote){
+	if((note.noteType == "geng note" || note.noteType == "gengar") && !event.note.isSustainNote){
 		note.loadGraphic(Paths.image('UI/pixel/genga'), true, 32, 32);
 		var maxCol = Math.floor(note.graphic.width / 17);
 		note.animation.add("scroll", [0 + strumID%maxCol]);
+		if(!FlxG.save.data.lullabyMechanics && note.noteType == "geng note") note.kill();
 		
 	}	
 }

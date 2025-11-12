@@ -4,10 +4,18 @@ import flixel.ui.FlxBarFillDirection;
 var directions = ["LEFT", "DOWN", "UP", "RIGHT"];
 introLength = 0;
 function create(){
-    player.cpu = true;
-    camGame.addShader(heat1);
-    heat1.intensity = 1;
-    heat1.v_comp = 5.0;
+    //player.cpu = true;
+    if(FlxG.save.data.lullabyShaders){
+        bur = stage.getSprite("buried");
+        
+        bur.shader = heat1;
+        desat.desaturationAmount = 1;
+        heat1.intensity = 0;
+        heat1.v_comp = 5.0;
+        camGame.addShader(desat);
+        FlxG.game.addShader(gameboy);
+    }
+
     
     buryman = cpu.characters[0];
     gengar = cpu.characters[1];
@@ -102,7 +110,7 @@ function postCreate(){
     gengarEnt.scale.set(3,3);
     add(gengarEnt);
 
-    pkball = new FlxSprite(-100, downscroll ? 150 : 250);
+    pkball = new FlxSprite(-100, downscroll ? 150 : 300);
     pkball.frames = Paths.getFrames("characters/buried/missingnopokeball_assets");
     pkball.animation.addByPrefix('throw', 'Ball_Throw', 24, false);
     pkball.animation.addByPrefix('idle1', 'Ball_Idle_Normal', 24, true);
@@ -122,7 +130,8 @@ function postCreate(){
         }
     });
     pkball.scale.set(3,3);
-    insert(13, pkball);
+    pkball.alpha = 0;
+    insert(10, pkball);
 
 
     
@@ -154,15 +163,13 @@ function postCreate(){
     nogega.camera = camHUD;
     nogega.scale.set(6,6);
     nogega.alpha = 0;
-    //nogega.screenCenter(FlxAxes.X);
-    //617
     add(nogega);
 }
 
 var time:Float = 0;
 function update(e){
     missingno.iTime = time += e;
-    heat1.iTime = time;
+    heat1.iTime = time*0.15;
     hpBar.percent = health*50;
     cpuBar.percent = (2.05-health)*50;
 }
@@ -180,6 +187,7 @@ function stepHit(s){
         
         case 123: buryman.playAnim('buryman_scream', true);
 
+        case 416: FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
         case 940: 
             gengarEnt.alpha = 1;
             gengarEnt.animation.play('enter');
@@ -192,6 +200,7 @@ function stepHit(s){
             FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 2, {ease: FlxEase.circInOut});
 
         case 1593:
+            pkball.alpha = 1;
             FlxTween.tween(pkball, {x: 150, y: 200}, 0.1);
             pkball.animation.play('throw');
         case 1620: pkball.animation.play('break1');
@@ -202,6 +211,7 @@ function stepHit(s){
             pkball.animation.play('final');
         case 1730: missingnobf.alpha = 1;
         case 2385:
+            FlxTween.num(0, 1, 1, {onUpdate: (v)->gameboy.interpolation = v.value});
             FlxTween.tween(nogega, {alpha: 0}, 1, {onComplete: nogega.destroy});
             gengarEnt.alpha = 1;
             gengar.alpha = 0;
@@ -213,6 +223,7 @@ function stepHit(s){
             FlxTween.tween(missingnobf, {y: 1000}, 0.8, {ease: FlxEase.quintOut, onComplete: missingno.kill});
             FlxTween.tween(bfxml, {x: bfxml.x + 120}, 1, {ease: FlxEase.quintOut});
 
+        case 2656: FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
         case 2700:
             loan.alpha = 1;
             loan.playAnim('Muk_Intro');
@@ -227,6 +238,10 @@ function stepHit(s){
         case 3460:
             wa.animation.play('gf');
             loan.kill();
+            FlxTween.num(0, 3, 5, {onUpdate: (v)->heat1.intensity = v.value});
+            FlxTween.num(1, 0.2, 7, {onUpdate: (v)->desat.desaturationAmount = v.value});
+
+        case 4192: FlxTween.num(0.2, 0.7, 5, {onUpdate: (v)->desat.desaturationAmount = v.value});
     }
 }
 
@@ -286,6 +301,8 @@ inline function shake(){
 }
 
 function loanCums(){
+    if(!FlxG.save.data.lullabyMechanics) return;
+
     loan.playAnim("Muk_Puke", true);
     new FlxTimer().start(0.25, ()->{
         var muk = new FlxSprite();
