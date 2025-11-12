@@ -38,6 +38,12 @@ function onNoteCreation(event) {
 	note.scale.set(3.5, 3.5);
 	note.updateHitbox();
 	note.antialiasing = false;
+
+	if((event.note.noteType == "geng note" || event.note.noteType == "gengar") && !event.note.isSustainNote){
+		note.loadGraphic(Paths.image('UI/pixel/genga'), true, 32, 32);
+		var maxCol = Math.floor(note.graphic.width / 17);
+		note.animation.add("scroll", [0 + strumID%maxCol]);
+	}	
 }
 
 function onPostNoteCreation(event) if (pixelSplashes)

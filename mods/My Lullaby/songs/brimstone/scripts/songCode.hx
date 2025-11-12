@@ -2,6 +2,7 @@ import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
 
 var directions = ["LEFT", "DOWN", "UP", "RIGHT"];
+introLength = 0;
 function create(){
     buryman = cpu.characters[0];
     gengar = cpu.characters[1];
@@ -55,6 +56,10 @@ function create(){
 }
 
 function postCreate(){
+    camExtra = new FlxCamera(0, 0);
+    camExtra.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(camExtra, false);
+
     modchart.setPercent('opponentSwap', 1.14);
     modchart.setPercent('reverse', downscroll ? 0 : 1, 0);
     modchart.setPercent('y', -30, 0);
@@ -66,7 +71,22 @@ function postCreate(){
     iconP1.visible = false;
     iconP2.visible = false;
 
-    gengarEnt = new FlxSprite(485, 20);
+    bars = [];
+    for(i in 0...20){
+        var bar = new FlxSprite(0, 0).makeGraphic(FlxG.width, 46, FlxColor.BLACK);
+        bar.setPosition(0, i*bar.height);
+        bar.camera = camExtra;
+        bars.push(bar);
+        add(bar);
+        new FlxTimer().start(0.05, ()->{
+            bar.x += i%2==1 ? -30 : 30;
+        },50);
+    }
+
+    bfxml.x += 1280;
+    new FlxTimer().start(2, ()->FlxTween.tween(bfxml, {x:bfxml.x - 1280}, 1.5, {onComplete: ()->for(b in bars) b.destroy()}));
+
+    gengarEnt = new FlxSprite(763, 240);
     gengarEnt.frames = Paths.getFrames("characters/buried/enter_gengar");
     gengarEnt.animation.addByPrefix('enter', 'gengar', 24, false);
     gengarEnt.animation.onFinish.addOnce(function(_){
@@ -74,6 +94,7 @@ function postCreate(){
         gengar.alpha = 1;
     });
     gengarEnt.alpha = 0;
+    gengarEnt.camera = camExtra;
     gengarEnt.scale.set(3,3);
     add(gengarEnt);
 
@@ -98,21 +119,40 @@ function postCreate(){
     });
     pkball.scale.set(3,3);
     insert(13, pkball);
+
+
     
-    wa = new FlxSprite(350, -1);
+    wa = new FlxSprite(251, -122);
     wa.frames = Paths.getFrames("characters/buried/WA_assets");
     wa.animation.addByPrefix('idle', 'WH_Idle', 24, true);
     wa.animation.addByPrefix('intro', 'WH_Intro', 24, false);
     wa.animation.addByPrefix('gf', 'WH_ToGF', 24, false);
     wa.animation.onFinish.add(function(a){
         switch(a){
-            case "intro": wa.animation.play('idle');
+            case "intro": 
+                FlxTween.tween(wa, {y: wa.y + 10}, 1.5, {type: 4, ease: FlxEase.quadInOut});
+                wa.animation.play('idle');
             case "gf": wa.kill(); fakegf.alpha = 1;
         }
     });
     wa.scale.set(3, 3);
     wa.alpha = 0;
+    wa.updateHitbox();
     add(wa);
+
+    waShad = new FlxSprite(wa.x, wa.y + 100).loadGraphic(Paths.image("characters/buried/shadow"));
+    waShad.scale.set(3,3);
+    waShad.updateHitbox();
+    waShad.alpha = 0;
+    add(waShad);
+
+    nogega = new FlxSprite(200, 350).loadGraphic(Paths.image("UI/pixel/nogega"));
+    nogega.camera = camHUD;
+    nogega.scale.set(6,6);
+    nogega.alpha = 0;
+    //nogega.screenCenter(FlxAxes.X);
+    //617
+    add(nogega);
 }
 
 var time:Float = 0;
@@ -125,12 +165,25 @@ function update(e){
 function stepHit(s){
     switch(s){
         case 1: holds.visible = false;
+
+        case 96: shake();
+        case 112: shake();
+        case 128: shake();
+        case 136: shake();
+        case 144: shake();
         
         case 123: buryman.playAnim('buryman_scream', true);
 
         case 940: 
             gengarEnt.alpha = 1;
             gengarEnt.animation.play('enter');
+
+        case 1272:
+            nogega.alpha = 1;
+            FlxTween.tween(nogega, {alpha: 0.3}, 5);
+
+        case 1281:
+            FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 3, {ease: FlxEase.circInOut});
 
         case 1593:
             FlxTween.tween(pkball, {x: 150, y: 200}, 0.1);
@@ -153,16 +206,17 @@ function stepHit(s){
             FlxTween.tween(missingnobf, {y: 1000}, 0.8, {ease: FlxEase.quintOut});
             FlxTween.tween(bfxml, {x: bfxml.x + 100}, 1, {ease: FlxEase.quintOut});
 
-        case 2704:
+        case 2700:
             loan.alpha = 1;
             loan.playAnim('Muk_Intro');
 
-        case 2954:
+        case 2964:
             wa.alpha = 1;
             wa.animation.play('intro');
+            FlxTween.tween(waShad, {alpha: 1}, 1);
 
-        case 3464:
-            loan.playAnim('Muk_Intro');
+        case 3450:
+            loan.playAnim('Muk_Intro', true, null, true);
         case 3460:
             wa.animation.play('gf');
             loan.kill();
@@ -174,6 +228,10 @@ function onPlayerHit(e){
         case "missingno-bf":
             e.preventAnim();
             missingnobf.playSingAnim(e.direction);
+        case "geng note":
+            e.preventAnim();
+            bfxml.playAnim("BF_AURGH", true);
+            FlxG.sound.play(Paths.sound("errorMenu"), 3);
         default:
             e.preventAnim();
             bfxml.playSingAnim(e.direction);
@@ -195,4 +253,18 @@ function onDadHit(e){
             e.preventAnim();
             buryman.playSingAnim(e.direction);
     }
+}
+
+inline function shake(){
+    modchart.set('vibrate',curBeatFloat, 1, 0);
+    modchart.ease('vibrate', curBeatFloat+0.5, 0.7, 0, FlxEase.cubeOut, 0);
+
+    new FlxTimer().start(0.05, ()->{
+        if(!window.fullscreen){
+            window.x += FlxG.random.int(-10, 10);
+            window.y += FlxG.random.int(-10, 10);
+        }
+    }, 3);
+    FlxTween.shake(buryman, 0.05, 0.5, FlxAxes.X);
+
 }
