@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="gengar_assets" antialiasing="false" icon="gengar">
+<character sprite="gengar_assets" antialiasing="false" icon="gengar" x="-120" y="120" scale="3">
 	<anim name="idle" anim="gengar idle"/>
 	<anim name="singDOWN" anim="gengar down"/>
 	<anim name="singRIGHT" anim="gengar right"/>

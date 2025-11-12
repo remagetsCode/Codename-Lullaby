@@ -1,6 +1,6 @@
 var colors:Array = ["Purple", "Blue", "Green", "Red"];
 var generated:Bool = false;
-public var holds:FlxTypedGroup<FlxSprite>;
+public var holds:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 function onSongStart(){
 	//holds = new FlxTypedGroup<FlxSprite>();
 	for(i => color in colors){

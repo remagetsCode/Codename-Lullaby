@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character antialiasing="false" icon="leanmonster">
+<character antialiasing="false" icon="leanmonster" x="-200" y="140" scale="3">
 	<anim name="idle" anim="Muk_Idle"/>
 	<anim name="singDOWN" anim="Muk_Down"/>
 	<anim name="singRIGHT" anim="Muk_Right"/>

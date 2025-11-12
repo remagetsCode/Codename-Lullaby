@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="ba_BF_assets" icon="bf-pixel" color="#000000" antialiasing="false">
+<character sprite="ba_BF_assets" icon="bf-pixel" color="#000000" antialiasing="false" scale="3.5">
 	<anim name="idle" anim="BF_Idle"/>
 	<anim name="singDOWN" anim="BF_Down0"/>
 	<anim name="singRIGHT" anim="BF_Right0" x="8" y="-3"/>

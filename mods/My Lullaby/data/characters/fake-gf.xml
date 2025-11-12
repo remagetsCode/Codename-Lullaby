@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="apparitiongf_assets" antialiasing="false">
+<character sprite="apparitiongf_assets" antialiasing="false" x="-400" y="0" scale="3">
 	<anim name="idle" anim="BAGF_Idle" loop="true"/>
 	<anim name="singDOWN" anim="BAGF_Down"/>
 	<anim name="singRIGHT" anim="BAGF_Right" x="4" y="-3"/>

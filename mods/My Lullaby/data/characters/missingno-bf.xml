@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="ba_missingno_assets" antialiasing="false" icon="missingno-bf">
+<character sprite="ba_missingno_assets" antialiasing="false" icon="missingno-bf" x="300" y="-200" scale="3">
 	<anim name="idle" anim="BA_Missingno_Idle"/>
 	<anim name="singDOWN" anim="BA_Missingno_Down0"/>
 	<anim name="singRIGHT" anim="BA_Missingno_Right0"/>
