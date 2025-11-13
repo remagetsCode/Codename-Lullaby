@@ -116,22 +116,22 @@ var pixellyCameras = [];
 var pixellyShaders = [];
 
 function postUpdate() {
-	for (e in pixellyCameras) if (Std.isOfType(e, HudCamera))
-		e.downscroll = camHUD.downscroll;
-
-	if (enableCameraHacks) for (p in strumLines) {
-		p.notes.forEach(function(n) {
-			if(n.isSustainNote) return; // hacky fix for hold
-			n.y -= n.y % daPixelZoom;
-			n.x -= n.x % daPixelZoom;
-		});
-	}
-
-	var zoom = 1 / daPixelZoom / Math.min(FlxG.scaleMode.scale.x, FlxG.scaleMode.scale.y);
-	for (e in pixellyCameras) {
-		if (!e.exists) continue;
-		e.zoom = zoom;
-	}
-	for (e in pixellyShaders)
-		e.pixelZoom = zoom;
+	//for (e in pixellyCameras) if (Std.isOfType(e, HudCamera))
+	//	e.downscroll = camHUD.downscroll;
+//
+	//if (enableCameraHacks) for (p in strumLines) {
+	//	p.notes.forEach(function(n) {
+	//		if(n.isSustainNote) return; // hacky fix for hold
+	//		n.y -= n.y % daPixelZoom;
+	//		n.x -= n.x % daPixelZoom;
+	//	});
+	//}
+//
+	//var zoom = 1 / daPixelZoom / Math.min(FlxG.scaleMode.scale.x, FlxG.scaleMode.scale.y);
+	//for (e in pixellyCameras) {
+	//	if (!e.exists) continue;
+	//	e.zoom = zoom;
+	//}
+	//for (e in pixellyShaders)
+	//	e.pixelZoom = zoom;
 }

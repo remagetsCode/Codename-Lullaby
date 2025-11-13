@@ -124,3 +124,7 @@ v0.10.1
 - Added unown timer in monochrome
 - Placed the combo ratings correctly in all stages
 - Fixed Lost Cause crashing somehow
+
+v 0.11
+
+- Fixed the position of the text in death toll

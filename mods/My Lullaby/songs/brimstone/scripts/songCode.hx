@@ -132,8 +132,6 @@ function postCreate(){
     pkball.scale.set(3,3);
     pkball.alpha = 0;
     insert(10, pkball);
-
-
     
     wa = new FlxSprite(251, -122);
     wa.frames = Paths.getFrames("characters/buried/WA_assets");
@@ -179,6 +177,7 @@ function stepHit(s){
     switch(s){
         case 1: holds.visible = false;
 
+        case 50: setMarginColor(FlxColor.fromRGB(136, 192, 112));
         case 96: shake();
         case 112: shake();
         case 128: shake();
@@ -187,12 +186,18 @@ function stepHit(s){
         
         case 123: buryman.playAnim('buryman_scream', true);
 
-        case 416: FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
+        case 416: 
+            setMarginColor(FlxColor.GRAY);
+            FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
         case 940: 
+            setMarginColor(FlxColor.fromRGB(154, 120, 183));
             gengarEnt.alpha = 1;
             gengarEnt.animation.play('enter');
 
+        case 1050: setMarginColor(FlxColor.GRAY);
+
         case 1272:
+            setMarginColor(FlxColor.fromRGB(164, 80, 193));
             nogega.alpha = 1;
             FlxTween.tween(nogega, {alpha: 0.3}, 5);
 
@@ -211,6 +216,7 @@ function stepHit(s){
             pkball.animation.play('final');
         case 1730: missingnobf.alpha = 1;
         case 2385:
+            setMarginColor(FlxColor.fromRGB(136, 192, 112));
             FlxTween.num(0, 1, 1, {onUpdate: (v)->gameboy.interpolation = v.value});
             FlxTween.tween(nogega, {alpha: 0}, 1, {onComplete: nogega.destroy});
             gengarEnt.alpha = 1;
@@ -225,6 +231,7 @@ function stepHit(s){
 
         case 2656: FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
         case 2700:
+            setMarginColor(FlxColor.fromRGB(191, 164, 211));
             loan.alpha = 1;
             loan.playAnim('Muk_Intro');
 
@@ -236,6 +243,7 @@ function stepHit(s){
         case 3450:
             loan.playAnim('Muk_Intro', true, null, true);
         case 3460:
+            setMarginColor(FlxColor.RED);
             wa.animation.play('gf');
             loan.kill();
             FlxTween.num(0, 3, 5, {onUpdate: (v)->heat1.intensity = v.value});
