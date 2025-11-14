@@ -1,5 +1,6 @@
 public var bell;
 introLength = 10;
+if(FlxG.save.data.lullabyMechanics) Options.extraHints = 'SINGLE';
 function onCountdown(e){
     e.cancel();
 }
@@ -8,9 +9,6 @@ function postCreate(){
     camDS.bgColor = FlxColor.TRANSPARENT;
     FlxG.cameras.add(camDS, false);
     //player.cpu = true;
-    
-    // MOBILE ONLY
-    if(FlxG.save.data.lullabyMechanics) Options.extraHints = 'SINGLE';
 
     if(FlxG.save.data.lullabyShaders)
     {
