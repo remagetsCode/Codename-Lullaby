@@ -152,7 +152,7 @@ function stepHit(s){
         case 5: setMarginColor(0xfd831a);
         case 240: heat1.intensity = 0.02;
         case 248: heat1.intensity = 0.04;
-        case 256: FlxTween.tween(camDS, {zoom: 1.3}, 0.5, {ease: FlxEase.quadInOut});
+        case 256: FlxTween.tween(camDS, {zoom: 1.32}, 0.5, {ease: FlxEase.quadInOut});
 
         case 768:
             setMarginColor(0x000000); 

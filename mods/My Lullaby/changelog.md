@@ -127,4 +127,4 @@ v0.10.1
 
 v 0.11
 
-- Fixed the position of the text in death toll
+- Fixed the position of the text in death toll 

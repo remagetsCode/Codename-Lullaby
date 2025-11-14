@@ -46,16 +46,16 @@ function create(){
 		
 	if(!window.fullscreen){
 		window.maximized = false;
-		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.2, { 
-			ease: FlxEase.quadInOut,
+		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.4, { 
+			ease: FlxEase.backInOut,
 			onUpdate: function(num){
 				window.x = lerp(window.x, curDisplayX + curDisplayWidth/5, 0.04);
 				window.width = num.value;
 			}
 		});
 		
-		alo = FlxTween.num(window.height, 3*curDisplayHeight/3.5, 1.2, { 
-			ease: FlxEase.quadInOut,
+		alo = FlxTween.num(window.height, 3*curDisplayHeight/3.5, 1.4, { 
+			ease: FlxEase.backInOut,
 			onUpdate: function(num){
 				window.y = lerp(window.y, curDisplayY + curDisplayHeight/16, 0.04);
 				window.height = num.value;
@@ -156,6 +156,8 @@ function update(){
 function destroy(){
 	var curDisplayHeight = window.display.bounds.height;
 	var curDisplayWidth = window.display.bounds.width;	
+	var prevWindowX = window.x;	
+	var prevWindowY = window.y;	
 
 	Main.scaleMode.width = 1280;
     Main.scaleMode.height = 720;
@@ -169,11 +171,26 @@ function destroy(){
     }
 	
 	if(!window.fullscreen && !window.maximized){
-		window.x = window.x + (window.width - 16*curDisplayHeight/11)*0.5;
-		window.width = 16*curDisplayHeight/11;
-
-		window.y = window.y + (window.height - 9*curDisplayHeight/11)*0.5;
-		window.height = 9*curDisplayHeight/11;
+		//window.x = window.x + (window.width - 16*curDisplayHeight/11)/2;
+		//window.width = 16*curDisplayHeight/11;
+//
+		//window.y = window.y + (window.height - 9*curDisplayHeight/11)/2;
+		//window.height = 9*curDisplayHeight/11;
+		alo = FlxTween.num(window.width, 16*curDisplayHeight/11, 0.25, { 
+			ease: FlxEase.backInOut,
+			onUpdate: function(num){
+				window.x = lerp(window.x, prevWindowX + (window.width - 16*curDisplayHeight/11), 0.1);
+				window.width = num.value;
+			}
+		});
+		
+		alo = FlxTween.num(window.height, 9*curDisplayHeight/11, 0.25, { 
+			ease: FlxEase.backInOut,
+			onUpdate: function(num){
+				window.y = lerp(window.y, prevWindowY + (window.height - 9*curDisplayHeight/11), 0.1);
+				window.height = num.value;
+			}
+		});
 	}
 }
 

@@ -91,7 +91,7 @@ function postCreate(){
         bars.push(bar);
         add(bar);
         new FlxTimer().start(0.05, ()->{
-            bar.x += i%2==1 ? -30 : 30;
+            bar.x += i%2==1 ? -35 : 35;
         },50);
     }
 
@@ -162,6 +162,15 @@ function postCreate(){
     nogega.scale.set(6,6);
     nogega.alpha = 0;
     add(nogega);
+
+    red = new FlxSprite().loadGraphic(Paths.image("UI/base/badvignettered"));
+    red.camera = camExtra;
+    red.setGraphicSize(FlxG.width, FlxG.height);
+    red.updateHitbox();
+    red.alpha = 0;
+    add(red);
+
+    accuracyTxt.y = missesTxt.y = scoreTxt.y = 5;
 }
 
 var time:Float = 0;
@@ -177,36 +186,39 @@ function stepHit(s){
     switch(s){
         case 1: holds.visible = false;
 
+        // Buryman raising
         case 50: setMarginColor(FlxColor.fromRGB(136, 192, 112));
         case 96: shake();
         case 112: shake();
         case 128: shake();
         case 136: shake();
         case 144: shake();
-        
         case 123: buryman.playAnim('buryman_scream', true);
 
+        //gamemboy green color off
         case 416: 
             setMarginColor(FlxColor.GRAY);
             FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
+
+        // gengar entrance
         case 940: 
             setMarginColor(FlxColor.fromRGB(154, 120, 183));
             gengarEnt.alpha = 1;
             gengarEnt.animation.play('enter');
-
         case 1050: setMarginColor(FlxColor.GRAY);
 
+        // Starts throwing gengar notes
         case 1272:
             setMarginColor(FlxColor.fromRGB(164, 80, 193));
-            nogega.alpha = 1;
+            nogega.alpha = FlxG.save.data.lullabyMechanics;
             FlxTween.tween(nogega, {alpha: 0.3}, 5);
-
         case 1281:
             FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 2, {ease: FlxEase.circInOut});
 
+        // Bf throws pokeball
         case 1593:
             pkball.alpha = 1;
-            FlxTween.tween(pkball, {x: 150, y: 200}, 0.1);
+            FlxTween.tween(pkball, {x: 150, y: 200}, 0.07);
             pkball.animation.play('throw');
         case 1620: pkball.animation.play('break1');
         case 1665: pkball.animation.play('break2');
@@ -215,6 +227,8 @@ function stepHit(s){
             FlxTween.tween(missingnobf, {x: bf.xml.x-140}, 1);
             pkball.animation.play('final');
         case 1730: missingnobf.alpha = 1;
+
+        // Starts gameboy green color again, gengar and missingno are out
         case 2385:
             setMarginColor(FlxColor.fromRGB(136, 192, 112));
             FlxTween.num(0, 1, 1, {onUpdate: (v)->gameboy.interpolation = v.value});
@@ -229,17 +243,20 @@ function stepHit(s){
             FlxTween.tween(missingnobf, {y: 1000}, 0.8, {ease: FlxEase.quintOut, onComplete: missingno.kill});
             FlxTween.tween(bfxml, {x: bfxml.x + 120}, 1, {ease: FlxEase.quintOut});
 
+        // green color off and loanmonster enters
         case 2656: FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
         case 2700:
             setMarginColor(FlxColor.fromRGB(191, 164, 211));
             loan.alpha = 1;
             loan.playAnim('Muk_Intro');
 
+        // white hand appears
         case 3240:
             wa.alpha = 1;
             wa.animation.play('intro');
             FlxTween.tween(waShad, {alpha: 1}, 1);
 
+        // white hand transforms
         case 3450:
             loan.playAnim('Muk_Intro', true, null, true);
         case 3460:
@@ -248,7 +265,10 @@ function stepHit(s){
             loan.kill();
             FlxTween.num(0, 3, 5, {onUpdate: (v)->heat1.intensity = v.value});
             FlxTween.num(1, 0.2, 7, {onUpdate: (v)->desat.desaturationAmount = v.value});
+         case 3468:
+            apparitiongf = true;
 
+        // idk
         case 4192: FlxTween.num(0.2, 0.7, 5, {onUpdate: (v)->desat.desaturationAmount = v.value});
     }
 }
@@ -264,7 +284,7 @@ function onPlayerHit(e){
             FlxG.sound.play(Paths.sound("errorMenu"), 2);
             e.healthGain = -0.2;
             hpBar.color = FlxColor.PURPLE;
-            FlxTween.shake(nogega, 0.07, 1);
+            FlxTween.shake(nogega, 0.09, 1);
         default:
             e.preventAnim();
             bfxml.playSingAnim(e.direction);
@@ -330,5 +350,10 @@ function loanCums(){
         FlxTween.tween(muk, {alpha: 1}, 0.1);
         new FlxTimer().start(1, ()->FlxTween.tween(muk, {alpha: 0}, 4, {onComplete: muk.destroy}));
     });
+}
 
+var apparitiongf:Bool = false;
+function measureHit(){
+    if(apparitiongf) FlxTween.tween(red, {alpha: 0.2}, 0.05, {onComplete: ()->FlxTween.tween(red, {alpha: 0}, 1)});
+    
 }
