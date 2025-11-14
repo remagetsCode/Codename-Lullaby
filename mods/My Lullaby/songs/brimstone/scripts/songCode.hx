@@ -179,6 +179,8 @@ function update(e){
     heat1.iTime = time*0.15;
     hpBar.percent = health*50;
     cpuBar.percent = (2.05-health)*50;
+    waShad.setPosition(fakegf.x-469, -22);
+    waShad.scale.set(2.5+(fakegf.y+68)*0.03,2.5+(fakegf.y+68)*0.01);    // Yeah, detail that 99.999999999999999999% of people wont notice. Ps: there must be a better way to do this.
 }
 
 function stepHit(s){
@@ -193,7 +195,7 @@ function stepHit(s){
         case 128: shake();
         case 136: shake();
         case 144: shake();
-        case 123: buryman.playAnim('buryman_scream', true);
+        case 125: buryman.playAnim('buryman_scream', true);
 
         //gamemboy green color off
         case 416: 
@@ -213,7 +215,7 @@ function stepHit(s){
             nogega.alpha = FlxG.save.data.lullabyMechanics;
             FlxTween.tween(nogega, {alpha: 0.3}, 5);
         case 1281:
-            FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 2, {ease: FlxEase.circInOut});
+            FlxTween.tween(nogega, {"scale.x": 3, "scale.y": 3, x:580, y: 80}, 2, {ease: FlxEase.quintInOut});
 
         // Bf throws pokeball
         case 1593:
@@ -281,7 +283,7 @@ function onPlayerHit(e){
         case "geng note":
             e.preventAnim();
             bfxml.playAnim("BF_AURGH", true);
-            FlxG.sound.play(Paths.sound("errorMenu"), 2);
+            FlxG.sound.play(Paths.sound("GengarNoteSFX"), 2);
             e.healthGain = -0.2;
             hpBar.color = FlxColor.PURPLE;
             FlxTween.shake(nogega, 0.09, 1);
@@ -352,8 +354,9 @@ function loanCums(){
     });
 }
 
+var gfTween:FlxTween;
 var apparitiongf:Bool = false;
 function measureHit(){
     if(apparitiongf) FlxTween.tween(red, {alpha: 0.2}, 0.05, {onComplete: ()->FlxTween.tween(red, {alpha: 0}, 1)});
-    
+    if(apparitiongf && gfTween == null) gfTween = FlxTween.circularMotion(fakegf, fakegf.x, fakegf.y-18, 20, 0, true, 10, true,{type: 2});
 }

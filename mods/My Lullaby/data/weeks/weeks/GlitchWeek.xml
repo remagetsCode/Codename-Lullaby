@@ -1,0 +1,5 @@
+<week name="GlitchWeek" chars="pico,bf,gf" sprite="week3">
+    <song>missingno</song>
+    <song>brimstone</song>
+	<difficulty name="Hard"/>
+</week>

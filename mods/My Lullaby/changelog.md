@@ -125,6 +125,9 @@ v0.10.1
 - Placed the combo ratings correctly in all stages
 - Fixed Lost Cause crashing somehow
 
-v 0.11
+## v 0.11
 
+- ADDED BRIMSTONE SONG
+- Added Cartridge selection menu
 - Fixed the position of the text in death toll 
+- Improvements to the shop's code

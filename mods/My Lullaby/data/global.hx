@@ -1,4 +1,4 @@
-// script extracted from FNDustin' all the credits to they
+// script extracted from FNDustin', edited by me.
 
 
 import Type;
@@ -24,7 +24,7 @@ var overwriteStates:Map<String, String> = [
     "funkin.menus.TitleState" => "MyTitleState",
     "funkin.menus.MainMenuState" => "MyMainMenu",
     "funkin.menus.FreeplayState" => "Shop",
-    "funkin.menus.StoryMenuState" => "MyMainMenu"
+    "funkin.menus.StoryMenuState" => "CartridgeMenu"
 ];
 
 static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
@@ -39,11 +39,9 @@ function new() {
     //Noob mode
     //FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
 
-	if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", "insomnia" => "unlocking"];
+	if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
+	if(FlxG.save.data.cartridgesOwned == null) FlxG.save.data.cartridgesOwned = ["HypnoWeek"];
 	if(FlxG.save.data.lullabyMoney == null) FlxG.save.data.lullabyMoney = 0;
-	if(!FlxG.save.data.unlockedSongs.exists("frostbite")) FlxG.save.data.unlockedSongs.set("frostbite", "unlocking");
-	if(!FlxG.save.data.unlockedSongs.exists("insomnia")) FlxG.save.data.unlockedSongs.set("insomnia", "unlocking");
-	if(!FlxG.save.data.unlockedSongs.exists("monochrome")) FlxG.save.data.unlockedSongs.set("monochrome", "unlocking");
 
 	if(FlxG.save.data.lullabyMechanics == null) FlxG.save.data.lullabyMechanics = true;
 	if(FlxG.save.data.lullabyShaders == null) FlxG.save.data.lullabyShaders = true;

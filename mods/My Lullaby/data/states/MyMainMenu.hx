@@ -406,13 +406,14 @@ class Player extends FlxSprite
 			case 1:
 				canMove = false;
 				if(!isMoving){
-					FlxG.switchState(PlayState.loadWeek({
-						name: 'Lullaby',
-						id: '1',
-						songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
-						difficulties: ['hard']
-					}, 'hard'));
-					FlxG.switchState(new PlayState());
+					//FlxG.switchState(PlayState.loadWeek({
+					//	name: 'Lullaby',
+					//	id: '1',
+					//	songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
+					//	difficulties: ['hard']
+					//}, 'hard'));
+					//FlxG.switchState(new PlayState());
+					FlxG.switchState(new StoryMenuState());
 					startingTrigger = true;			
 				}
 				return;
