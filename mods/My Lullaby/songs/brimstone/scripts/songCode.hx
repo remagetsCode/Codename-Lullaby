@@ -283,7 +283,7 @@ function onPlayerHit(e){
         case "geng note":
             e.preventAnim();
             bfxml.playAnim("BF_AURGH", true);
-            FlxG.sound.play(Paths.sound("GengarNoteSFX"), 2);
+            FlxG.sound.play(Paths.sound("GengarNoteSFX"), 1);
             e.healthGain = -0.2;
             hpBar.color = FlxColor.PURPLE;
             FlxTween.shake(nogega, 0.09, 1);

@@ -1,4 +1,5 @@
 import funkin.menus.StoryWeeklist;
+import funkin.backend.utils.DiscordUtil;
 
 var cartridges:Array = [];
 var curSelected:Int = 0;
@@ -28,6 +29,7 @@ var cartridgeList:Array = [
 
 function create(){
 	#if mobile
+	trace('hola');
 	#else
 	DiscordUtil.changePresence("Cartridge Selection", "What am i going to play now?");
 	#end

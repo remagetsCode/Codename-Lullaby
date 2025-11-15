@@ -18,6 +18,9 @@ function onSongEnd(e) {
         money.animation.play('idle');
         money.cameras = [moneyCam];
         money.animation.onFinish.add(function(){
+            // Unlock lost silver week
+            if(curSong == "lost-cause" && this.isStoryMode && !FlxG.save.data.cartridgesOwned.contains("LostSilverWeek")) FlxG.switchState(new ModState("CartridgeGuyState"));
+
             if(FlxG.random.bool(1) && (curSong != "safety-lullaby" || curSong != "left-unchecked" || curSong != "lost-cause")){
                 FlxG.switchState(PlayState.loadSong('shinte', 'drah'));
 			    FlxG.switchState(new PlayState()); 

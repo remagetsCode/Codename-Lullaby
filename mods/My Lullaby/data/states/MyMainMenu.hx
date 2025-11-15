@@ -3,6 +3,7 @@ import funkin.menus.ModSwitchMenu;
 import funkin.menus.credits.CreditsMain;
 import funkin.options.OptionsMenu;
 import funkin.editors.EditorPicker;
+import funkin.menus.StoryWeeklist;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -14,6 +15,7 @@ import flixel.addons.display.FlxBackdrop;
 import funkin.backend.utils.DiscordUtil;
 
 public var curMusic = FlxG.sound.music;
+public var weekList;
 FlxG.game.setFilters([]);
 
 var curDisplayHeight = window.display.bounds.height;
@@ -29,6 +31,7 @@ public var walls:FlxGroup;
 var tileSize = 16;
 
 function create(){
+	weekList = StoryWeeklist.get(true, false);
 	if(curMusic != null){
 		FlxTween.tween(curMusic, {volume: 0}, 1, {
 		onComplete: ()->{
@@ -46,7 +49,7 @@ function create(){
 		
 	if(!window.fullscreen){
 		window.maximized = false;
-		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.4, { 
+		alo = FlxTween.num(window.width, 4*curDisplayHeight/3.5, 1.8, { 
 			ease: FlxEase.backInOut,
 			onUpdate: function(num){
 				window.x = lerp(window.x, curDisplayX + curDisplayWidth/5, 0.04);
@@ -54,7 +57,7 @@ function create(){
 			}
 		});
 		
-		alo = FlxTween.num(window.height, 3*curDisplayHeight/3.5, 1.4, { 
+		alo = FlxTween.num(window.height, 3*curDisplayHeight/3.5, 1.8, { 
 			ease: FlxEase.backInOut,
 			onUpdate: function(num){
 				window.y = lerp(window.y, curDisplayY + curDisplayHeight/16, 0.04);
@@ -406,14 +409,8 @@ class Player extends FlxSprite
 			case 1:
 				canMove = false;
 				if(!isMoving){
-					//FlxG.switchState(PlayState.loadWeek({
-					//	name: 'Lullaby',
-					//	id: '1',
-					//	songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
-					//	difficulties: ['hard']
-					//}, 'hard'));
-					//FlxG.switchState(new PlayState());
-					FlxG.switchState(new StoryMenuState());
+					//FlxG.switchState(new StoryMenuState());
+					FlxG.switchState(new ModState("CartridgeGuyState"));
 					startingTrigger = true;			
 				}
 				return;
@@ -423,7 +420,8 @@ class Player extends FlxSprite
 					curMusic.volume = 0;
 					FlxG.sound.play(Paths.sound('StartupBroke'), 0.5);
 					new FlxTimer().start(5, ()->{
-						FlxG.switchState(PlayState.loadSong('missingno', 'hard'));
+						FlxG.save.data.cartridgesOwned.push("GlitchWeek");
+						FlxG.switchState(PlayState.loadWeek(weekList.weeks[2], 'hard'));
 						FlxG.switchState(new PlayState()); 
 					});
 					startingTrigger = true;

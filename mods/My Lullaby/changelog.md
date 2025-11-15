@@ -129,5 +129,6 @@ v0.10.1
 
 - ADDED BRIMSTONE SONG
 - Added Cartridge selection menu
+- Added cartridgeguy gifting you a videogame
 - Fixed the position of the text in death toll 
 - Improvements to the shop's code
