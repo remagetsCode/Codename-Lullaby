@@ -53,16 +53,24 @@ function beatHit(b){
         case 228: moveBars(0.95, 0.1);
         case 230: moveBars(0.9, 0.1);
         case 231: moveBars(0.85, 0.5);
-        case 236: moveBars(0.6);
+        case 236: moveBars(0.55);
         case 240: moveBars(0.8);
         case 272: moveBars(0.5, 2);
         case 276: moveBars(1, 0.5, FlxEase.cubeOut);
         case 744: moveBars(0.7); 
         case 808: moveBars(0.95); 
-        case 864: moveBars(0.9, 0.05); 
-        case 866: moveBars(0.85, 0.05); 
-        case 868: moveBars(0.8, 0.05); 
-        case 870: moveBars(0.75); 
+        case 864: 
+            moveBars(0.9, 0.05); 
+            FlxTween.tween(camHUD, {alpha: 0.9}, 0.05);
+        case 866: 
+            moveBars(0.85, 0.05); 
+            FlxTween.tween(camHUD, {alpha: 0.75}, 0.05);
+        case 868: 
+            moveBars(0.8, 0.05); 
+            FlxTween.tween(camHUD, {alpha: 0.5}, 0.05);
+        case 870: 
+            moveBars(0.75);
+            FlxTween.tween(camHUD, {alpha: 0}, 2); 
         case 872: moveBars(0.5, 5, FlxEase.cubeInOut); 
         case 895: moveBars(0.8, 6); 
         case 970: moveBars(0.9, 3); 

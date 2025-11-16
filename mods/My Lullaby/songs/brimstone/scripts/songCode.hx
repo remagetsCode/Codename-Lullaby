@@ -203,10 +203,12 @@ function stepHit(s){
             FlxTween.num(1, 0, 0.5, {onUpdate: (v)->gameboy.interpolation = v.value});
 
         // gengar entrance
+        case 932: FlxTween.tween(camHUD, {alpha: 0}, 1);
         case 940: 
             setMarginColor(FlxColor.fromRGB(154, 120, 183));
             gengarEnt.alpha = 1;
             gengarEnt.animation.play('enter');
+        case 970: FlxTween.tween(camHUD, {alpha: 1}, 1);
         case 1050: setMarginColor(FlxColor.GRAY);
 
         // Starts throwing gengar notes
@@ -268,8 +270,9 @@ function stepHit(s){
             FlxTween.num(0, 3, 5, {onUpdate: (v)->heat1.intensity = v.value});
             FlxTween.num(1, 0.2, 7, {onUpdate: (v)->desat.desaturationAmount = v.value});
             FlxTween.tween(waShad, {y: -22}, 2);
-         case 3468:
+        case 3468:
             apparitiongf = true;
+        case 3616: FlxTween.tween(camHUD, {alpha: 1}, 2);
 
         // idk
         case 4192: FlxTween.num(0.2, 0.5, 5, {onUpdate: (v)->desat.desaturationAmount = v.value});
@@ -296,7 +299,18 @@ function onPlayerHit(e){
 
 function onPlayerMiss(e){
     if(e.note.noteType == "geng note"){
-        e.cancel();
+        #if mobile
+        e.preventAnim();
+        e.preventMissSound();
+        e.preventResetCombo();
+        e.preventStunned();
+        e.preventVocalsMute();
+        e.healthGain = 0;
+        e.misses = 0;
+        e.accuracy = null;
+        #else
+        e.cancel(); // Dunno why, but this lags a lot in mobile
+        #end
     }
 }
 

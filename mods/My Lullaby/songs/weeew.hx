@@ -151,22 +151,20 @@ function hideCineBorders(length){
 
 function missingnoEffect(){
 	//modchart.set('y', curBeat, FlxG.random.int(0,550), 1);
-	if(FlxG.save.data.lullabyMechanics){
-		downscroll = FlxG.random.bool();
-		modchart.set('x', curBeat, -750, 1);
-		modchart.set('y', curBeat, downscroll == false ? FlxG.random.int(-50, 240) : FlxG.random.int(-240, 50), 1);
+	if(!FlxG.save.data.lullabyMechanics) return;
+	downscroll = FlxG.random.bool();
+	modchart.set('x', curBeat, -750, 1);
+	modchart.set('y', curBeat, downscroll == false ? FlxG.random.int(-50, 240) : FlxG.random.int(-240, 50), 1);
 
-		for(i in 0...4){	
-			if(i == 0) modchart.set('x'+0, curBeat, FlxG.random.int(0, 250), 1);
-			else modchart.set('x'+i, curBeat, modchart.getPercent('x' + (i-1), 1) + FlxG.random.int(70, 250), 1);
-		}
-
-		//window.x = oldPosX;
-		//window.y = oldPosY;
-		//window.x += FlxG.random.int(-100,100);
-		//window.y += FlxG.random.int(-65,65);
-
-		missingno.iTime = FlxG.random.float(0,5);
+	for(i in 0...4){	
+		if(i == 0) modchart.set('x'+0, curBeat, FlxG.random.int(0, 250), 1);
+		else modchart.set('x'+i, curBeat, modchart.getPercent('x' + (i-1), 1) + FlxG.random.int(70, 250), 1);
 	}
 	
+	//window.x = oldPosX;
+	//window.y = oldPosY;
+	//window.x += FlxG.random.int(-100,100);
+	//window.y += FlxG.random.int(-65,65);
+	
+	missingno.iTime = FlxG.random.float(0,5);
 }
