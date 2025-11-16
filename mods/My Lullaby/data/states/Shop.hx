@@ -284,13 +284,13 @@ function update(elapsed){
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 	}
 
-	try{
-		// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
-		if(textBox.visible) upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
-	}
-	catch(e:Dynamic){
-		trace('hxsehexception: maybe the music reseted');
-	}
+	//try{
+	//	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
+	//	if(textBox.visible) upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
+	//}
+	//catch(e:Dynamic){
+	//	trace('hxsehexception: maybe the music reseted');
+	//}
 	
 }
 
