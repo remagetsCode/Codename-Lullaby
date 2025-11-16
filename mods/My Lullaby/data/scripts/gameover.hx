@@ -2,7 +2,11 @@ import funkin.game.GameOverSubstate;
 import hxvlc.flixel.FlxVideo;
 import hxvlc.flixel.FlxVideoSprite;
 
+var gf;
+
 function create(event){
+	FlxG.game.setFilters([]);
+	setMarginColor(FlxColor.BLACK);
 	switch(game.curSong){
 		case 'safety-lullaby': safeOver(event);
 		case 'left-unchecked': safeOver(event);
@@ -10,6 +14,7 @@ function create(event){
 		case 'missingno': missingno(event);
 		case 'insomnia': insomnia(event);
 		case 'monochrome': monochrome(event);
+		case 'brimstone': brimstone(event);
 	}
 }
 
@@ -167,6 +172,44 @@ function monochrome(event){
 	}
 }
 
+function brimstone(e){
+	e.cancel();
+
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	ba = new FlxSprite();
+	ba.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+	ba.animation.addByPrefix('ded', 'buried_death', 24, false);
+	
+	ba.animation.play('ded');
+	ba.scale.set(3,3);
+	ba.updateHitbox();
+	ba.screenCenter();
+	ba.y += 80;
+	add(ba);
+
+	baRetry = new FlxSprite();
+	baRetry.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+	baRetry.animation.addByPrefix('loop', 'BA_retry0', 24, true);
+	baRetry.animation.addByPrefix('confirm', 'BA_retry_confirm', 24, false);
+	baRetry.scale.set(3,3);
+	baRetry.screenCenter();
+	baRetry.y -= 200;
+	baRetry.animation.play('loop');
+	add(baRetry);
+
+	new FlxTimer().start(3.4, ()->{
+		ba.animation.play('ded');
+		new FlxTimer().start(3.68, ()->ba.animation.play('ded'), 0);
+	});
+
+	FlxG.sound.play(Paths.sound('buryman-death/buriedDeath'));
+	FlxG.sound.play(Paths.sound('buryman-death/BA'+FlxG.random.int(0,3)));
+	FlxG.sound.playMusic(Paths.music('BurymanDeath'));
+}
+
 function update(){
 	if (controls.ACCEPT && !ending) endBullshit();
 	if (controls.BACK) exit();
@@ -179,9 +222,14 @@ function endBullshit():Void
 	{
 		ending = true;
 		if(game.curSong == 'lost-cause') gf.y -= 180;
-
-		if (FlxG.sound.music != null)
-			FlxG.sound.music.stop();
+		if(game.curSong == 'brimstone'){
+			FlxG.sound.play(Paths.sound('buryman-death/buriedThud'));
+			baRetry.animation.play('confirm');
+			baRetry.x -= 17;
+			baRetry.y -= 25;
+		}
+		
+		FlxG.sound.music?.stop();
 		FlxG.sound.music = null;
 
 		//var sound = FlxG.sound.play(Paths.sound(retrySFX), 0.5);
@@ -196,12 +244,8 @@ function endBullshit():Void
 				FlxG.switchState(new PlayState());
 			});
 		});
-		try{
-			if(gf) gf.animation.play('wake');
-		}
-		catch(e:Dynamic){
-			trace("no hay gf en este gameover");
-		}
+
+		gf?.animation?.play('wake');
 	}
 
 
