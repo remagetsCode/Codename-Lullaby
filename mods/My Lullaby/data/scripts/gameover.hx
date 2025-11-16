@@ -179,35 +179,37 @@ function brimstone(e){
     deathCam.bgColor = FlxColor.TRANSPARENT;
     FlxG.cameras.add(deathCam, false);
 
-	ba = new FlxSprite();
-	ba.frames = Paths.getFrames('characters/death/BA_DeathRetry');
-	ba.animation.addByPrefix('ded', 'buried_death', 24, false);
-	
-	ba.animation.play('ded');
-	ba.scale.set(3,3);
-	ba.updateHitbox();
-	ba.screenCenter();
-	ba.y += 80;
-	add(ba);
-
-	baRetry = new FlxSprite();
-	baRetry.frames = Paths.getFrames('characters/death/BA_DeathRetry');
-	baRetry.animation.addByPrefix('loop', 'BA_retry0', 24, true);
-	baRetry.animation.addByPrefix('confirm', 'BA_retry_confirm', 24, false);
-	baRetry.scale.set(3,3);
-	baRetry.screenCenter();
-	baRetry.y -= 200;
-	baRetry.animation.play('loop');
-	add(baRetry);
-
-	new FlxTimer().start(3.4, ()->{
-		ba.animation.play('ded');
-		new FlxTimer().start(3.68, ()->ba.animation.play('ded'), 0);
-	});
-
 	FlxG.sound.play(Paths.sound('buryman-death/buriedDeath'));
-	FlxG.sound.play(Paths.sound('buryman-death/BA'+FlxG.random.int(0,3)));
-	FlxG.sound.playMusic(Paths.music('BurymanDeath'));
+	FlxG.sound.play(Paths.sound('buryman-death/BA'+FlxG.random.int(0,3)), 1, false, null, true, function() {
+		FlxG.sound.playMusic(Paths.music('BurymanDeath'));
+		ba = new FlxSprite();
+		ba.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+		ba.animation.addByPrefix('ded', 'buried_death', 24, false);
+		ba.animation.play('ded');
+		ba.scale.set(3,3);
+		ba.updateHitbox();
+		ba.screenCenter();
+		ba.y += 80;
+		ba.alpha = 0;
+		add(ba);
+
+		baRetry = new FlxSprite();
+		baRetry.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+		baRetry.animation.addByPrefix('loop', 'BA_retry0', 24, true);
+		baRetry.animation.addByPrefix('confirm', 'BA_retry_confirm', 24, false);
+		baRetry.scale.set(3,3);
+		baRetry.screenCenter();
+		baRetry.y -= 200;
+		baRetry.animation.play('loop');
+		baRetry.alpha = 0;
+		add(baRetry);
+
+		for(a in [ba, baRetry]) FlxTween.tween(a, {alpha: 1}, 3);
+		new FlxTimer().start(3.4, ()->{
+			ba.animation.play('ded');
+			new FlxTimer().start(3.68, ()->ba.animation.play('ded'), 0);
+		});
+	});	
 }
 
 function update(){
@@ -221,14 +223,15 @@ var ending:Bool = false;
 function endBullshit():Void
 	{
 		ending = true;
-		if(game.curSong == 'lost-cause') gf.y -= 180;
-		if(game.curSong == 'brimstone'){
-			FlxG.sound.play(Paths.sound('buryman-death/buriedThud'));
-			baRetry.animation.play('confirm');
-			baRetry.x -= 17;
-			baRetry.y -= 25;
+		switch(game.curSong){
+			case 'lost-cause': gf.y -= 180;
+			case 'brimstone':
+				FlxG.sound.play(Paths.sound('buryman-death/buriedThud'));
+				baRetry.animation.play('confirm');
+				baRetry.x -= 17;
+				baRetry.y -= 25;
 		}
-		
+	
 		FlxG.sound.music?.stop();
 		FlxG.sound.music = null;
 
