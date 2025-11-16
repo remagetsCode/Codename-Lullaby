@@ -29,10 +29,6 @@ function postCreate(){
     playerStrums.members[3].getJustPressed = () -> { return controls.NOTE_RIGHT_P; }
     playerStrums.members[3].getJustReleased = () -> { return controls.NOTE_RIGHT_R; }
 
-    playerStrums.members[4].getPressed = () -> { return hitbox.buttonExtra.pressed; }
-    playerStrums.members[4].getJustPressed = () -> { return hitbox.buttonExtra.justPressed; }
-    playerStrums.members[4].getJustReleased = () -> { return hitbox.buttonExtra.justReleased; }
-
     modchart.ease('z', 313, 2, -100, FlxEase.backIn, 0);
     if(!FlxG.save.data.lullabyMechanics){
         modchart.setPercent('vibrate', 0.5, 1);
@@ -42,6 +38,14 @@ function postCreate(){
         modchart.ease('x1', 5, 3, 0, FlxEase.backInOut, 1);
         modchart.ease('x2', 5, 3, 0, FlxEase.backInOut, 1);
         modchart.ease('x3', 5, 3, 0, FlxEase.backInOut, 1);
+    }
+}
+
+function update(){
+    if(FlxG.save.data.lullabyMechanics){
+        playerStrums.members[4].getPressed = () -> { return hitbox.buttonExtra.pressed; }
+        playerStrums.members[4].getJustPressed = () -> { return hitbox.buttonExtra.justPressed; }
+        playerStrums.members[4].getJustReleased = () -> { return hitbox.buttonExtra.justReleased; }
     }
 }
 
