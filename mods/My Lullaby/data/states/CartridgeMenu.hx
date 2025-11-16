@@ -35,6 +35,7 @@ function create(){
 	#end
 	weekList = StoryWeeklist.get(true, false);
 	if(FlxG.sound.music != null) FlxTween.tween(FlxG.sound.music, {pitch: 0.3, volume: 0.2}, 3);
+	else FlxG.sound.playMusic(Paths.music("freakyMenu"));
 
 	var unlockedSilver = true;
 	var unlockedGlitch = false;
@@ -106,7 +107,7 @@ function update(elapsed){
 			var currentAngle:Float = -((i - curSelected) * 60);
 			curSprite.angle = lerp(curSprite.angle, currentAngle, 0.2);
 			curSprite.x = curSprite.x - Math.sin(curSprite.angle * (Math.PI / 180)) * 600;
-			curSprite.y = curSprite.y + Math.cos(curSprite.angle * (Math.PI / 150)) * 550;
+			curSprite.y = curSprite.y + Math.cos(curSprite.angle * (Math.PI / 180)) * 550;
 			curSprite.alpha = (i - curSelected == 0) ? 1 : 0.3;
 		}
 }

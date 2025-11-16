@@ -33,7 +33,6 @@ function create(){
 	if(FlxG.save.data.lullabyShaders) FlxG.game.addShader(shader);
 
 	if(curSong == "missingno"){ 
-		trace('aer');
 		FlxG.game.addShader(missingno);
 		missingno.ENABLE_MODE = 1;
 		missingno.GLITCH_THR = 0.01;

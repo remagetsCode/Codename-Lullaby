@@ -6,9 +6,9 @@ function onSongStart(){
 	for(i => color in colors){
 		s = new FlxSprite(i*100, 0);
 		s.frames = Paths.getFrames('holdCover'+color);
-		s.animation.addByPrefix('start', 'holdCoverStart'+color, 24, false);
-		s.animation.addByPrefix('hold', 'holdCover'+color, 24, true);
-		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 24, false);
+		s.animation.addByPrefix('start', 'holdCoverStart'+color, 22, false);
+		s.animation.addByPrefix('hold', 'holdCover'+color, 22, true);
+		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 22, false);
 		s.cameras = [camHUD];
 		s.visible = false;
 		s.animation.onFinish.add(function(e){

@@ -23,7 +23,7 @@ public function moveBars(?percent:Float, ?time:Float, ?ease:FlxEase){
     ease ??= FlxEase.quintOut;
     
     for(i => bar in bars.members) {
-        FlxTween.cancelTweensOf(i);
+        FlxTween.cancelTweensOf(bar);
         FlxTween.tween(bar, {y: i==0? (-360)*percent : 360+360*percent}, time, {ease: ease});
     }
 }
@@ -55,7 +55,7 @@ function beatHit(b){
         case 231: moveBars(0.85, 0.5);
         case 236: moveBars(0.6);
         case 240: moveBars(0.8);
-        case 272: moveBars(0.5, 0.5);
+        case 272: moveBars(0.5, 2);
         case 276: moveBars(1, 0.5, FlxEase.cubeOut);
         case 744: moveBars(0.7); 
         case 808: moveBars(0.95); 

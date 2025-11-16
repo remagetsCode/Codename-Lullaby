@@ -151,11 +151,11 @@ function postCreate(){
     wa.updateHitbox();
     insert(6, wa);
 
-    waShad = new FlxSprite(wa.x, wa.y + 100).loadGraphic(Paths.image("characters/buried/shadow"));
+    waShad = new FlxSprite(wa.x, wa.y + 50).loadGraphic(Paths.image("characters/buried/shadow"));
     waShad.scale.set(3,3);
     waShad.updateHitbox();
     waShad.alpha = 0;
-    add(waShad);
+    insert(7, waShad);
 
     nogega = new FlxSprite(200, 350).loadGraphic(Paths.image("UI/pixel/nogega"));
     nogega.camera = camHUD;
@@ -179,7 +179,7 @@ function update(e){
     heat1.iTime = time*0.15;
     hpBar.percent = health*50;
     cpuBar.percent = (2.05-health)*50;
-    waShad.setPosition(fakegf.x-469, -22);
+    waShad.setPosition(fakegf.x-469, -50);
     waShad.scale.set(2.5+(fakegf.y+68)*0.03,2.5+(fakegf.y+68)*0.01);    // Yeah, detail that 99.999999999999999999% of people wont notice. Ps: there must be a better way to do this.
 }
 
@@ -267,11 +267,12 @@ function stepHit(s){
             loan.kill();
             FlxTween.num(0, 3, 5, {onUpdate: (v)->heat1.intensity = v.value});
             FlxTween.num(1, 0.2, 7, {onUpdate: (v)->desat.desaturationAmount = v.value});
+            FlxTween.tween(waShad, {y: -22}, 2);
          case 3468:
             apparitiongf = true;
 
         // idk
-        case 4192: FlxTween.num(0.2, 0.7, 5, {onUpdate: (v)->desat.desaturationAmount = v.value});
+        case 4192: FlxTween.num(0.2, 0.5, 5, {onUpdate: (v)->desat.desaturationAmount = v.value});
     }
 }
 

@@ -409,8 +409,8 @@ class Player extends FlxSprite
 			case 1:
 				canMove = false;
 				if(!isMoving){
-					//FlxG.switchState(new StoryMenuState());
-					FlxG.switchState(new ModState("CartridgeGuyState"));
+					FlxG.switchState(new StoryMenuState());
+					//FlxG.switchState(new ModState("CartridgeGuyState"));
 					startingTrigger = true;			
 				}
 				return;

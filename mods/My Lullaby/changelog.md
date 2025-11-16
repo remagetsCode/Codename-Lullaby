@@ -132,3 +132,5 @@ v0.10.1
 - Added cartridgeguy gifting you a videogame
 - Fixed the position of the text in death toll 
 - Improvements to the shop's code
+- Now the songs are finally in their weeks
+- Now the unlock anim can go back to make it faster and less dumb

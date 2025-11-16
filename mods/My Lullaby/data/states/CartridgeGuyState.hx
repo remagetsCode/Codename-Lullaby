@@ -66,6 +66,7 @@ function update(){
 	    	curSelected = curSelected==0 ? 1 : 0;
         }
         if(controls.ACCEPT){
+            FlxG.sound.play(Paths.sound('confirmMenu'));
             canMove = false;
             
             text.resetText("If your curiosity calls for more, you can find me elsewhere.");
@@ -79,11 +80,13 @@ function update(){
             new FlxTimer().start(3.5, ()->{
                 add(black); // yeah im too lazy
                 if(curSelected == 0){
+                    FlxG.save.data.cartridgesOwned.push("LostSilverWeek");
                     FlxG.sound.play(Paths.sound('cartridgeguy/selectorYes'), 1, false, null, true, ()->{
                         FlxG.switchState(new StoryMenuState());
                     });
                 }
                 else{
+                    cg.animation.play('1');
                     FlxG.sound.play(Paths.sound('cartridgeguy/selectorNo'), 1, false, null, true, ()->{
                         FlxG.switchState(new MainMenuState());
                     });
