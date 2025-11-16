@@ -7,6 +7,9 @@ heat.intensity = 1;
 heat.vel = 1;
 public var heat1 = new CustomShader('heatwave1');
 heat1.intensity = 0;
+heat1.v_comp = 30.0;
+public var gameboy = new CustomShader('gameboy');
+gameboy.interpolation = 1;
 public var desat = new CustomShader('desaturation');
 public var shader = new CustomShader('glitch');
 public var missingno = new CustomShader('glitch1');
@@ -30,7 +33,6 @@ function create(){
 	if(FlxG.save.data.lullabyShaders) FlxG.game.addShader(shader);
 
 	if(curSong == "missingno"){ 
-		trace('aer');
 		FlxG.game.addShader(missingno);
 		missingno.ENABLE_MODE = 1;
 		missingno.GLITCH_THR = 0.01;

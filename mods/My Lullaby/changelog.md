@@ -124,3 +124,13 @@ v0.10.1
 - Added unown timer in monochrome
 - Placed the combo ratings correctly in all stages
 - Fixed Lost Cause crashing somehow
+
+## v 0.11
+
+- ADDED BRIMSTONE SONG
+- Added Cartridge selection menu
+- Added cartridgeguy gifting you a videogame
+- Fixed the position of the text in death toll 
+- Improvements to the shop's code
+- Now the songs are finally in their weeks
+- Now the unlock anim can go back to make it faster and less dumb

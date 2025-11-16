@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/buried/images/" name="buried">
+	<sprite antialiasing="false" x="100" sprite="buuried" type="none" scale="3.5" name="buried"/>
+	<girlfriend/>
+	<dad camxoffset="-380" x="680.610244745757" camyoffset="150" y="-30.3982925423738"/>
+	<ratings x="250" y="60"/>
+	<boyfriend scrolly="0.1" camxoffset="100" x="50.796585084744" camyoffset="-300" y="518.398292542374" scrollx="0.4" flipX="false"/>
+</stage>

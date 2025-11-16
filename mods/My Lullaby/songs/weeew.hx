@@ -54,7 +54,6 @@ function postCreate(){
 	add(modchart);
 
 	// V-slice sustain anim 
-	holds = new FlxTypedGroup<FlxSprite>();
 	add(holds);
 }
 

@@ -3,6 +3,7 @@ import funkin.menus.ModSwitchMenu;
 import funkin.menus.credits.CreditsMain;
 import funkin.options.OptionsMenu;
 import funkin.editors.EditorPicker;
+import funkin.menus.StoryWeeklist;
 
 import funkin.backend.system.Controls;
 
@@ -16,6 +17,7 @@ import flixel.addons.display.FlxBackdrop;
 import funkin.backend.utils.DiscordUtil;
 
 public var curMusic = FlxG.sound.music;
+public var weekList;
 FlxG.game.setFilters([]);
 
 var windowTitle = "Friday Night Funkin' Lullaby - Main Menu";
@@ -25,6 +27,7 @@ public var walls:FlxGroup;
 var tileSize = 16;
 
 function create(){
+	weekList = StoryWeeklist.get(true, false);
 	if(curMusic != null){
 		FlxTween.tween(curMusic, {volume: 0}, 1, {
 		onComplete: ()->{
@@ -353,13 +356,8 @@ class Player extends FlxSprite
 			case 1:
 				canMove = false;
 				if(!isMoving){
-					FlxG.switchState(PlayState.loadWeek({
-						name: 'Lullaby',
-						id: '1',
-						songs: [{name: 'safety-lullaby'}, {name: 'left-unchecked'}, {name: 'lost-cause'}],
-						difficulties: ['hard']
-					}, 'hard'));
-					FlxG.switchState(new PlayState());
+					FlxG.switchState(new StoryMenuState());
+					//FlxG.switchState(new ModState("CartridgeGuyState"));
 					startingTrigger = true;			
 				}
 				return;
@@ -369,7 +367,8 @@ class Player extends FlxSprite
 					curMusic.volume = 0;
 					FlxG.sound.play(Paths.sound('StartupBroke'), 0.5);
 					new FlxTimer().start(5, ()->{
-						FlxG.switchState(PlayState.loadSong('missingno', 'hard'));
+						FlxG.save.data.cartridgesOwned.push("GlitchWeek");
+						FlxG.switchState(PlayState.loadWeek(weekList.weeks[2], 'hard'));
 						FlxG.switchState(new PlayState()); 
 					});
 					startingTrigger = true;

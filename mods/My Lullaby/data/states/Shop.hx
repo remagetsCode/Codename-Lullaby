@@ -15,7 +15,7 @@ var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var items:Array = ["2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow"];
+var items:Array = ["1Pokemon Silver", "2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow"];
 var itemsGrp:FlxTypedGroup;
 var pricesGrp:FlxTypedGroup;
 var prices:Array = [];
@@ -129,14 +129,11 @@ function create(){
 
 	var posh:Int = 0;
 	var posw:Int = 0;
-
 	for(i => item in items) {
-
 		if (i % 4 == 0 && i != 0){ 
 			posw = 0;
 			posh++;
 		}
-		
 
 		var d:String = CoolUtil.parseJson(Paths.json("shop/items/" + item));
 		spr = new FunkinSprite((270+150*posw), (150+160*posh));
@@ -152,6 +149,7 @@ function create(){
 		price.color = FlxColor.BLACK;
 		price.alignment = "center";
 		if(FlxG.save.data.unlockedSongs.exists(d.itemDetail.songUnlock)) price.text = "OWNED";
+		if(FlxG.save.data.cartridgesOwned.contains("LostSilverWeek") && d.itemDetail.name == "Pokemon Silver") price.text = "OWNED";
 		pricesGrp.add(price);
 
 		prices.push(d.itemDetail.price);
@@ -254,7 +252,6 @@ function postCreate(){
 		ease: FlxEase.circOut,
 		type: FlxTween.PINGPONG
 	});
-
 }
 
 var canMove:Bool = true;
@@ -285,13 +282,16 @@ function update(elapsed){
 		if (controls.BACK && buying && pricesGrp.members[curSelected].text == "CONFIRM?") {pricesGrp.members[curSelected].text = itemsGrp.members[curSelected].extra.get('price'); canMove = true;}
 		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
-
 	}
 
-	// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
-	//if(textBox.visible){ upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
-	//aberration.iTime = 5.5+curMusic.amplitude;
-	//}
+	try{
+		// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
+		if(textBox.visible) upperText.setGraphicSize(lerp(upperText.width, curMusic.amplitude > 0.8 ? 350*curMusic.amplitude : 140, 0.15), lerp(upperText.height, curMusic.amplitude > 0.8 ? 200*curMusic.amplitude : 80, 0.15));
+	}
+	catch(e:Dynamic){
+		trace('hxsehexception: maybe the music reseted');
+	}
+	
 }
 
 var curMoney:Int;
@@ -316,42 +316,28 @@ function postUpdate(){
 
 function showDialogue(){
 	//trace(data.shopLines);
-	textBox.visible = true;
-	selBox.visible = true;
-	hand.visible = true;
+	for(i in [textBox, selBox, hand]) i.visible = true;
 	for(a in options) a.visible = true;
 
-	if(FlxG.save.data.lullabyMechanics == false) {
-		targ = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
-		if(FlxG.random.bool(40)) targ = data.shopLines.pussyLines[FlxG.random.int(0,data.shopLines.pussyLines.length-1)];
-	}
-	else targ = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
-
+	targ = data.shopLines.idleLines[FlxG.random.int(0,data.shopLines.idleLines.length-1)];
+	if(FlxG.random.bool(40) && !FlxG.save.data.lullabyMechanics) targ = data.shopLines.pussyLines[FlxG.random.int(0,data.shopLines.pussyLines.length-1)];
+	
 	dialogue(targ);
 }
 
 function changeItem(huh:Int = 0, ?mouse:Bool = false)
 	{
 		var len = buying ? itemsGrp.length-1 : options.length-1;
-		
 		FlxG.sound.play(Paths.sound("menu/scroll"),0.5);
+
 		if(mouse) curSelected = huh;
-		//else if(!mouse && !buying){
-			switch(huh){
-				case -1: curSelected-1 >= 0 ? curSelected-- : curSelected = len;
-				case -4: curSelected-4 >= 0 ? curSelected-=4 : null;
-				case 1: curSelected+1 <= len ? curSelected++ : curSelected = 0;
-				case 4: curSelected+4 <= len ? curSelected+=4 : null;
-			}
-		//}
-		//else if(!mouse && buying){  //For later
-		//	
-		//}
-			
+		curSelected = FlxMath.wrap(curSelected + huh, 0, len);	
 	}
 
 function selectItem(){
 	FlxG.sound.play(Paths.sound("confirmMenu"));
+
+	// Outside buy menu
 	if(curSelected != null && !buying){
 		var selected = curSelected;
 			switch(selected){
@@ -364,16 +350,26 @@ function selectItem(){
 				case 2: FlxG.switchState(new MainMenuState());
 		}
 	}
+
+	// Inside buy menu
 	else if(curSelected != null && buying && pricesGrp.members[curSelected].text != "OWNED"){
 		var ptext = pricesGrp.members[curSelected].text;
 		var item = itemsGrp.members[curSelected];
+		var itemPrice = item.extra.get('price');
 
-		if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney >= item.extra.get('price')){
-			FlxG.save.data.lullabyMoney -= item.extra.get('price');
+		if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney >= itemPrice){
 			pricesGrp.members[curSelected].text = "OWNED";
+
+			// LostSilver cartridge
+			if(item.name == "") {
+				FlxG.save.data.cartridgesOwned.push("LostSilverWeek");
+				return;
+			}
+
+			FlxG.save.data.lullabyMoney -= itemPrice;
 			FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
 			canMove = true;
-			
+
 			onSubstate = true;
 			right.animation.play('push');
 			persistentUpdate = false;
@@ -381,7 +377,7 @@ function selectItem(){
 			openSubState(new ModSubState('RealFreePlay'));
 		}
 
-		else if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney < item.extra.get('price')) {
+		else if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney < itemPrice) {
 			CGDialog("poor"); 
 			FlxG.sound.play(Paths.sound('errorMenu'));
 		}
@@ -429,7 +425,7 @@ function showNextLetter(timer:FlxTimer){
     talk.text += fullText.charAt(currentIndex);
     currentIndex++;
 
-	if(fullText.charAt(currentIndex) != " ") FlxG.sound.play(Paths.sound('cartridgeGuy'), 0.1);
+	if(fullText.charAt(currentIndex) != " ") FlxG.sound.play(Paths.sound('cartridgeguy/cartridgeGuy'), 0.1);
 
     if (currentIndex >= fullText.length){
 		//trace('e');

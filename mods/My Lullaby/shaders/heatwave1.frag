@@ -2,6 +2,7 @@
 
 uniform float iTime;
 uniform float intensity;
+uniform float v_comp;
 void main()
 {
     // Normalized pixel coordinates (from 0 to 1)
@@ -16,7 +17,7 @@ void main()
      
      //customisation variables
      float wiggle_speed = 2.5;
-     float vertical_compression = 30.0;
+     float vertical_compression = v_comp;
      float effect_intensity = 0.05*intensity;
      
      float x_off = sin((iTime * wiggle_speed) + (uv.y * vertical_compression));//offset the x part of the uv based on y and propagate up based on time

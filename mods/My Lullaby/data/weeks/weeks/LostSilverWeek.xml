@@ -1,0 +1,6 @@
+<week name="LostSilverWeek" chars="pico,bf,gf" sprite="week3">
+    <song>frostbite</song>
+    <song>insomnia</song>
+    <song>monochrome</song>
+	<difficulty name="Hard"/>
+</week>

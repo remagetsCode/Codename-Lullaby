@@ -67,8 +67,6 @@ function create(){
 	left.antialiasing = true;
 	add(left);
 
-
-
 	for (i => song in songs){
 		var songText:Alphabet = new Alphabet(FlxG.width, 110, song.displayName, "bold");
 		songText.ID = i;
@@ -290,9 +288,11 @@ function selectItem(){
 
 function unlockAnim(?songName:String){
 	canChange = false;
-	timer = new FlxTimer().start(0.14, ()->{
-		if(songs[curSelected].name == songName){
-			l = locks.members[curSelected];
+	var idx; for(i=>song in songs) if(song.name == songName) idx = i;
+	
+	timer = new FlxTimer().start(0.15, ()->{
+		if(curSelected == idx){
+			l = locks.members[idx];
 			l.animation.play('unlocked');
 			l.animation.onFinish.addOnce(function(){
 				FlxTween.tween(l, {alpha: 0}, 1);
@@ -301,7 +301,8 @@ function unlockAnim(?songName:String){
 			canChange = true;
 			timer.cancel();
 		}
-		else changeItem(1);
+		else changeItem(idx > curSelected ? 1 : -1);
+		
 	}, 0);
 }
 

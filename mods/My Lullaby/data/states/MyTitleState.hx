@@ -108,7 +108,7 @@ function floatingLogo(){
 		type: FlxTween.PINGPONG
 	});
 	FlxTween.num(window.y, window.y+100, 4, {
-		ease: FlxEase.smootherStepInOut,
+		ease: FlxEase.quadInOut,
 		type: FlxTween.PINGPONG,
 		onUpdate: function(num){
 			window.y = num.value;

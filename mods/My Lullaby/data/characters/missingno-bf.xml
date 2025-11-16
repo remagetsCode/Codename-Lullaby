@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="ba_missingno_assets" antialiasing="false" icon="missingno-bf" x="300" y="-200" scale="3">
+	<anim name="idle" anim="BA_Missingno_Idle"/>
+	<anim name="singDOWN" anim="BA_Missingno_Down0"/>
+	<anim name="singRIGHT" anim="BA_Missingno_Right0"/>
+	<anim name="singLEFT" anim="BA_Missingno_Left0"/>
+	<anim name="singUP" anim="BA_Missingno_Up0"/>
+	<anim name="singUPmiss" anim="BA_Missingno_Up Miss"/>
+	<anim name="singDOWNmiss" anim="BA_Missingno_Down Miss"/>
+	<anim name="singLEFTmiss" anim="BA_Missingno_Left Miss"/>
+	<anim name="singRIGHTmiss" anim="BA_Missingno_Right Miss"/>
+</character>

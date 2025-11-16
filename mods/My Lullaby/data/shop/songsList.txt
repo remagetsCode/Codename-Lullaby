@@ -6,6 +6,7 @@ insomnia
 isotope
 monochrome
 missingno
+brimstone
 purin
 amusia
 death-toll

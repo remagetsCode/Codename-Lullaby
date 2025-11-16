@@ -1,0 +1,14 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="ba_BF_assets" icon="bf-pixel" color="#000000" antialiasing="false" scale="3.5">
+	<anim name="idle" anim="BF_Idle"/>
+	<anim name="singDOWN" anim="BF_Down0"/>
+	<anim name="singRIGHT" anim="BF_Right0" x="8" y="-3"/>
+	<anim name="singLEFT" anim="BF_Left0" x="-3" y="-6"/>
+	<anim name="singUP" anim="BF_Up0" x="5" y="-13"/>
+	<anim name="BF_AURGH" anim="BF_AURGH"/>
+	<anim name="singUPmiss" anim="BF_Up Miss" x="5" y="-15"/>
+	<anim name="singDOWNmiss" anim="BF_Down Miss" x="-1" y="2"/>
+	<anim name="singLEFTmiss" anim="BF_Left Miss" x="-4" y="-6"/>
+	<anim name="BF_Ball_Throw" anim="BF_Ball_Throw"/>
+	<anim name="singRIGHTmiss" anim="BF_Right Miss" x="9" y="-4"/>
+</character>
