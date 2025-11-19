@@ -285,6 +285,9 @@ function update(elapsed){
 		else if (controls.BACK && buying) {buying = false; curSelected = 0;}
 		else if (controls.BACK) FlxG.switchState(new MainMenuState());
 	}
+	else if(!onSubstate && introing){
+		if(controls.ACCEPT) cgIntro.animation.finished = true; 
+	}
 
 	try{
 		// Lmao wtf did I just do hahaha I'll leave this like that, I like it. This line is too long aaah it scares me
@@ -361,6 +364,7 @@ function selectItem(){
 
 		if(ptext == "CONFIRM?" && FlxG.save.data.lullabyMoney >= itemPrice){
 			pricesGrp.members[curSelected].text = "OWNED";
+			canMove = true;
 
 			// LostSilver cartridge
 			if(item.name == "") {
@@ -370,7 +374,6 @@ function selectItem(){
 
 			FlxG.save.data.lullabyMoney -= itemPrice;
 			FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
-			canMove = true;
 
 			onSubstate = true;
 			right.animation.play('push');

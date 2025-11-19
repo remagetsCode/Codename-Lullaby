@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/shitty-cave/images/" name="shittycave" zoom="1.5">
+	<boyfriend x="110" y="44"/>
+	<sprite type="none" antialiasing="false" sprite="BG_shitno" name="bg" scale="4"/>
+	<sprite type="none" y="40" antialiasing="false" sprite="BG_shitno" name="bg2" scale="4"/>
+	<girlfriend/>
+	<dad x="90" y="20" camxoffset="-150" camyoffset="70"/>
+	
+</stage>

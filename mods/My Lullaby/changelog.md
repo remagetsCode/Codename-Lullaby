@@ -134,3 +134,9 @@ v0.10.1
 - Improvements to the shop's code
 - Now the songs are finally in their weeks
 - Now the unlock anim can go back to make it faster and less dumb
+
+## next
+
+- Fixed buying the cartridge preventing you from moving
+- Shop intro animation is now skippable
+

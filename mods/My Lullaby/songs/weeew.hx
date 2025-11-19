@@ -22,6 +22,7 @@ function create(){
 	}
 
 	modchart.addModifier('transform');
+	modchart.addModifier('bounce');
 	modchart.addModifier('confusion');
 	modchart.addModifier('opponentswap');
 	modchart.addModifier('drunk');

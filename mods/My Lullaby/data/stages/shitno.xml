@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/shitno/images/" name="shitno">
+	<sprite x="-301.16066493102" sprite="floor" y="262.071118530804" type="none" name="floor"/>
+	<girlfriend/>
+	<dad x="-270" y="-270" camxoffset="30" camyoffset="170" scale="1"/>
+	<boyfriend flipX="false" camxoffset="-100" scale="2"/>
+	<ratings x="500" y="200"/>
+</stage>
