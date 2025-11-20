@@ -1,6 +1,6 @@
 introLength = 0;
 function postCreate(){
-    for(i in [healthBar, healthBarBG, iconP1, iconP2]) i.alpha = 0;
+    iconDAD.alpha = 0;
     camHUD.alpha = 0;
     
     
@@ -21,7 +21,9 @@ function stepHit(e){
             FlxTween.tween(camHUD, {alpha: 1}, 2);
 
         case 115: window.title = "Why is it so cold?";
-
+		
+		case 415: FlxTween.tween(iconDAD, {alpha: 1}, 2);
+		
         case 428: bf.cameraOffset = FlxPoint.get(-400, 0);
     }
 }

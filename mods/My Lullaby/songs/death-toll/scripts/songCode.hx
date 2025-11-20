@@ -1,8 +1,13 @@
 public var bell;
+
+var bficon:HealthIcon;
+var dawnColor:FlxColor;
+
 introLength = 10;
 function onCountdown(e){
     e.cancel();
 }
+
 function postCreate(){
     camDS = new FlxCamera(0, 0);
     camDS.bgColor = FlxColor.TRANSPARENT;
@@ -93,25 +98,18 @@ function postCreate(){
     FlxTween.tween(camHUD, {zoom: 0.6}, 0.5, {ease: FlxEase.quadInOut});
 
     new FlxTimer().start(0.2, ()->FlxG.sound.play(Paths.sound("bimbembodsi")));
-    // Thanks to BASHIR for flipping the healthbar
-	healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
-	updateIconPositions = function(){
-		var iconOffset:Int = 26;
 
-		var center:Float = healthBar.x + healthBar.width * FlxMath.remapToRange(100-healthBar.percent, 0, 100, 1, 0);
+	bficon = new HealthIcon(strumLines.members[1].characters[1].icon, true);
+	bficon.cameras = [camHUD];
+	
+	dawnColor = (boyfriend != null && boyfriend.xml != null && boyfriend.xml.exists("iconColor") | boyfriend.xml.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
+	bfColor = (strumLines.members[1].characters[1] != null && strumLines.members[1].characters[1].xml != null && strumLines.members[1].characters[1].xml.exists("iconColor") | strumLines.members[1].characters[1].xml.exists("color")) ? CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("iconColor")) | CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("color")) : 0xFF66FF33;
 
-		iconP2.x = center - iconOffset;
-		iconP1.x = center - (iconP1.width - iconOffset);
-
-		health = FlxMath.bound(health, 0, maxHealth);
-
-		iconP1.health = healthBar.percent / 100;
-		iconP2.health = 1 - (healthBar.percent / 100);
-	}
+	insert(members.indexOf(healthBar)+2, bficon);	
+	iconArray = [iconBF,iconDAD,bficon]; //Makes it so the BF Icon also will properly bop and such		
+	FlipIcons = true;
 
     pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
-
-
 }
 
 var shaderVel:Float = 1;
@@ -130,7 +128,12 @@ function postUpdate(){
     dawnbf.alpha = 1-dawn.alpha;
     inst.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.6 : 1, amount);
     vocals.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.8 : 1, amount);
-    pitio.volume = lerp(pitio.volume, 0, 0.005); 
+    pitio.volume = lerp(pitio.volume, 0, 0.005);	
+	
+	iconBF.alpha = strumLines.members[1].characters[0].alpha;
+	bficon.alpha = strumLines.members[1].characters[1].alpha;	
+	bficon.x = iconBF.x;bficon.y = iconBF.y;
+	customHealthBarColors[0] = FlxColor.interpolate(dawnColor, bfColor, strumLines.members[1].characters[1].alpha);
 
     if(curBeat > 7) modchart.setPercent('vibrate', modchart.getPercent('vibrate', 1) > 0 ? modchart.getPercent('vibrate', 1)-0.01 : 0, 1);
 }
@@ -204,7 +207,6 @@ function stepHit(s){
 
         case 1809: 
             setMarginColor(0x693609);
-            iconP1.setIcon('bf');
 
         case 2336: 
             FlxTween.num(0.06, 0.0, 2, {onUpdate: (v)->heat1.intensity = v.value});

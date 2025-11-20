@@ -203,7 +203,7 @@ function update(elapsed){
     
     if(curStep < 800)
     {
-        switch(iconP2.curCharacter){
+        switch(iconDAD.curCharacter){
             case "icon-wigglytuff": vignette.alpha = lerp(vignette.alpha, 0, 0.05);
             case "icon-wigglytuff1": vignette.alpha = lerp(vignette.alpha, 0.3, 0.05);
             case "icon-wigglytuff2": vignette.alpha = lerp(vignette.alpha, 0.6, 0.05);
@@ -225,15 +225,15 @@ function onNoteHit(e){
             case null: 
                 e.character.idleSuffix = "";
                 e.animSuffix = "";
-                iconP2.setIcon("icon-wigglytuff");
+                iconDAD.setIcon("icon-wigglytuff");
             case "1", "2", "3": 
                 e.character.idleSuffix = e.noteType;
                 e.animSuffix = e.noteType;
-                iconP2.setIcon("icon-wigglytuff"+e.noteType);
+                iconDAD.setIcon("icon-wigglytuff"+e.noteType);
             default: return;
         }
     }
-    else iconP2.setIcon("icon-wigglytuff3");
+    else iconDAD.setIcon("icon-wigglytuff3");
 
     modchart.setPercent('vibrate', 0.5, 0);
     new FlxTimer().start(0.05, ()->{modchart.setPercent('vibrate', 0, 0);});
@@ -318,21 +318,7 @@ function stepHit(s){
 
         case 805: for(i in uiStuff) FlxTween.tween(i, {alpha: 0}, 0.5);
         case 815:
-            	// Thanks to BASHIR for flipping the healthbar
-	        healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
-	        updateIconPositions = function(){
-		        var iconOffset:Int = 26;
-
-		        var center:Float = healthBar.x + healthBar.width * FlxMath.remapToRange(100-healthBar.percent, 0, 100, 1, 0);
-
-		        iconP2.x = center - iconOffset;
-		        iconP1.x = center - (iconP1.width - iconOffset);
-
-		        health = FlxMath.bound(health, 0, maxHealth);
-
-		        iconP1.health = healthBar.percent / 100;
-		        iconP2.health = 1 - (healthBar.percent / 100);
-	        }
+            FlipIcons = true;customHealthBarColors = [bfColor, dadColor];
         case 825: for(i in uiStuff) FlxTween.tween(i, {alpha: 1}, 1);
 
         case 1296:

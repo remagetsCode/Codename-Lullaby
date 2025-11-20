@@ -12,10 +12,10 @@ public var uiStuff:FlxTypedGroup;
 function postCreate(){
 	camera.zoom = defaultCamZoom;
 	uiStuff = new FlxTypedGroup();
-	uiStuff.add(healthBarBG);
-	uiStuff.add(healthBar);
-	uiStuff.add(iconP1);
-	uiStuff.add(iconP2);
+	uiStuff.add(customHealthBarBG);
+	uiStuff.add(customHealthBar);
+	uiStuff.add(iconBF);
+	uiStuff.add(iconDAD);
 	uiStuff.add(accuracyTxt);
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);

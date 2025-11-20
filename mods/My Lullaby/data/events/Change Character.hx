@@ -79,28 +79,6 @@ public function changeCharacter(strumIndex:Int, charName:String = 'bf', memberIn
 	if (oldChar.curCharacter == newChar.curCharacter) return trace('It\'s the same character bro.');
 	if (oldChar == null || newChar == null) return;
 
-	// icon change + healthBar color update
-	if (memberIndex == 0 && updateBar) {
-		if (strumIndex == 0) { // opponent side
-			prIconP2.changeChar(newChar.getIcon(),false );
-			
-		} else if (strumIndex == 1) { // player side
-			prIconP1.changeChar(newChar.getIcon(), true );
-			
-		}
-	}
-
-	//sets icon animations
-	for (icon in [iconP1, iconP2]) {
-        var losing:Bool = switch (icon) {
-            case iconP1: (healthBar.percent < 20);
-            case iconP2: (healthBar.percent > 80);
-            default: false;
-        };
-
-        icon.animation.curAnim.curFrame = losing ? 1 : 0;
-    }
-
 	// swaps old and new char
 	var group = FlxTypedGroup.resolveGroup(oldChar);
 	if (group == null) group = this;
@@ -113,6 +91,11 @@ public function changeCharacter(strumIndex:Int, charName:String = 'bf', memberIn
 	newChar.playAnim(oldChar.animation?.name);
 	newChar.animation?.curAnim?.curFrame = oldChar.animation?.curAnim?.curFrame;
 	strumLines.members[strumIndex].characters[memberIndex] = newChar;
+	if(updateBar){
+		for(ico in iconArray) {
+			if(ico.curCharacter == oldChar.getIcon())ico.setIcon(newChar.getIcon());
+		}customHealthBarColors[0] = boyfriend.iconColor;customHealthBarColors[1] = dad.iconColor;
+	}	
 	if (funnyTraceMode) trace('Character index "' + memberIndex + '" changed to "' + newChar.curCharacter + '" on strumLine "' + strumIndex + '"!');
 }
 
