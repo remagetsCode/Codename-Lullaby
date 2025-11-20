@@ -110,6 +110,8 @@ function postCreate(){
 	FlipIcons = true;
 
     pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
+
+    modchart.setPercent('alpha', 0.4, 0);
 }
 
 var shaderVel:Float = 1;
@@ -249,7 +251,6 @@ function onPlayerHit(e){
             if(dawn.idleSuffix != "-morph") dawn.idleSuffix = "";
             dawnbf.idleSuffix = "";
         });
-
     }
 }
 
