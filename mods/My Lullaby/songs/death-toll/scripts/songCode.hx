@@ -110,7 +110,7 @@ function postCreate(){
 	}
 
     pitio = FlxG.sound.play(Paths.sound('pitio'), 0, true);
-
+    modchart.setPercent('alpha', 0.4, 0);
 
 }
 
