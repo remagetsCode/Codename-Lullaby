@@ -9,8 +9,8 @@ public var FlipIcons = false;
 var cacheRect:FlxRect = new FlxRect();
 public var customHealthBar:FlxSprite;
 public var customHealthBarBG:FlxSprite;
-public var bfColor = (boyfriend != null && boyfriend.xml != null && boyfriend.xml.exists("iconColor") | boyfriend.xml.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
-public var dadColor = (dad != null && dad.xml != null && dad.xml.exists("iconColor") | dad.xml.exists("color")) ? CoolUtil.getColorFromDynamic(dad.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(dad.xml.get("color")): 0xFFFF0000;		
+public var bfColor = (boyfriend?.xml?.exists("iconColor") | boyfriend?.xml?.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
+public var dadColor = (dad?.xml?.exists("iconColor") | dad?.xml?.exists("color")) ? CoolUtil.getColorFromDynamic(dad.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(dad.xml.get("color")): 0xFFFF0000;		
 public var customHealthBarColors:Array<Int> = [dadColor, bfColor];
 
 function create(){

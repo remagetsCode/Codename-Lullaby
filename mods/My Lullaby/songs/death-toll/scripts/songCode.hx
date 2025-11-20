@@ -102,8 +102,8 @@ function postCreate(){
 	bficon = new HealthIcon(strumLines.members[1].characters[1].icon, true);
 	bficon.cameras = [camHUD];
 	
-	dawnColor = (boyfriend != null && boyfriend.xml != null && boyfriend.xml.exists("iconColor") | boyfriend.xml.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
-	bfColor = (strumLines.members[1].characters[1] != null && strumLines.members[1].characters[1].xml != null && strumLines.members[1].characters[1].xml.exists("iconColor") | strumLines.members[1].characters[1].xml.exists("color")) ? CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("iconColor")) | CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("color")) : 0xFF66FF33;
+	dawnColor = (boyfriend?.xml?.exists("iconColor") | boyfriend?.xml?.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
+	bfColor = (strumLines.members[1]?.characters[1]?.xml != null && strumLines.members[1]?.characters[1]?.xml.exists("iconColor") | strumLines.members[1]?.characters[1]?.xml.exists("color")) ? CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("iconColor")) | CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("color")) : 0xFF66FF33;
 
 	insert(members.indexOf(healthBar)+2, bficon);	
 	iconArray = [iconBF,iconDAD,bficon]; //Makes it so the BF Icon also will properly bop and such		

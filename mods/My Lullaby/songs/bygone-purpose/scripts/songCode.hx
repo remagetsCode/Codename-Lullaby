@@ -1,5 +1,10 @@
 var alexisColor:FlxColor;
 
+function create(){
+    camFollow.setPosition(800, 500);
+    curCameraTarget = -1;
+}
+
 function postCreate(){
     if(FlxG.save.data.lullabyShaders){
         FlxG.game.addShader(desat);
@@ -34,8 +39,7 @@ function postCreate(){
     big.alpha = 0;
     iconDAD.visible = false;
 	customHealthBarColors[0] = 0xFFFF0000;
-	camGame.focusOn(FlxPoint.get(900, 360));curCameraTarget = -1;
-	
+		
     modchart.ease('alpha', 38, 2, 0, FlxEase.cubeOut);
     modchart.ease('alpha', 46, 2, 1, FlxEase.cubeOut, 1);
     modchart.ease('alpha', 143, 2, 0, FlxEase.cubeOut);
