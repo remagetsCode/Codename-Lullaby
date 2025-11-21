@@ -1,6 +1,5 @@
 // script extracted from FNDustin', edited by me.
 
-
 import Type;
 
 import funkin.backend.MusicBeatTransition;
@@ -37,7 +36,7 @@ function new() {
 	//FlxG.save.data.unlockedSongs = ["u" => "stoopid", "frostbite" => "unlocking", 'lost-cause' => 'unlocking', 'left-unchecked' => 'unlocking', 'safety-lullaby' => 'unlocking', 'missingno' => 'unlocking', 'insomnia' => 'unlocking', 'monochrome' => 'unlocking', 'purin' => 'unlocking'];
 
     //Noob mode
-    //FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
+    FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
 
 	if(FlxG.save.data.unlockedSongs == null) FlxG.save.data.unlockedSongs = ["u" => "stoopid"];
 	if(FlxG.save.data.cartridgesOwned == null) FlxG.save.data.cartridgesOwned = ["HypnoWeek"];

@@ -17,7 +17,7 @@ function postCreate(){
         modchart.ease('x'+i, 105, 5, 0, FlxEase.cubeOut);
     }
 
-    new FlxTimer().start(0.03, ()->{
+    new FlxTimer().start(0.05, ()->{
         vignette.alpha = 0.9;
         vignette.camera = camExtra;
     });

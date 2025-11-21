@@ -37,7 +37,7 @@ public var portraitOffset:Map<String, FlxPoint> = [
 	'brimstone' => FlxPoint.get(0, 115),
 	'death-toll' => FlxPoint.get(129, -4),
 	'isotope' => FlxPoint.get(12, 1),
-	'shitno' => FlxPoint.get(72, 90)
+	'shitno' => FlxPoint.get(56, 33)
 ];
 var abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -272,7 +272,7 @@ function selectItem(){
 
 		new FlxTimer().start(1.0, ()->{
 			FlxTween.num(1, 200, 1, {onUpdate: (v2)->aberration.amount = v2.value, ease: FlxEase.cubeIn});
-			FlxTween.tween(FlxG.camera, {zoom: 5}, 2, {ease: FlxEase.cubeIn});
+			FlxTween.tween(FlxG.camera, {zoom: 7}, 2, {ease: FlxEase.cubeIn});
 			});
 		new FlxTimer().start(2.0, ()->{
 			FlxG.switchState(PlayState.loadSong(songs[selected].name, 'hard'));
@@ -290,7 +290,7 @@ function unlockAnim(?songName:String){
 	canChange = false;
 	var idx; for(i=>song in songs) if(song.name == songName) idx = i;
 	
-	timer = new FlxTimer().start(0.15, ()->{
+	timer = new FlxTimer().start(0.12, ()->{
 		if(curSelected == idx){
 			l = locks.members[idx];
 			l.animation.play('unlocked');

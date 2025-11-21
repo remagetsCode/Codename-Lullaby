@@ -44,25 +44,30 @@ var p4:Int = 1856;
 function stepHit(e){
     switch(e){
         case 1: holds.visible = false;
+        
         case p1 | p1+16 | p1+24 | p1+32 | p1+48 | p1+64:
             pattern1();
             var targAngle = modchart.getPercent('confusionOffset', 1) == 360 ? 0 : 360;
             modchart.ease('confusionOffset', curBeatFloat, 1.5, targAngle, FlxEase.cubeOut, 1);
+            modchart.ease('opponentSwap', curBeatFloat, 1, modchart.getPercent('opponentSwap') == 0 ? 1 : 0, FlxEase.cubeOut);
 
         case p2 | p2+16 | p2+24 | p2+32 | p2+48 | p2+64:
             pattern1();
             var targAngle = modchart.getPercent('confusionOffset', 1) == 360 ? 0 : 360;
             modchart.ease('confusionOffset', curBeatFloat, 1.5, targAngle, FlxEase.cubeOut, 1);
+            modchart.ease('opponentSwap', curBeatFloat, 1, modchart.getPercent('opponentSwap') == 0 ? 1 : 0, FlxEase.cubeOut);
 
         case p3 | p3+16 | p3+24 | p3+32 | p3+48 | p3+64:
             pattern1();
             var targAngle = modchart.getPercent('confusionOffset', 1) == 360 ? 0 : 360;
             modchart.ease('confusionOffset', curBeatFloat, 1.5, targAngle, FlxEase.cubeOut, 1);
+            modchart.ease('opponentSwap', curBeatFloat, 1, modchart.getPercent('opponentSwap') == 0 ? 1 : 0, FlxEase.cubeOut);
 
         case p4 | p4+16 | p4+24 | p4+32 | p4+48 | p4+64:
             pattern1();
             var targAngle = modchart.getPercent('confusionOffset', 1) == 360 ? 0 : 360;
             modchart.ease('confusionOffset', curBeatFloat, 1.5, targAngle, FlxEase.cubeOut, 1);
+            modchart.ease('opponentSwap', curBeatFloat, 1, modchart.getPercent('opponentSwap') == 0 ? 1 : 0, FlxEase.cubeOut);
 
         case 2080: 
             hand.alpha = 1;

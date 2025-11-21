@@ -2,6 +2,8 @@ import sys.io.File;
 import haxe.Json;
 import flixel.math.FlxRect;
 import funkin.backend.utils.DiscordUtil;
+import funkin.menus.StoryWeeklist;
+import flixel.graphics.frames.FlxAtlasFrames;
 
 FlxG.game.setFilters([]);
 
@@ -15,7 +17,7 @@ var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
 
-var items:Array = ["1Pokemon Silver", "2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow"];
+var items:Array = ["1Pokemon Silver", "2GameBoy Advanced SP", "4Lit Candle", "5Mysterious Letter", "6Broken Note", "8Trainer Bow", "9Broken Vinyl"];
 var itemsGrp:FlxTypedGroup;
 var pricesGrp:FlxTypedGroup;
 var prices:Array = [];
@@ -27,6 +29,7 @@ var introing:Bool = true;
 
 function create(){
 	window.title = windowTitle;
+	weekList = StoryWeeklist.get(true, false);
 	if(FlxG.save.data.lullabyShaders){
 		FlxG.game.addShader(shaderCrt);
 		FlxG.game.addShader(aberration);
@@ -297,6 +300,10 @@ function update(elapsed){
 		trace('hxsehexception: maybe the music reseted');
 	}
 	
+	if (gameboy?.isAnimFinished()) {
+		FlxG.switchState(PlayState.loadWeek(weekList.weeks[3], 'hard'));
+		FlxG.switchState(new PlayState());
+	}
 }
 
 var curMoney:Int;
@@ -367,8 +374,15 @@ function selectItem(){
 			canMove = true;
 
 			// LostSilver cartridge
-			if(item.name == "") {
+			if (item.name == "") {
 				FlxG.save.data.cartridgesOwned.push("LostSilverWeek");
+				return;
+			}
+			else if (item.name == "shinto") {
+				FlxG.save.data.lullabyMoney -= itemPrice;
+				FlxG.save.data.unlockedSongs.set(item.name, "unlocking");
+				FlxG.save.data.unlockedSongs.set("shitno", "unlocking");
+				showShintoAnim();
 				return;
 			}
 
@@ -442,3 +456,25 @@ function showNextLetter(timer:FlxTimer){
 
 subStateOpened.add(function(){onSubstate = true;});
 subStateClosed.add(function(){onSubstate = false;});
+
+var gameboy:FunkinSprite;
+function showShintoAnim() {
+	camExtra = new FlxCamera(0, 0);
+    camExtra.bgColor = FlxColor.BLACK;
+    FlxG.cameras.add(camExtra, false);
+
+	FlxG.sound.music.volume = 0;
+	FlxG.sound.play(Paths.sound("gameboyAnim"));
+
+	gameboy = new FunkinSprite();
+	gameboy.loadSprite("images/shop/gameboy");
+	gameboy.addAnim('idle', 'Buying Broken Record', 24, false);
+	gameboy.camera = camExtra;
+	gameboy.playAnim('idle');
+	gameboy.antialiasing = true;
+	add(gameboy);
+
+	gameboy.animation.onFinish.add(function(){
+		trace('ee');
+	});
+}
