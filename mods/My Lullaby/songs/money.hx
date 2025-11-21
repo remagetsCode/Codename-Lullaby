@@ -9,7 +9,7 @@ function onSongEnd(e) {
         moneyCam.bgColor = FlxColor.fromRGB(0,0,0,245);
         FlxG.cameras.add(moneyCam, false);
 
-        var got = FlxG.random.int(230,270);
+        var got = Std.int(270*accuracy);
         FlxG.save.data.lullabyMoney += got;
 
         money = new FlxSprite(FlxG.width-150, -30);

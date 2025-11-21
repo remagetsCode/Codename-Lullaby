@@ -139,4 +139,5 @@ v0.10.1
 
 - Fixed buying the cartridge preventing you from moving
 - Shop intro animation is now skippable
+- Now you'll get gold amount depending on your accuracy
 
