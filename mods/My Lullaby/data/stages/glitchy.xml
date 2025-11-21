@@ -6,5 +6,5 @@
 	<girlfriend x="1100" y="-500"/>
 	<ratings x="1150" y="400"/>
 	<dad scale="0.95" x="1153" scroll="0.53" y="0"/>
-	<boyfriend camxoffset="350" x="466" scroll="1.1" camyoffset="-50" y="186" zoomfactor="0.7"/>
+	<boyfriend camxoffset="350" x="466" scrollx="1.1" scrolly="0.8" camyoffset="-65" y="256" zoomfactor="0.7"/>
 </stage>

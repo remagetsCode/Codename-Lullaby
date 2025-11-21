@@ -55,7 +55,14 @@ function stepHit(step){
 
 function beatHit(beat){
 	switch(beat){
-		case 0: modchart.ease('opponentSwap', beat, 20, 1, FlxEase.cubeInOut);
+		case 0: 
+			modchart.ease('opponentSwap', beat, 20, 1, FlxEase.cubeInOut);
+			modchart.ease('z', beat, 10, -200, FlxEase.cubeInOut, 0);
+			modchart.ease('z', beat, 10, 150, FlxEase.cubeInOut, 1);
+		
+		case 10:
+			modchart.ease('z', beat, 10, 0, FlxEase.cubeInOut, 0);
+			modchart.ease('z', beat, 10, 0, FlxEase.cubeInOut, 1);
 		
 		case 277: 
 			damage = true;

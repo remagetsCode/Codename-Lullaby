@@ -15,6 +15,7 @@ function create(event){
 		case 'insomnia': insomnia(event);
 		case 'monochrome': monochrome(event);
 		case 'brimstone': brimstone(event);
+		case 'shitno': shitno(event);
 	}
 }
 
@@ -210,6 +211,15 @@ function brimstone(e){
 			new FlxTimer().start(3.68, ()->ba.animation.play('ded'), 0);
 		});
 	});	
+}
+
+function shitno(e){
+	e.cancel();
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	FlxG.sound.play(Paths.sound('Shitno-Death'));
 }
 
 function update(){

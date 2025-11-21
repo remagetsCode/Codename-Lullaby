@@ -18,9 +18,10 @@ function postCreate(){
     }
 
     new FlxTimer().start(0.05, ()->{
-        vignette.alpha = 0.9;
+        vignette.alpha = 1;
         vignette.camera = camExtra;
     });
+    FlxTween.shake(iconBF, 0.015, 9999999);
 }
 
 function stepHit(e){

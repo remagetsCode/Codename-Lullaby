@@ -8,7 +8,7 @@ function onSongStart(){
 		s.frames = Paths.getFrames('holdCover'+color);
 		s.animation.addByPrefix('start', 'holdCoverStart'+color, 20, false);
 		s.animation.addByPrefix('hold', 'holdCover'+color, 20, true);
-		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 20, false);
+		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 22, false);
 		s.cameras = [camHUD];
 		s.visible = false;
 		s.animation.onFinish.add(function(e){
