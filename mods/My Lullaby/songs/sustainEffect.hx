@@ -6,9 +6,9 @@ function onSongStart(){
 	for(i => color in colors){
 		s = new FlxSprite(i*100, 0);
 		s.frames = Paths.getFrames('holdCover'+color);
-		s.animation.addByPrefix('start', 'holdCoverStart'+color, 22, false);
-		s.animation.addByPrefix('hold', 'holdCover'+color, 22, true);
-		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 22, false);
+		s.animation.addByPrefix('start', 'holdCoverStart'+color, 20, false);
+		s.animation.addByPrefix('hold', 'holdCover'+color, 20, true);
+		s.animation.addByPrefix('end', 'holdCoverEnd'+color, 20, false);
 		s.cameras = [camHUD];
 		s.visible = false;
 		s.animation.onFinish.add(function(e){
@@ -33,7 +33,7 @@ function stepHit(){
 		}
 
 		if(generated) milk.setPosition(
-			(player.members[i].x-player.members[i].width)+(modchart.getPercent('x'+i,1) + modchart.getPercent('x',1) + (swap == 1 ? -640 : 0)), 
+			(player.members[i].x-player.members[i].width)+(modchart.getPercent('x'+i,1) + modchart.getPercent('x',1) + (-640*swap)), 
 			(player.members[i].y-player.members[i].height)-mode+(modchart.getPercent('y'+i,1)+modchart.getPercent('y',1))
 		);
 	}

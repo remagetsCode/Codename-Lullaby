@@ -1,6 +1,6 @@
 // Script by Spookula S. Scareva/@nebulastellanova
 
-var intensity = 6; // How far the camera moves on press, default is 5
+var intensity = 2; // How far the camera moves on press, default is 5
                    // 5 = 50 Pixels
 var speed = 66;    // pixelsPerSecond
 

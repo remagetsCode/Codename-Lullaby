@@ -73,6 +73,7 @@ function postCreate(){
     modchart.ease('z', 200, 8, -70, FlxEase.cubeInOut, 0);
     modchart.set('tipsy', 201, 0.5);
     modchart.set('tipsy', 328, 0.4);
+    modchart.set('tipsyspeed', 328, 3);
     modchart.set('wiggle', 328, 1);
 
     modchart.ease('alpha', 384, 1, 0, FlxEase.cubeOut);

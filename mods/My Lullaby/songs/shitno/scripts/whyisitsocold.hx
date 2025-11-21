@@ -39,6 +39,8 @@ function stepHit(e){
             for(i in [healthBar, healthBarBG, iconDAD]) FlxTween.tween(i, {alpha: 1}, 2);
             FlxTween.tween(vignette, {alpha: 0.5}, 5); 
             bf.cameraOffset = FlxPoint.get(-400, 0);
+
+        // Idk
         case 1232: FlxTween.tween(vignette, {alpha: 0.85}, 5); 
         case 1744: FlxTween.tween(vignette, {alpha: 0.5}, 5); 
         case 2908: 
