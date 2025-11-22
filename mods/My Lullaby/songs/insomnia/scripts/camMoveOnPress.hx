@@ -4,7 +4,7 @@ var intensity = 6; // How far the camera moves on press, default is 5
                    // 5 = 50 Pixels
 var speed = 66;    // pixelsPerSecond
 
-var alignX = true; // Makes up and down movement 70% of left and right movement, defualt is true
+var alignX = false; // Makes up and down movement 70% of left and right movement, defualt is true
 
 public var move = true;   // Do you want the camera to move? default is true (can also be toggled with "toggleMovePress" event)
 

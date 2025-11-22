@@ -10,21 +10,7 @@ function create(){
 }
 
 function postCreate(){
-	// Thanks to BASHIR for flipping the healthbar
-	healthBar.flipX = iconP1.flipX = iconP2.flipX = true;
-	updateIconPositions = function(){
-		var iconOffset:Int = 26;
-
-		var center:Float = healthBar.x + healthBar.width * FlxMath.remapToRange(100-healthBar.percent, 0, 100, 1, 0);
-
-		iconP2.x = center - iconOffset;
-		iconP1.x = center - (iconP1.width - iconOffset);
-
-		health = FlxMath.bound(health, 0, maxHealth);
-
-		iconP1.health = healthBar.percent / 100;
-		iconP2.health = 1 - (healthBar.percent / 100);
-	}
+	FlipIcons = true;
 }
 
 function onSongStart(){
@@ -69,7 +55,14 @@ function stepHit(step){
 
 function beatHit(beat){
 	switch(beat){
-		case 0: modchart.ease('opponentSwap', beat, 20, 1, FlxEase.cubeInOut);
+		case 0: 
+			modchart.ease('opponentSwap', beat, 20, 1, FlxEase.cubeInOut);
+			modchart.ease('z', beat, 10, -200, FlxEase.cubeInOut, 0);
+			modchart.ease('z', beat, 10, 150, FlxEase.cubeInOut, 1);
+		
+		case 10:
+			modchart.ease('z', beat, 10, 0, FlxEase.cubeInOut, 0);
+			modchart.ease('z', beat, 10, 0, FlxEase.cubeInOut, 1);
 		
 		case 277: 
 			damage = true;

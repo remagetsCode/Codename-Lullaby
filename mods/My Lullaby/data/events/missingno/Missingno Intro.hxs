@@ -14,7 +14,7 @@ function eventFunction(params) {
 		PlayState.dadOpponent.dance();
 		PlayState.dadOpponent.animation.finishCallback = null;
 	};
-	FlxTween.tween(PlayState.instance.iconP2, {alpha: 1}, 1, {ease: FlxEase.linear});
+	FlxTween.tween(PlayState.instance.iconDAD, {alpha: 1}, 1, {ease: FlxEase.linear});
 	if (!Init.trueSettings.get("Centered Notefield"))
 		PlayState.instance.dadStrums.visible = true;
 	
@@ -57,7 +57,7 @@ function onUpdate(elapsed) {
 
 function initFunction(params) {
 	PlayState.dadOpponent.visible = false;
-	PlayState.instance.iconP2.alpha = 0;
+	PlayState.instance.iconDAD.alpha = 0;
 	PlayState.songDisplayName = "";
 	for (i in 0...PlayState.SONG.song.length)
 		PlayState.songDisplayName += "?";

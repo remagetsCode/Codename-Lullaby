@@ -12,10 +12,10 @@ public var uiStuff:FlxTypedGroup;
 function postCreate(){
 	camera.zoom = defaultCamZoom;
 	uiStuff = new FlxTypedGroup();
-	uiStuff.add(healthBarBG);
-	uiStuff.add(healthBar);
-	uiStuff.add(iconP1);
-	uiStuff.add(iconP2);
+	uiStuff.add(customHealthBarBG);
+	uiStuff.add(customHealthBar);
+	uiStuff.add(iconBF);
+	uiStuff.add(iconDAD);
 	uiStuff.add(accuracyTxt);
 	uiStuff.add(missesTxt);
 	uiStuff.add(scoreTxt);
@@ -37,7 +37,7 @@ function onSongEnd(){
 	trace(FlxG.save.data.unlockedSongs);
 }
 
-function pattern1(){
+public function pattern1(){
 	for(i in 0...4){
 		var arrPosX = modchart.getPercent('x'+i, 1);
 		var arrPosY = modchart.getPercent('y'+i, 1);
@@ -49,7 +49,7 @@ function pattern1(){
 	}
 }
 
-function pattern2(){
+public function pattern2(){
 	for(i in 0...4){
 		switch(i){
 			case 0, 3: modchart.ease('z'+i, curBeatFloat, 0.1, 35, FlxEase.linear, 1);
@@ -59,7 +59,7 @@ function pattern2(){
 	}
 }
 
-function pattern3(){
+public function pattern3(){
 	for(i in 0...4){
 		switch(i){
 			case 1, 2: modchart.ease('z'+i, curBeatFloat, 0.1, 35, FlxEase.linear, 1);

@@ -1,3 +1,10 @@
+var alexisColor:FlxColor;
+
+function create(){
+    camFollow.setPosition(800, 500);
+    curCameraTarget = -1;
+}
+
 function postCreate(){
     if(FlxG.save.data.lullabyShaders){
         FlxG.game.addShader(desat);
@@ -10,6 +17,7 @@ function postCreate(){
     big = stage.getSprite("bighipno");
     pic = stage.getSprite("Transition");
     alexis = player.characters[1];
+	alexisColor = (strumLines.members[1].characters[1] != null && strumLines.members[1].characters[1].xml != null && strumLines.members[1].characters[1].xml.exists("iconColor") | strumLines.members[1].characters[1].xml.exists("color")) ? CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("iconColor")) | CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("color")) : 0xFF66FF33;
     smol = player.characters[0];
 
     pass = new FlxSprite(1040, -300);
@@ -29,8 +37,9 @@ function postCreate(){
     pic.screenCenter();
 
     big.alpha = 0;
-    iconP2.visible = false;
-
+    iconDAD.visible = false;
+	customHealthBarColors[0] = 0xFFFF0000;
+		
     modchart.ease('alpha', 38, 2, 0, FlxEase.cubeOut);
     modchart.ease('alpha', 46, 2, 1, FlxEase.cubeOut, 1);
     modchart.ease('alpha', 143, 2, 0, FlxEase.cubeOut);
@@ -70,13 +79,14 @@ function stepHit(s){
             setMarginColor(0x444400, 1);
             big.alpha = 1;
             smol.alpha = 0;
-            iconP1.setIcon('icon-hypno');
+            iconBF.setIcon('icon-hypno');
             FlxTween.tween(pic, {alpha: 0}, 5);
             for(i in uiStuff) FlxTween.tween(i, {alpha: 0.5}, 4);
         case 714: 
             setMarginColor(0x1097AF, 1);
             FlxTween.tween(alexis, {alpha: 0.9}, 1);
-        case 720: iconP1.setIcon('icon-alexis');
+        case 720: 
+			iconBF.setIcon('icon-alexis');customHealthBarColors[1] = alexisColor;
         case 1236:
             pass.animation.play('pass');
             light.animation.play('lit');
@@ -85,7 +95,8 @@ function stepHit(s){
 
         case 1240: 
             setMarginColor(0x444400, 1);
-            iconP1.setIcon('icon-hypno');
+            iconBF.setIcon('icon-hypno');
+			customHealthBarColors[1] = bfColor;
     }
 }
 

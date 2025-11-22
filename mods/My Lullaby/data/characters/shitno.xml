@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character icon="icon-shitno" color="#130D09">
+	<anim name="idle" anim="Idle"/>
+	<anim name="singDOWN" anim="Down"/>
+	<anim name="singRIGHT" anim="Right"/>
+	<anim name="singLEFT" anim="Left" x="-36" y="12"/>
+	<anim name="singUP" anim="Up" x="41" y="2"/>
+</character>

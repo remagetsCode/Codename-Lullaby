@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="shitno_assets" antialiasing="false" icon="icon-shinto" color="#FFFC00" scale="4">
+	<anim name="idle" anim="shitno_idle"/>
+	<anim name="singDOWN" anim="shitno_down"/>
+	<anim name="singRIGHT" anim="shitno_right"/>
+	<anim name="singLEFT" anim="shitno_left"/>
+	<anim name="singUP" anim="shitno_up"/>
+	<anim name="shitno_end" anim="shitno_end"/>
+	<anim name="shitno_lose" anim="shitno_lose" x="-19" y="-4"/>
+</character>

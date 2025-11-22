@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#9271FD",
+	"opponentModeAllowed": false,
+	"icon": "icon-shinto",
+	"difficulties": [
+		"hard"
+	],
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "shinto",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 160
+}

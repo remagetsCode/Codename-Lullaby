@@ -78,11 +78,6 @@ function postCreate(){
     modchart.setPercent('y', downscroll ? -30 : 0, 1);
     buryman.playAnim('buryman_ground', true);
 
-    healthBar.visible = false;
-    healthBarBG.visible = false;
-    iconP1.visible = false;
-    iconP2.visible = false;
-
     bars = [];
     for(i in 0...20){
         var bar = new FlxSprite(0, 0).makeGraphic(FlxG.width, 46, FlxColor.BLACK);
@@ -171,6 +166,10 @@ function postCreate(){
     add(red);
 
     accuracyTxt.y = missesTxt.y = scoreTxt.y = 5;
+	
+	new FlxTimer().start(0.01, ()->{
+		for (i in [uiStuff.members[0], uiStuff.members[1], iconBF, iconDAD]) i.visible = false;	
+	});
 }
 
 var time:Float = 0;

@@ -1,6 +1,5 @@
 // script extracted from FNDustin', edited by me.
 
-
 import Type;
 
 import funkin.backend.MusicBeatTransition;

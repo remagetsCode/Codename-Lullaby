@@ -1,10 +1,9 @@
 <!DOCTYPE codename-mod-credits>
-<!-- TEMPLATE FOR CUSTOM CREDITS!!! -->
-<credit portrait="false" name="Remagets" desc="Hello, I made this lil' mod to test how fnf modding is and how coding works in this. I want to be a good dev not only in Fnf but in other areas so this is just for fun. Thanks for playing. " icon="" size="130"/>
+<credit portrait="false" name="Remagets" desc="Hello, I made this port to test how fnf modding is and how coding works in this. I want to be a good dev not only in Fnf but in other areas so this is just for fun. Thanks for playing. " icon="" size="130"/>
+<credit portrait="false" name="DonGT" desc="Talented guy, helped coding/improving some code, Thanks!" icon="" size="130" url=""/>
 <credit portrait="false" name="Hypno's Lullaby Team" desc="Those who created the original mod, all the credits to them. You can find all the team members in the link." icon="" size="130" url="https://fridaynightfunking.fandom.com/wiki/Friday_Night_Funkin%27_Lullaby"/>
 <menu name="Special Thanks" desc="People who knows how to code.">
 	<credit portrait="false" name="BASHIR" desc="Helped me with the animated icons and flip the healthbar codes." icon="" size="130" url=""/>
-	<credit portrait="false" name="DonGT" desc="Helped improving the overworld and make it compatible with vanilla codename, Thanks!" icon="" size="130" url=""/>
 	<credit portrait="false" name="Breninho" desc="Had the initiative to make a mobile build." icon="" size="130" url=""/>
 	<credit portrait="false" name="teotm" desc="Got all the assets from this repo, dunno why, but thanks anyways!" icon="" size="130" url="https://github.com/teotm/hypnos-lullaby-source-code-archive"/>
 	<credit portrait="false" name="Ne_Eo" desc="Used his ndll to make the window transparent." icon="" size="130" url=""/>

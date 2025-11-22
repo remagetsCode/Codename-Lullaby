@@ -1,0 +1,26 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Grey_Assets" antialiasing="false" icon="icon-grey" color="#555555">
+	<anim name="idle-alt" anim="Grey_Idle"/>
+	<anim name="singDOWN-alt" anim="Grey_Down"/>
+	<anim name="singRIGHT-alt" anim="Grey_Right"/>
+	<anim name="singLEFT-alt" anim="Grey_Left"/>
+	<anim name="singUP-alt" anim="Grey_Up"/>
+	<anim name="singDOWNmiss-alt" anim="Grey_Miss_Down"/>
+	<anim name="singLEFTmiss-alt" anim="Grey_Miss_Left"/>
+	<anim name="singRIGHTmiss-alt" anim="Grey_Miss_Right"/>
+	<anim name="singUPmiss-alt" anim="Grey_Miss_Up"/>
+	<anim name="Grey_Talk1" anim="Grey_Talk1"/>
+	<anim name="Grey_Talk2" anim="Grey_Talk2"/>
+
+	<anim name="idle" anim="GreyCold_Idle" x="-16" y="-10"/>
+	<anim name="singUP" anim="GreyCold_Up" x="-17" y="-10"/>
+	<anim name="singDOWN" anim="GreyCold_Down" x="-16" y="-11"/>
+	<anim name="singLEFT" anim="GreyCold_Left" x="-18" y="-10"/>
+	<anim name="singRIGHT" anim="GreyCold_Right" x="-16" y="-10"/>
+	<anim name="singUPmiss" anim="GreyCold_Miss_Up" x="-17" y="-10"/>
+	<anim name="singDOWNmiss" anim="GreyCold_Miss_Down" x="-16" y="-11"/>
+	<anim name="singLEFTmiss" anim="GreyCold_Miss_Left" x="-18" y="-11"/>
+	<anim name="singRIGHTmiss" anim="GreyCold_Miss_Right" x="-17" y="-12"/>
+	<anim name="GreyCold_Talk" anim="GreyCold_Talk" x="-16" y="-10"/>
+	<anim name="GreyCold_Turn" anim="GreyCold_Turn" x="-17" y="-11"/>
+</character>
