@@ -334,12 +334,7 @@ inline function shake(){
     modchart.set('vibrate',curBeatFloat, 1, 0);
     modchart.ease('vibrate', curBeatFloat+0.5, 0.7, 0, FlxEase.cubeOut, 0);
 
-    new FlxTimer().start(0.05, ()->{
-        if(!window.fullscreen){
-            window.x += FlxG.random.int(-5, 5);
-            window.y += FlxG.random.int(-5, 5);
-        }
-    }, 4);
+9
     FlxTween.shake(buryman, 0.05, 0.5, FlxAxes.X);
 
 }

@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="GAMBLE_X" icon="icon-lord-x" x="0" y="300" color="#041A2C">
+	<anim name="idle" anim="X IDLE" y="-10"/>
+	<anim name="singDOWN" anim="X DOWN"/>
+	<anim name="singRIGHT" anim="X RIGHT" x="-27" y="156"/>
+	<anim name="singLEFT" anim="X LEFT" x="39" y="-1"/>
+	<anim name="singUP" anim="X UP" x="2" y="26"/>
+</character>

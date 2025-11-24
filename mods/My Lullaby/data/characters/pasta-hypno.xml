@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="PASTA_HYPNO" x="0" y="0" scale="1.4" color="#C5C300">
+	<anim name="idle" anim="Hypno Idle0" x="-2"/>
+	<anim name="singDOWN" anim="Hypno Down0" x="-48" y="-74"/>
+	<anim name="singRIGHT" anim="Hypno Right0" x="-88" y="13"/>
+	<anim name="singLEFT" anim="Hypno Left0" x="-96" y="33"/>
+	<anim name="singUP" anim="Hypno Up0" x="-136" y="106"/>
+</character>
