@@ -16,6 +16,7 @@ function create(event){
 		case 'monochrome': monochrome(event);
 		case 'brimstone': brimstone(event);
 		case 'shitno': shitno(event);
+		case 'pasta-night': pastaNight(event);
 	}
 }
 
@@ -220,6 +221,50 @@ function shitno(e){
     FlxG.cameras.add(deathCam, false);
 
 	FlxG.sound.play(Paths.sound('Shitno-Death'));
+}
+
+public var crt = new CustomShader('crt');
+function pastaNight(e) {
+	e.cancel();
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	deathCam.width = 800;
+    deathCam.x = 250;
+
+    if(FlxG.save.data.lullabyShaders) deathCam.addShader(crt);
+
+	pj = new FlxSprite();
+	pj.frames = Paths.getFrames("UI/base/pasta/PN_LoseSprites");
+	pj.animation.addByPrefix("hypno", "pastanight_LoseHypno", 24, false);
+	pj.animation.addByPrefix("lordx", "pastanight_LoseLordX", 24, false);
+	pj.animation.addByPrefix("mx", "pastanight_LoseMX", 24, false);
+	pj.scale.set(3,3);
+	pj.screenCenter();
+	pj.velocity.y = -500;
+	add(pj);
+	FlxTween.tween(pj.velocity, {y: 1000}, 0.5, {ease: FlxEase.cubeIn});
+
+	if(asMX) pj.animation.play("mx");
+	if(asHypno) pj.animation.play("hypno");
+	if(asLordX) pj.animation.play("lordx");
+
+	telon = new FlxSprite();
+	telon.frames = Paths.getFrames("UI/base/pasta/PN_GameOver");
+	telon.animation.addByPrefix("anim", "pastanight_curtains0", 24, false);
+	telon.animation.addByPrefix("idle", "pastanight_curtains_retry", 24, false);
+	telon.scale.set(3.2,3.2);
+	telon.screenCenter();
+	add(telon);
+
+	telon.animation.play("anim");
+	telon.animation.onFinish.add(()->{
+		telon.animation.play("idle");
+	});
+
+	pj.x -= 240;
+	telon.x -= 240;
 }
 
 function update(){

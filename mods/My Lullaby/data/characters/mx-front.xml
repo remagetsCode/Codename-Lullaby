@@ -1,6 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="mxfront"  x="-125" y="-3
-5" icon="mx-front">
+<character sprite="mxfront"  x="-125" y="-35" icon="mx-front">
 	<anim name="idle" anim="IdleFront"/>
 	<anim name="singDOWN" anim="DownFront" x="17" y="-111"/>
 	<anim name="singRIGHT" anim="RightFront" x="-34" y="-115"/>
