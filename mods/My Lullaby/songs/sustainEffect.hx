@@ -23,18 +23,23 @@ function onSongStart(){
 }
 
 function stepHit(){
-	var swap = modchart.getPercent('opponentSwap', 1);
 	var mode = downscroll ? 87 : -5;
 
+	var user;
+	var userID;
+	for(idx=>strumLine in strumLines.members) if(strumLine.cpu == false) {user = strumLine; userID = idx;}
+
+	var swap = modchart.getPercent('opponentSwap', userID);
+	var reverse = modchart.getPercent('reverse', userID);
 	for(i in 0...4){
 		var milk = holds.members[i];
-		if(player.members[i].animation.name == "static" && generated){
+		if(user.members[i].animation.name == "static" && generated){
 			if(milk.animation.name == "hold") milk.visible = false;
 		}
 
 		if(generated) milk.setPosition(
-			(player.members[i].x-player.members[i].width)+(modchart.getPercent('x'+i,1) + modchart.getPercent('x',1) + (-640*swap)), 
-			(player.members[i].y-player.members[i].height)-mode+(modchart.getPercent('y'+i,1)+modchart.getPercent('y',1))
+			(user.members[i].x-user.members[i].width)+(modchart.getPercent('x'+i,userID) + modchart.getPercent('x',userID) + (-640*swap)), 
+			(user.members[i].y-user.members[i].height) - mode + (modchart.getPercent('y'+i,userID)+modchart.getPercent('y',userID)) - 640*reverse
 		);
 	}
 		

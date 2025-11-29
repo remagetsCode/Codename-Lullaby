@@ -1,0 +1,27 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/bar/images/" name="bar" zoom="0.8">
+	<sprite x="816.377200550293" sprite="SKY" y="271.84582375179" type="none" name="sky"/>
+	<sprite x="887.046192648629" sprite="shine" y="272.402741326252" type="none" name="shine"/>
+	<sprite x="-100.232252284067" sprite="bar" y="6.4251392710222" type="none" name="bar"/>
+	<sprite x="1079.65067826487" sprite="holder" y="236.316633204129" type="none" name="holder"/>
+	<sprite x="939.3095238066" sprite="SFingers" y="293.452380942178" name="sFingers"/>
+	<sprite x="1085.84495845491" sprite="MrWidemouth" y="328.387948758191" type="beat" name="widemouth"/>
+	<sprite x="486.253815902331" sprite="machine" y="25.0239887151043" type="none" scale="0.6" name="machine"/>
+	<sprite x="620.038686181672" sprite="brian_idle" y="265.296691866967" type="beat" name="brian"/>
+	<sprite x="788.619047714388" sprite="CoronationPeach" y="268.750000067937" type="beat" scale="0.8" name="peach"/>
+	<sprite x="945.29761904762" sprite="ShintoPastaNight" y="306.642857687785" type="beat" scale="0.8" name="shitno"/>
+	<sprite x="379.010349183752" sprite="Jack" y="135.00376925864" type="beat" scale="0.7" name="jack"/>
+	<sprite x="1031.82990642116" sprite="TableMisc" y="493.44543648263" type="none" scale="0.7" name="tablemisc"/>
+	<sprite x="1069.88194462159" sprite="Buds_Slender_Effects" y="113.170093578839" type="beat" scale="0.5" name="slender"/>
+	<sprite x="1579.48854633938" sprite="Ben_Drowned_BG" y="402.544462249606" type="none" scale="0.8" name="Ben"/>
+	<sprite x="772.887948093286" sprite="Jeff" y="349.124651419477" type="beat" scale="0.8" name="jeff"/>
+	<sprite x="385.683466017" sprite="Mousetable" y="317.000000000012" type="beat" scale="0.8" name="mouse"/>
+	<sprite x="792.910707058591" sprite="JeffArm" y="482.124651417887" type="beat" scale="0.8" name="jeffArm"/>
+	<sprite x="2421.28515238744" sprite="GB_PastaNight_Assets" y="437.735423970315" name="gb"/>
+	<sprite x="2507.52814542322" sprite="GOLD_PASTA_NIGHT" y="246.902048652015" name="gold"/>
+	<sprite x="1198.93508202872" sprite="chair" y="607.620551120662" type="none" name="chair"/>
+	<girlfriend x="954.330664331133" y="526.678049994693" camxoffset="-330" camyoffset="50"/>
+	<dad x="89.5776282316151" y="425.311921636445" camxoffset="150"/>
+	<boyfriend x="560.911322875788" y="206.838316724243" camxoffset="100"/>
+	<sprite x="-625.543186771936" sprite="TABLE" y="717.857864376269" type="none" scale="0.6" name="table"/>
+</stage>

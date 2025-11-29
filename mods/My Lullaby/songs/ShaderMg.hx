@@ -28,6 +28,8 @@ blur.Quality = 4.0;
 blur.Size = 15;
 public var blurfast = new CustomShader('lightBlur');
 blurfast.Strength = 0;
+public var crt = new CustomShader('crt');
+public var old = new CustomShader('old');
 
 function create(){
 	if(FlxG.save.data.lullabyShaders) FlxG.game.addShader(shader);

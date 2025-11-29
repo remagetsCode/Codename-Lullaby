@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="mxback" icon="icon-mx" color="#6E0000">
+	<anim name="idle" anim="IdleBack"/>
+	<anim name="singDOWN" anim="DownBack" x="16" y="-42"/>
+	<anim name="singRIGHT" anim="RightBack" x="-41" y="51"/>
+	<anim name="singLEFT" anim="LeftBack" x="84" y="3"/>
+	<anim name="singUP" anim="UpBack" x="9" y="124"/>
+	<anim name="Hit1Back" anim="Hit1Back"/>
+	<anim name="Hit2Back" anim="Hit2Back"/>
+</character>
