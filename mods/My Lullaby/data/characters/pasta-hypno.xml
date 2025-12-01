@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="PASTA_HYPNO" x="0" y="0" scale="1.4" color="#C5C300">
+<character sprite="PASTA_HYPNO" scale="1.4" icon="icon-hypno-cards" color="#C5C200">
 	<anim name="idle" anim="Hypno Idle0" x="-2"/>
 	<anim name="singDOWN" anim="Hypno Down0" x="-48" y="-74"/>
 	<anim name="singRIGHT" anim="Hypno Right0" x="-88" y="13"/>
