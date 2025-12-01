@@ -135,9 +135,14 @@ v0.10.1
 - Now the songs are finally in their weeks
 - Now the unlock anim can go back to make it faster and less dumb
 
-## next
+## v 0.12
 
 - Fixed buying the cartridge preventing you from moving
 - Shop intro animation is now skippable
 - Now you'll get gold amount depending on your accuracy
 - Health bar and icons smooth transition in death toll - Thanks to DonGT
+
+## v 0.13
+
+- ADDED PASTA NIGHT SONG
+- Fixed the shop controls not working sometimes in mobile
