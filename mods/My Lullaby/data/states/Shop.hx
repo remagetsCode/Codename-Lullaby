@@ -235,7 +235,7 @@ function create(){
 			for(a in FlxG.save.data.unlockedSongs) if(a == "unlocking") {
 					onSubstate = true;
 					right.animation.play('push');
-					persistentUpdate = false;
+					persistentUpdate = true;
 					persistentDraw = true;
 					openSubState(new ModSubState('RealFreePlay'));
 					break;
@@ -398,7 +398,7 @@ function selectItem(){
 
 			onSubstate = true;
 			right.animation.play('push');
-			persistentUpdate = false;
+			persistentUpdate = true;
 			persistentDraw = true;
 			openSubState(new ModSubState('RealFreePlay'));
 		}
