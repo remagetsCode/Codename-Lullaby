@@ -334,7 +334,6 @@ inline function shake(){
     modchart.set('vibrate',curBeatFloat, 1, 0);
     modchart.ease('vibrate', curBeatFloat+0.5, 0.7, 0, FlxEase.cubeOut, 0);
 
-9
     FlxTween.shake(buryman, 0.05, 0.5, FlxAxes.X);
 
 }
