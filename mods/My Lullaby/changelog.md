@@ -154,9 +154,8 @@ v0.10.1
 ## v1.0
 Yaay finally
 
-
 - ADDED DISSENSION SONG 
--! Added custom gameover to Death Toll
+- Added custom gameover to Death Toll
 - Reduced shader in Death Toll
 - Added gameover sound to Pasta Night
 - Added mx handup sound to Pasta Night
