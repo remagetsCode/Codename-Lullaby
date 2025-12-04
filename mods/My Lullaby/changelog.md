@@ -147,6 +147,3 @@ v0.10.1
 - ADDED PASTA NIGHT SONG
 - Fixed the shop controls not working sometimes in mobile
 
-## v 0.13.1
-
-- Fixed Brimstone not working 🥀
