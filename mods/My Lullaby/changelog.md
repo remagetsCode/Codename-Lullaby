@@ -152,7 +152,7 @@ v0.10.1
 - Fixed Brimstone not working 🥀
 
 ## v1.0
-Yaay finally
+Yay finallyyy
 
 - ADDED DISSENSION SONG 
 - Added custom gameover to Death Toll
