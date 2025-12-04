@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="BRO_DEAD" icon="icon-mike" color="#F88D3A">
+	<anim name="idle" anim="BRO IDLE"/>
+	<anim name="singDOWN" anim="BRO DOWN"/>
+	<anim name="singRIGHT" anim="BRO RIGHT"/>
+	<anim name="singLEFT" anim="BRO LEFT" x="74"/>
+	<anim name="singUP" anim="BRO UP"/>
+</character>

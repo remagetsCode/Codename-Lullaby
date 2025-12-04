@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="steve" icon="icon-steven-evil" color="#000000">
+	<anim name="idle" anim="STEVE IDLE"/>
+	<anim name="singDOWN" anim="STEVE DOWN"/>
+	<anim name="singRIGHT" anim="STEVE RIGHT"/>
+	<anim name="singLEFT" anim="STEVE LEFT"/>
+	<anim name="singUP" anim="STEVE UP"/>
+</character>

@@ -6,20 +6,20 @@ import funkin.menus.StoryWeeklist;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 FlxG.game.setFilters([]);
-
-public var shaderCrt = new CustomShader('monitor');
 public static var aberration = new CustomShader('aberration');
+public var shaderCrt = new CustomShader('monitor');
+
 var options:Array = [];
 var curSelected = -1;
-
 var data:String = CoolUtil.parseJson(Paths.json("shop/shopText"));
-
 var talk:FunkinText;
 var windowTitle = "Friday Night Funkin' - Shop";
+public var onSubstate:Bool = false;
 
 var items:Array = [
 	"1Pokemon Silver", 
 	"2GameBoy Advanced SP", 
+	"3Pokemon Red",
 	"4Lit Candle", 
 	"5Mysterious Letter", 
 	"6Broken Note", 
@@ -27,14 +27,15 @@ var items:Array = [
 	"8Trainer Bow", 
 	"9Broken Vinyl"
 ];
-var itemsGrp:FlxTypedGroup;
-var pricesGrp:FlxTypedGroup;
+
+var itemsGrp:FlxSpriteGroup;
+var pricesGrp:FlxSpriteGroup;
 var prices:Array = [];
-public var onSubstate:Bool = false;
 var curMusic = FlxG.sound.music;
 var buying:Bool = false;
 
 var introing:Bool = true;
+var defaultItemsY:Int = 0;
 
 function create(){
 	window.title = windowTitle;
@@ -46,8 +47,8 @@ function create(){
 		aberration.amount = 0.5;
 	}
 
-	itemsGrp = new FlxTypedGroup();
-	pricesGrp = new FlxTypedGroup();
+	itemsGrp = new FlxSpriteGroup();
+	pricesGrp = new FlxSpriteGroup();
 
 	var songList = CoolUtil.coolTextFile(Paths.txt("shop/songsList"));
 	for(song in songList) graphicCache.cache(Paths.image('menus/freeplay/' + song));
@@ -169,6 +170,7 @@ function create(){
 		spr.x += d.itemDetail.xOffset;
 		spr.y += d.itemDetail.yOffset;
 	}
+	defaultItemsY = itemsGrp.y;
 	add(itemsGrp);
 	add(pricesGrp);
 
@@ -333,6 +335,22 @@ function postUpdate(){
 
 	hand.y = lerp(hand.y, (buying ? itemsGrp.members[curSelected].y - itemsGrp.members[curSelected].height/5: options[curSelected].y - hand.height/2), 0.3);
 	hand.x = lerp(hand.x, (buying ? itemsGrp.members[curSelected].x : options[curSelected].x) - hand.width*0.7, 0.3);
+
+
+	for(spr in itemsGrp.members) 
+		spr.clipRect = new FlxRect(
+			0, 														// X
+			(buyBox.y+18)-spr.y < 0 ? 0 : (buyBox.y+18)-spr.y, 		// Y
+			spr.width, 												// Width
+			spr.height-(spr.y - 400)								// Height
+		);
+	for(spr in pricesGrp.members) 
+		spr.clipRect = new FlxRect(
+			0, 														// X
+			(buyBox.y+18)-spr.y < 0 ? 0 : (buyBox.y+18)-spr.y, 		// Y
+			spr.width, 												// Width
+			spr.height-(spr.y - 450)								// Height
+		);
 }
 
 function showDialogue(){
@@ -353,6 +371,15 @@ function changeItem(huh:Int = 0, ?mouse:Bool = false)
 
 		if(mouse) curSelected = huh;
 		curSelected = FlxMath.wrap(curSelected + huh, 0, len);	
+
+		if(buying && curSelected < 4) {
+			FlxTween.tween(itemsGrp, {y: defaultItemsY}, 0.15);
+			FlxTween.tween(pricesGrp, {y: defaultItemsY}, 0.15);
+		}
+		if(buying && curSelected > 7) {
+			FlxTween.tween(itemsGrp, {y: defaultItemsY-150}, 0.15);
+			FlxTween.tween(pricesGrp, {y: defaultItemsY-150}, 0.15);
+		}
 	}
 
 function selectItem(){
@@ -362,7 +389,7 @@ function selectItem(){
 	if(curSelected != null && !buying){
 		var selected = curSelected;
 			switch(selected){
-				case 0: CGDialog("buy"); buying = true;
+				case 0: CGDialog("buy"); buying = true; changeItem(0);
 				case 1: 
 					FlxTween.shake(selBox, 0.01, 0.5, FlxAxes.XY, {
 						ease: FlxTween.cubeInOut

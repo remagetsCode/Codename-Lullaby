@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character icon="icon-mike" color="#F88E3B">
+	<anim name="idle" anim="Texture" y="-1" loop="true" indices="0..10"/>
+	<anim name="singDOWN" anim="DOWN"/>
+	<anim name="singRIGHT" anim="RIGHT"/>
+	<anim name="singLEFT" anim="LEFT"/>
+	<anim name="singUP" anim="UP"/>
+	<anim name="singUPmiss" anim="missUP"/>
+	<anim name="singLEFTmiss" anim="missLEFT"/>
+	<anim name="singRIGHTmiss" anim="missUP"/>
+	<anim name="singDOWNmiss" anim="missDOWN"/>
+</character>

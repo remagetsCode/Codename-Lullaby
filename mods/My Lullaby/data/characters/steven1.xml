@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="steven_phase_1" icon="icon-steven" color="#B30000">
+	<anim name="idle" anim="IDLE"/>
+	<anim name="singDOWN" anim="DOWN"/>
+	<anim name="singRIGHT" anim="RIGHT"/>
+	<anim name="singLEFT" anim="LEFT"/>
+	<anim name="singUP" anim="UP"/>
+</character>

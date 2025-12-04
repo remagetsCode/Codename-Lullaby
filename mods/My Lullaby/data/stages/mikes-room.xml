@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/mikes-room/images/" name="mikes-room" zoom="1.5">
+	<girlfriend/>
+	<sprite type="none" sprite="back" name="back"/>
+	<sprite type="none" sprite="portrait" name="portrait"/>
+	<sprite type="none" sprite="bed" name="bed"/>
+	<sprite type="none" sprite="pillow" name="pillow"/>
+	<dad camxoffset="120" camyoffset="50"/>
+	<boyfriend x="310" y="350" flipX="false" camxoffset="450" camyoffset="160"/>
+</stage>
