@@ -155,8 +155,8 @@ function stepHit(s){
      //1477, -452
     switch(s){
         case 5: setMarginColor(0xfd831a);
-        case 240: heat1.intensity = 0.02;
-        case 248: heat1.intensity = 0.04;
+        case 240: heat1.intensity = 0.01;
+        case 248: heat1.intensity = 0.02;
         case 256: FlxTween.tween(camDS, {zoom: 1.32}, 0.5, {ease: FlxEase.quadInOut});
 
         case 768:
@@ -211,7 +211,7 @@ function stepHit(s){
             setMarginColor(0x693609);
 
         case 2336: 
-            FlxTween.num(0.06, 0.0, 2, {onUpdate: (v)->heat1.intensity = v.value});
+            FlxTween.num(0.02, 0.0, 2, {onUpdate: (v)->heat1.intensity = v.value});
             FlxTween.tween(camDS, {zoom: 0.5}, 4, {ease: FlxEase.quadInOut});
         case 2370: 
             setMarginColor(0x000000);

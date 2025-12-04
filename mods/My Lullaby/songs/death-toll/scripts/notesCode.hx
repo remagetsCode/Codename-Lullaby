@@ -96,7 +96,7 @@ function onNoteHit(e){
     if(e.character == bell && !FlxG.save.data.lullabyMechanics) modchart.setPercent('vibrate', 0.4, 1);
     if(e.character == bell && !e.note.isSustainNote) {
         heat1.intensity = 0.3;
-        FlxTween.num(0.3, 0.06, 0.3, {onUpdate: (v)->heat1.intensity = v.value});
+        FlxTween.num(0.3, 0.02, 0.3, {onUpdate: (v)->heat1.intensity = v.value});
         
     }
     
