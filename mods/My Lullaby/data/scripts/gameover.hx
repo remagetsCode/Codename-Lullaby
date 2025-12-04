@@ -14,6 +14,7 @@ function create(event){
 		case 'missingno': missingno(event);
 		case 'insomnia': insomnia(event);
 		case 'monochrome': monochrome(event);
+		case 'death-toll': deathToll(event);
 		case 'brimstone': brimstone(event);
 		case 'shitno': shitno(event);
 		case 'pasta-night': pastaNight(event);
@@ -174,6 +175,34 @@ function monochrome(event){
 	}
 }
 
+function deathToll(e) {
+	e.cancel();
+
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	camera.zoom = 5;
+	camera.scroll.y = 130;
+	camera.scroll.x = 50;
+	FlxTween.tween(camera,{zoom:0.8, "scroll.x":10, "scroll.y":0},1.5,{ease: FlxEase.quadInOut});
+
+	FlxG.sound.playMusic(Paths.music('DeathTollDeathAmbience'));
+
+	ded = new FlxSprite();
+	ded.frames = Paths.getFrames('characters/death/hellbell/hellbellDeath');
+	ded.animation.addByPrefix('confirm', 'deathConfirm', 24, false);
+	ded.animation.addByPrefix('idle', 'deathIdle', 24, true);
+	ded.animation.addByPrefix('lol', 'deathLol', 24, false);
+	ded.antialiasing = true;
+	ded.screenCenter();
+	ded.animation.play('lol');
+	ded.animation.onFinish.addOnce(function(){
+		ded.animation.play('idle');
+	});
+	add(ded);
+}
+
 function brimstone(e){
 	e.cancel();
 
@@ -265,6 +294,7 @@ function pastaNight(e) {
 
 	pj.x -= 240;
 	telon.x -= 240;
+	FlxG.sound.play(Paths.sound('PS_Death'));
 }
 
 function update(){
@@ -285,6 +315,8 @@ function endBullshit():Void
 				baRetry.animation.play('confirm');
 				baRetry.x -= 17;
 				baRetry.y -= 25;
+			case 'death-toll':
+				ded.animation.play('confirm');
 		}
 	
 		FlxG.sound.music?.stop();

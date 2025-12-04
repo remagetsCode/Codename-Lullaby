@@ -158,3 +158,6 @@ Yaay finally
 - ADDED DISSENSION SONG 
 -! Added custom gameover to Death Toll
 - Reduced shader in Death Toll
+- Added gameover sound to Pasta Night
+- Added mx handup sound to Pasta Night
+

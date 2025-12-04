@@ -105,6 +105,7 @@ function onPlayerMiss(e) {
 
 function mxHit() {
     if(asMX || !FlxG.save.data.lullabyMechanics) return;
+    FlxG.sound.play(Paths.sound('MXHandUp'));
     var time:Float = 0.5;
 
     mx.playAnim('Hit1Back');

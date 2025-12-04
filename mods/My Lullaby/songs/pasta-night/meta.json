@@ -1,11 +1,11 @@
 {
-	"color": "#9271FD",
+	"color": "#000000",
 	"customValues": {},
 	"opponentModeAllowed": false,
 	"difficulties": [
 		"hard"
 	],
-	"icon": "face",
+	"icon": "icon-lord-x",
 	"coopAllowed": false,
 	"stepsPerBeat": 4,
 	"displayName": "Pasta Night",
