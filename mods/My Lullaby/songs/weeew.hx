@@ -52,7 +52,7 @@ function postCreate(){
 	rectDown.y = -rectDown.height;
 	add(rectDown);
 
-	add(modchart);
+	if(curSong != "mauve-macabre") add(modchart);
 
 	// V-slice sustain anim 
 	add(holds);

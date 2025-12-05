@@ -4,7 +4,7 @@
         "name": "Broken Vinyl",
         "price": 999,
         "animName": "BrokenVinyl instance 1",
-        "songUnlock": "shinto",
+        "songUnlock": "mauve-macabre",
         "songDescription": "I don't want this. But it's funny to make you pay for it.",
         "unlockRequirements": [""],
         "xOffset": 25,

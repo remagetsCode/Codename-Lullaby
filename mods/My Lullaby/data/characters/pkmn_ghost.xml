@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="130" y="370" sprite="ghost" scale="5" antialiasing="false" color="#D05030">
+	<anim name="idle" anim="Idle"/>
+	<anim name="singDOWN" anim="Down"/>
+	<anim name="singRIGHT" anim="Right"/>
+	<anim name="singLEFT" anim="Left"/>
+	<anim name="singUP" anim="Up"/>
+</character>

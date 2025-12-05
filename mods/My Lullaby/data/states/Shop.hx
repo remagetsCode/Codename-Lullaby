@@ -1,3 +1,7 @@
+/**
+	I should really really start using classes in this script...
+**/
+
 import sys.io.File;
 import haxe.Json;
 import flixel.math.FlxRect;
@@ -174,6 +178,20 @@ function create(){
 	add(itemsGrp);
 	add(pricesGrp);
 
+	up = new FlxSprite().loadGraphic(Paths.image('UI/pixel/selector'));
+	up.setGraphicSize(up.width*4, up.height*4);
+	up.setPosition(buyBox.x+650, buyBox.y+45);
+	up.angle = -90;
+	//up.visible = false;
+	add(up);
+
+	down = new FlxSprite().loadGraphic(Paths.image('UI/pixel/selector'));
+	down.setGraphicSize(down.width*4, down.height*4);
+	down.setPosition(buyBox.x+650, buyBox.y+310);
+	down.angle = 90;
+	//down.visible = false;
+	add(down);
+
 	talk = new FunkinText(textBox.x+30, textBox.y+30, 650, "", 28, false);
 	talk.wordWrap = true;
 	talk.setFormat(Paths.font("pokefont.ttf"), 28, 0x000000);
@@ -331,7 +349,7 @@ function postUpdate(){
     	}
 	}
 
-	buyBox.visible = itemsGrp.visible = pricesGrp.visible = buying;
+	buyBox.visible = itemsGrp.visible = pricesGrp.visible = down.visible = up.visible = buying;
 
 	hand.y = lerp(hand.y, (buying ? itemsGrp.members[curSelected].y - itemsGrp.members[curSelected].height/5: options[curSelected].y - hand.height/2), 0.3);
 	hand.x = lerp(hand.x, (buying ? itemsGrp.members[curSelected].x : options[curSelected].x) - hand.width*0.7, 0.3);

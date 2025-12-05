@@ -155,6 +155,7 @@ v0.10.1
 Yay finallyyy
 
 - ADDED DISSENSION SONG 
+- Shop buy menu extended
 - Added custom gameover to Death Toll
 - Reduced shader in Death Toll
 - Added gameover sound to Pasta Night

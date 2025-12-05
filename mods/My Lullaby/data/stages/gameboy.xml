@@ -1,0 +1,6 @@
+<!DOCTYPE codename-engine-stage>
+<stage startCamPosX="639" startCamPosY="359" folder="Stage Path/" zoom="1" name="gameboy">
+	<girlfriend/>
+	<dad x="164" y="-157"/>
+	<boyfriend x="180" y="-90"/>
+</stage>
