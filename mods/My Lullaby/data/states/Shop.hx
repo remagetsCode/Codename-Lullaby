@@ -371,6 +371,13 @@ function postUpdate(){
 		);
 }
 
+function beatHit() {
+	if(up.visible) up.alpha = up.alpha == 1 ? 0 : 1;
+	if(down.visible) down.alpha = down.alpha == 1 ? 0 : 1;
+	if(itemsGrp.y+itemsGrp.height+50 < buyBox.y+buyBox.height) down.alpha = 0;
+	if(itemsGrp.y+itemsGrp.height+50 > buyBox.y+buyBox.height) up.alpha = 0;
+}
+
 function showDialogue(){
 	//trace(data.shopLines);
 	for(i in [textBox, selBox, hand]) i.visible = true;
