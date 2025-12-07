@@ -358,10 +358,10 @@ function postUpdate(){
 
 	for(spr in itemsGrp.members) 
 		spr.clipRect = new FlxRect(
-			0, 														// X
-			(buyBox.y+18)-spr.y < 0 ? 0 : (buyBox.y+18)-spr.y, 		// Y
-			spr.width, 												// Width
-			spr.height-(spr.y - (spr.name == "mauve-macabre" ? 365 : 400))								// Height
+			0, 																// X
+			(buyBox.y+18)-spr.y < 0 ? 0 : (buyBox.y+18)-spr.y, 				// Y
+			spr.width, 														// Width
+			spr.height-(spr.y - (spr.name == "mauve-macabre" ? 365 : 400))	// Height
 		);
 	for(spr in pricesGrp.members) 
 		spr.clipRect = new FlxRect(
