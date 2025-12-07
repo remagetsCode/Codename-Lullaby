@@ -1,0 +1,16 @@
+{
+"itemDetail":  
+    {
+        "name": "Cursed Writings",
+        "price": 765,
+        "animName": "Monochrome Cartridge",
+        "songUnlock": "mauve-macabre",
+        "songDescription": "This shouldn't be here... But i'm gonna sell it to you anyways.",
+        "unlockRequirements": [""],
+        "xOffset": 10,
+        "yOffset": 15,
+        "lane": 2,
+        "row": 2,
+        "scale": 1
+    }
+}

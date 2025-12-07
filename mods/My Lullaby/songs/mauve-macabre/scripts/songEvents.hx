@@ -51,4 +51,18 @@ function stepHit(stepHit){
         case 1056 | 1314 | 2080 | 2336: FlxTween.num(0, 0, 1, {onUpdate: (v)->missingno.GLITCH_THR = v.value});
     }
 }
-function destroy() FlxG.game.setFilters([]);
+function destroy() {
+
+    FlxG.game.setFilters([]);
+
+    Main.scaleMode.width = 1280;
+    Main.scaleMode.height = 720;
+
+	FlxG.width = 1280; 
+	FlxG.height = 720;
+    
+    for(c in FlxG.cameras.list){
+        c.width = 1280;
+        c.height = 720;
+    }	
+}

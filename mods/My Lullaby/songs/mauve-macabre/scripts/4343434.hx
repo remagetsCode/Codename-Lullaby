@@ -11,6 +11,11 @@ public var enablePixelUI = true;
 public var daPixelZoom = PlayState.daPixelZoom;
 introLength = 0;
 
+var curDisplayHeight = window.display.bounds.height;
+var curDisplayWidth = window.display.bounds.width;
+var curDisplayX = window.display.bounds.x;
+var curDisplayY = window.display.bounds.y;
+
 function postCreate(){
     FlxG.camera.followLerp = 0;
 	FlxG.cameras.add(fakeCamHUD, false);
@@ -23,8 +28,29 @@ function postCreate(){
     FlxG.scaleMode.width = 800;
 	FlxG.camera.width = 800;
 	camHUD.width = 800;
-    iconP1.visible = iconP2.visible = healthBarBG.visible = scoreTxt.visible =  missesTxt.visible = accuracyTxt.visible = false;
-    healthBar.x = 139.5;
+
+	#if windows
+	if(!window.fullscreen){
+		window.maximized = false;
+		alo = FlxTween.num(window.width, 10*curDisplayHeight/11, 2, { 
+			ease: FlxEase.backInOut,
+			onUpdate: function(num){
+				window.x = lerp(window.x, curDisplayX + curDisplayWidth/5, 0.04);
+				window.width = num.value;
+			}
+		});
+		
+		alo = FlxTween.num(window.height, 9*curDisplayHeight/11, 2, { 
+			ease: FlxEase.backInOut,
+			onUpdate: function(num){
+				window.y = lerp(window.y, curDisplayY + curDisplayHeight/16, 0.04);
+				window.height = num.value;
+			}
+		});
+	}
+	#end
+    
+    
 
 
 		bigBar = new FlxSprite(5, !downscroll ? 5 : 570).loadGraphic(Paths.image('huds/PKMN/bigbar'));
@@ -45,13 +71,20 @@ function postCreate(){
 		healthBar2.antialiasing = false;
 		add(healthBar2);
 
-       healthBar.scale.x = 1.05;
-       healthBar.y = 45;
-       if (!downscroll){
-     healthBar.y = 665;
-       }
-       healthBar.flipX = true;
-	   healthBar.cameras = [camGame];
+	new FlxTimer().start(0.01, ()->{
+		iconP1.visible = iconP2.visible = customHealthBarBG.visible = scoreTxt.visible =  missesTxt.visible = accuracyTxt.visible = false;
+		customHealthBar.x = 136.5;
+		customHealthBar.scale.x = 1.05;
+		customHealthBar.scale.y = 1.15;
+		customHealthBar.y = 40;
+		if (!downscroll){
+			customHealthBar.y = 661;
+		}
+		customHealthBar.flipX = true;
+	   	customHealthBar.cameras = [camGame];
+		remove(customHealthBar);
+		insert(members.indexOf(healthBar2)-1, customHealthBar);
+	});
 
 
        //nums//
@@ -60,8 +93,6 @@ function postCreate(){
 
            add(newMSS = new FunkinText(130, !downscroll ? 80 : 645, FlxG.width, "0"));
            newMSS.setFormat(Paths.font('PKMN RBYGSC.ttf'), 30, FlxColor.BLACK, 'left');
-
-
 }
 
 

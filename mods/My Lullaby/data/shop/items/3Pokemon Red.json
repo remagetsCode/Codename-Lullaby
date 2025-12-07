@@ -7,7 +7,7 @@
         "songUnlock": "dissension",
         "songDescription": "Looks ordinary, no?",
         "unlockRequirements": [""],
-        "xOffset": 0,
+        "xOffset": 15,
         "yOffset": 15,
         "lane": 2,
         "row": 0,

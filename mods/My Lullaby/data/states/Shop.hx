@@ -29,7 +29,8 @@ var items:Array = [
 	"6Broken Note", 
 	"7Pasta Night Mushroom", 
 	"8Trainer Bow", 
-	"9Broken Vinyl"
+	"9Broken Vinyl",
+	"10Cursed Writings"
 ];
 
 var itemsGrp:FlxSpriteGroup;
@@ -360,7 +361,7 @@ function postUpdate(){
 			0, 														// X
 			(buyBox.y+18)-spr.y < 0 ? 0 : (buyBox.y+18)-spr.y, 		// Y
 			spr.width, 												// Width
-			spr.height-(spr.y - 400)								// Height
+			spr.height-(spr.y - (spr.name == "mauve-macabre" ? 365 : 400))								// Height
 		);
 	for(spr in pricesGrp.members) 
 		spr.clipRect = new FlxRect(

@@ -154,6 +154,7 @@ v0.10.1
 ## v1.0
 Yay finallyyy
 
+- ADDED MAUVE MACABRE SONG???
 - ADDED DISSENSION SONG 
 - Shop buy menu extended
 - Added custom gameover to Death Toll
