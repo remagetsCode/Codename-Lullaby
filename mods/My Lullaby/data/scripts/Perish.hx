@@ -19,7 +19,7 @@ var retryMessages:Array<String> = [
     "Stay Determined Player!",
     "Let's continue, shall we?",
     "Try again?",
-    "Undie?"
+    "Un-die?"
 ];
 
 
@@ -39,9 +39,14 @@ function update() {
 			    	FlxG.switchState(new PlayState());
 			    });
 		    });
-        }   
+        } 
+        else if(controls.BACK) FlxG.switchState(new MainMenuState());  
     }
     redvignette?.alpha = lerp(redvignette?.alpha, 0, 0.025);
+    
+    if (FlxG.keys.justPressed.R){
+        FlxG.keys.reset();
+    }
 }
 
 function onGameOver(e){
@@ -50,6 +55,7 @@ function onGameOver(e){
     vocals.pause();
     canPause = false;
     canDie = false;
+    canDadDie = false;
     heartbeat.play();
     camGame.alpha = 1;
 
@@ -61,10 +67,11 @@ function onGameOver(e){
 
     if(FlxG.save.data.lullabyShaders) camGame.addShader(monitor);
 
-    anotherblack = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+    anotherblack = new FunkinSprite().makeGraphic(FlxG.width*2, FlxG.height*2, FlxColor.BLACK);
     anotherblack.camera = camGame;
     anotherblack.alpha = 0;
     anotherblack.zoomFactor = 0;
+    anotherblack.screenCenter();
     add(anotherblack);
 
     estatic = new FunkinSprite();
@@ -73,7 +80,7 @@ function onGameOver(e){
     estatic.animation.play('xd');
     estatic.scrollFactor.set(0,0);
     estatic.camera = camGame;
-    estatic.setGraphicSize(FlxG.width+50, FlxG.height+35);
+    estatic.setGraphicSize(FlxG.width+200, FlxG.height+200);
     estatic.updateHitbox();
     estatic.screenCenter();
     estatic.alpha = 0;
@@ -102,11 +109,16 @@ function onGameOver(e){
     new FlxTimer().start(2.5, function(tmr:FlxTimer){
         deathText = new FlxTypeText(100, 200, 630, FlxG.random.getObject(deathMessages), 30);
         deathText.alignment = "center";
+        deathText.camera = pauseCam;
+        deathText.screenCenter();
+        deathText.y -= 150;
         deathText.start(0.05);
         add(deathText);
 
         retryText = new FlxTypeText(100, 400, 630, FlxG.random.getObject(retryMessages), 20);
         retryText.alignment = "center";
+        retryText.camera = pauseCam;
+        retryText.screenCenter(FlxAxes.X);
         add(retryText);
 
         deathText.completeCallback = ()->{
