@@ -161,4 +161,5 @@ Yay finallyyy
 - Reduced shader in Death Toll
 - Added gameover sound to Pasta Night
 - Added mx handup sound to Pasta Night
+- Fixed gameover in shinto
 

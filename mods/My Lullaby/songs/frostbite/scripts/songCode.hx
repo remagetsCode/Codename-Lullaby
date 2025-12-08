@@ -1,5 +1,6 @@
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
+importScript('data/scripts/Perish');
 
 FlxG.game.setFilters([]);
 var freezeBar:FlxBar;

@@ -1,3 +1,5 @@
+importScript('data/scripts/Perish');
+
 var bg1;
 var bg2;
 var placebf;

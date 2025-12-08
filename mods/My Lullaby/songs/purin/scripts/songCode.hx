@@ -1,3 +1,5 @@
+importScript('data/scripts/Perish');
+
 var amnt:Float = 1;
 
 function create(){

@@ -1,3 +1,5 @@
+importScript('data/scripts/Perish');
+
 function postCreate(){
     new FlxTimer().start(0.1, ()->{for(a in uiStuff) FlxTween.tween(a, {alpha: 0}, 20);});
 }

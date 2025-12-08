@@ -1,3 +1,5 @@
+importScript('data/scripts/Perish');
+
 var bgDesat:Bool = false;
 var damage:Bool = false;
 

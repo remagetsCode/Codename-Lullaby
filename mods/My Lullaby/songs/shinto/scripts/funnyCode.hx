@@ -42,6 +42,7 @@ function update(){
     if(blueballed){
         inst.pause();
         vocals.pause();
+        canDie = false;
         if(controls.ACCEPT) {
             var waitTime = 0.7;
 

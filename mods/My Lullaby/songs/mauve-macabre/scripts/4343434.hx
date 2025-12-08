@@ -2,6 +2,7 @@ import flixel.graphics.frames.FlxBitmapFont;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxBitmapText;
 import StringTools;
+importScript('data/scripts/Perish');
 
 var fakeCamHUD:HudCamera = new HudCamera();
 public var pixelNotesForBF = true;
