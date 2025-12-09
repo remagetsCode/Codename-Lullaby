@@ -54,7 +54,8 @@ function update(){
 			    	FlxG.switchState(new PlayState());
 			    });
 		    });
-        }   
+        }
+        if(controls.BACK) FlxG.switchState(new MainMenuState());   
     }
 }
 var p1:Int = 640;

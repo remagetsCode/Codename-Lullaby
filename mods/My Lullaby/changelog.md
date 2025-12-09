@@ -157,6 +157,7 @@ Yay finallyyy
 - ADDED MAUVE MACABRE SONG???
 - ADDED DISSENSION SONG 
 - Shop buy menu extended
+- Added a general gameover for those songs that doesnt have one
 - Added custom gameover to Death Toll
 - Reduced shader in Death Toll
 - Added gameover sound to Pasta Night
