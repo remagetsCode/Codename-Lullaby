@@ -1,4 +1,5 @@
 import modchart.Manager;
+import modchart.Config;
 import modchart.engine.modifiers.Modifier;
 import openfl.geom.Vector3D;
 public var modchart:Manager;
@@ -15,6 +16,7 @@ public var output;
 
 function create(){
 	modchart = new Manager();
+	Config.OPTIMIZE_HOLDS = true;
 	
 	switch(curSong){ 
 		case 'left-unchecked': leftUnchecked();

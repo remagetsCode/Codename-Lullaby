@@ -4,10 +4,8 @@ importScript('data/scripts/Perish');
 
 FlxG.game.setFilters([]);
 var freezeBar:FlxBar;
-var a:Float = 1;
-public var freezeVal:Float = 30; 
+var freezeVal:Float = 30; 
 var uses:Int = 0;
-var ty:Bool = true;
 var extraSound:FlxSound;
 
 function create(){
@@ -16,21 +14,23 @@ function create(){
 	graphicCache.cache(Paths.image('characters/mt_silver_red_dead'));
 
 	if(FlxG.save.data.lullabyShaders){
-		FlxG.game.addShader(frostbite);
-		FlxG.game.addShader(aberration);
+		camHUD.addShader(frostbite);
+		camGame.addShader(frostbite);
+		camGame.addShader(aberration);
+
+		aberration.iTime = 5;
+		frostbite.SPEED = 1.4;
+		frostbite.LAYERS = 10;
+		frostbite.WIDTH = .8;
+		frostbite.DEPTH = 0.6;
 	}
-	aberration.iTime = 5;
-	frostbite.SPEED = 1.4;
-	frostbite.LAYERS = 25;
-	frostbite.WIDTH = .8;
-	frostbite.DEPTH = 0.6;
 
 	health = 2;
 
 	redAnim = new FlxSprite(690,330);
 	redAnim.frames = Paths.getFrames('characters/red/freakachu_entrance');
 	redAnim.animation.addByPrefix('1', 'Freakachu entrance instance 1', 24, false);
-	redAnim.setGraphicSize(redAnim.width*1.1, redAnim.height*1.1);
+	redAnim.scale.set(1.1, 1.1);
 	//redAnim.scrollFactor.set(0.95);
 	redAnim.antialiasing = true;
 	redAnim.visible = false;
@@ -41,7 +41,7 @@ function create(){
 	freakachu.animation.addByPrefix('idle', 'Freakachu IDLE',24,true);
 	freakachu.animation.addByPrefix('bite', 'Freakachu PAIN SPLIT',24,false);
 	freakachu.animation.play('idle');
-	freakachu.setGraphicSize(freakachu.width*1.7, freakachu.height*1.7);
+	freakachu.scale.set(1.7, 1.7);
 	freakachu.antialiasing = true;
 	//freakachu.scrollFactor(0.93);
 	freakachu.visible = false;
@@ -150,34 +150,23 @@ function onSongStart(){
 }
 
 function update(elapsed){
-	a -= elapsed;
-	frostbite.iTime = a;
+	frostbite.iTime = -Conductor.songPosition / 1000;
 
-	if(FlxG.save.data.lullabyMechanics) typhlosionMechanic(elapsed);
-	else{ 
-		// If u are not using the mechanics then i won't mechanically unuse the freeze bar.
+	if(FlxG.save.data.lullabyMechanics) return typhlosionMechanic(elapsed);
+	
+	// If u are not using the mechanics then i won't mechanically unuse the freeze bar.
+	var g = 0.1;
+	var r = inst.amplitude * 0.8;
+	var b = 1-r;
 
-		var g = 0.1;
-		var r = inst.amplitude * 0.8;
-		var b = 1-r;
-
-		freezeBar.createFilledBar(FlxColor.GRAY, FlxColor.fromRGB(
-        	Std.int(r * 255),
-        	Std.int(g * 255),
-        	Std.int(b * 255)
-    		)
-		);
-		freezeVal = lerp(freezeVal, inst.amplitude * 65, 0.15);
-		freezeBar.percent = freezeVal;
-
-	}
-
-	if (extraSound != null && extraSound.playing) {
-		inst.pitch = 0.3;
-        extraSound.onComplete = function() {
-            endSong(); // manually ends the song
-        }
-    }
+	freezeBar.createFilledBar(FlxColor.GRAY, FlxColor.fromRGB(
+		Std.int(r * 255),
+		Std.int(g * 255),
+		Std.int(b * 255)
+		)
+	);
+	freezeVal = lerp(freezeVal, inst.amplitude * 65, 0.15);
+	freezeBar.percent = freezeVal;
 }
 
 function postUpdate(){
@@ -196,26 +185,18 @@ function beatHit(beat){
 
 	switch(beat){
 		case 6: 
-			FlxTween.tween(gf, {y: 581}, 1, {
-				ease: FlxEase.cubeOut
-			});
-			for(i in 0...4) FlxTween.tween(uiStuff.members[i], {y: uiStuff.members[i].y-525}, 2,{ease:FlxEase.cubeOut});
+			FlxTween.tween(gf, {y: 581}, 1, { ease: FlxEase.cubeOut });
+			for(i in 0...4) FlxTween.tween(uiStuff.members[i], {y: uiStuff.members[i].y-525}, 2,{ ease:FlxEase.cubeOut });
 
 		case 9:
-			uses++;
-			FlxTween.num(freezeVal, freezeVal-50, 1.5,{
-				ease: FlxEase.smootherStepInOut,
-				onUpdate: function(val) {freezeVal = val.value;}
-			});
+			typhlosionSpace(2);
 
 		case 12: FlxTween.num(5.0, 11.0, 2, {
 			onUpdate: (v)->{aberration.iTime = v.value;},
 			onComplete: ()->{aberration.iTime = 5;}
 		});
 
-		case 49: FlxTween.tween(fog, {x: 1400, alpha: 0}, 5, {
-			ease: FlxEase.quintOut
-		});
+		case 49: FlxTween.tween(fog, {x: 1400, alpha: 0}, 5, { ease: FlxEase.quintOut });
 		for(i in 4...uiStuff.length) FlxTween.tween(uiStuff.members[i], {y: uiStuff.members[i].y-500}, 2+i*0.5,{ease:FlxEase.cubeOut});
 
 		case 173: 
@@ -227,30 +208,26 @@ function beatHit(beat){
 				freakachu.visible = true;
 			});
 		case 176: 	
-			FlxTween.num(1,2.5,5,{
-				onUpdate:function(val){frostbite.SPEED = val.value;}
-			});
-			FlxTween.num(25,35,5,{
-				onUpdate:function(val){frostbite.LAYERS = val.value;}
-			});
+			FlxTween.num(1, 2.5, 5, null, (value) -> frostbite.SPEED = value);
+			FlxTween.num(25, 35, 5, null, (value) -> frostbite.SPEED = value);
 			frostbite.WIDTH = 1.2;
 			frostbite.DEPTH = 0.6;
-			freakachu.scrollFactor(0.96);
+			freakachu.scrollFactor.set(0.96, 0.96);
 			iconP2.setIcon('icon-red-dead');
 		case 340:
 			FlxTween.tween(black, {alpha: 1}, 3);
 		
 		case 344:
 			canDie = false;
-			extraSound = FlxG.sound.play(Paths.sound('Frostbite_ending'));
-			new FlxTimer().start(0.1,()->{health += 0.01;}, 100);
+			extraSound = FlxG.sound.play(Paths.sound('Frostbite_ending'), 1, false, null, null, () -> endSong());
+			new FlxTimer().start(0.2,()->{health += 0.01;}, 50);
 			new FlxTimer().start(10, ()->{
 				scare.visible = true;
 				scare1.visible = true;
 				new FlxTimer().start(0.3, ()->{
 					health -= 0.15;
 					scare1.visible = !scare1.visible;
-				},10);
+				}, 10);
 			});
 		}
 		
@@ -258,26 +235,24 @@ function beatHit(beat){
 
 //! Mechanics 
 function typhlosionMechanic(elapsed){
-	if (freezeVal < 100) freezeVal += elapsed*1.35;
-	if(freezeVal < 0) freezeVal = 0;
+	freezeVal = FlxMath.bound(freezeVal + elapsed*1.35, 0, 100);
 	
-	if(freezeBar.percent < 50){ health -= freezeVal*(elapsed*0.0016); 	modchart.setPercent('vibrate', freezeVal*0.0045, 1);}
-	else{ 						health -= freezeVal*(elapsed*0.0025); 	modchart.setPercent('vibrate', freezeVal*0.0065, 1);}
+	if(freezeBar.percent < 50){ 
+		health -= freezeVal*(elapsed*0.0016); 	
+		modchart.setPercent('vibrate', freezeVal*0.0045, 1);
+	}
+	else { 						
+		health -= freezeVal*(elapsed*0.0025); 	
+		modchart.setPercent('vibrate', freezeVal*0.0065, 1);
+	}
 	
 	freezeBar.percent = freezeVal;
 
-	if(FlxG.keys.justPressed.SPACE && ty){
-		health += 0.1;
-		FlxTween.num(freezeVal, freezeVal-33, 1.5,{
-			ease: FlxEase.smootherStepInOut,
-			onUpdate: function(val) {freezeVal = val.value;}
-		});
-		FlxG.sound.play(Paths.sound('TyphlosionUse'), 0.8);
-		gf.animation.play('mechanic');
-		uses++;
+	if(FlxG.keys.justPressed.SPACE){
+		typhlosionSpace();
 	}
 
-	else if(uses >= 8 && ty){
+	else if(uses >= 8){
 		ty = false;
 		FlxG.sound.play(Paths.sound('TyphlosionDeath'));
 		FlxTween.tween(gf, {y: 900}, 4, {
@@ -289,6 +264,18 @@ function typhlosionMechanic(elapsed){
 		});
 
 	}
+}
+
+function typhlosionSpace(?mult:Float) {
+	mult ??= 1;
+	health += 0.1;
+	FlxTween.num(freezeVal, freezeVal-33 * mult, 1.5,{
+		ease: FlxEase.smootherStepInOut,
+		onUpdate: function(val) {freezeVal = val.value;}
+	});
+	FlxG.sound.play(Paths.sound('TyphlosionUse'), 0.8);
+	gf.animation.play('mechanic');
+	uses++;
 }
 
 function freakachuBite(){

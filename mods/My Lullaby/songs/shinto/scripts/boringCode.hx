@@ -51,6 +51,8 @@ function onStrumCreation(event) {
 	var maxCol = Math.floor(strum.graphic.width / 17);
 	var strumID = event.strumID % maxCol;
 
+	strum.offset.y = 100;
+
 	strum.animation.add("static", [strumID]);
 	strum.animation.add("pressed", [maxCol + strumID, (maxCol*2) + strumID], 12, false);
 	strum.animation.add("confirm", [(maxCol*3) + strumID, (maxCol*4) + strumID], 24, false);

@@ -44,5 +44,6 @@ void main()
 		float edge = .005+.05*min(.5*abs(fi-5.-dof),1.);
 		acc += vec3(smoothstep(edge,-edge,d)*(r.x/(1.+.02*fi*DEPTH)));
 	}
-	gl_FragColor = flixel_texture2D(bitmap, openfl_TextureCoordv)+vec4(vec3(acc),1.0);
+	vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+	gl_FragColor = vec4(color.rgb + vec3(acc), color.a);
 }

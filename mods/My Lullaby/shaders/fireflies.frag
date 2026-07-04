@@ -2,8 +2,8 @@
 
 uniform float iTime;
 
-# define radius 0.001
-# define sphere_Counts 30.0
+# define radius 0.003
+# define sphere_Counts 6.0
 
 float N21(vec2 p) {
 	vec3 a = fract(vec3(p.xyx) * vec3(213.897, 653.453, 253.098));
@@ -45,7 +45,10 @@ void main()
     pointLight2 *= vec3(0.5,0.8,0.5);
    	pointLight += pointLight2;
     */
+
+    vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+    vec3 result = color.rgb + pointLight;
     
-    gl_FragColor = flixel_texture2D(bitmap, openfl_TextureCoordv)+vec4(pointLight,1.0);
+    gl_FragColor = vec4(result, color.a);
 }
 

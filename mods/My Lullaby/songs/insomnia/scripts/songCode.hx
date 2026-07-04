@@ -3,39 +3,34 @@
 var feralidying:Bool = false;
 var a:Float = 0;
 
-var pattern1:Array<Int> = [];
-
-var accuracyLimit = 0.85;
+var accuracyLimit:Float = 0.85;
+var camMoveAmount:Float = 30;
 function postCreate(){
 	coolEnabled = false;
 
-	var back = stage.getSprite("Back");
-	var tree = stage.getSprite("Tree");
-	tree.scrollFactor.set(0.7, 1);
-	tree.zoomFactor = 0.8;
+	var backSpr = new FlxSprite().makeGraphic(FlxG.width * 2, FlxG.height * 2, 0x0);
+	backSpr.scrollFactor.set(0, 0);
+	backSpr.shader = fireflies;
+	insert(members.indexOf(dad) - 1, backSpr);
+
+	var frontSpr = new FlxSprite().makeGraphic(FlxG.width * 2, FlxG.height * 2, 0x0);
+	frontSpr.scrollFactor.set(0, 0);
+	frontSpr.shader = fireflies1;
+	add(frontSpr);
+	
 	if(FlxG.save.data.lullabyShaders){
-		FlxG.camera.addShader(fireflies1);
-		FlxG.game.addShader(aberration);
-		back.shader = fireflies;
+		camGame.addShader(aberration);
 	}
 
 	aberration.iTime = 5;
 	gf.alpha = 1;
-
 
 	for(i in 0...4) {
 		modchart.setPercent('y'+i, downscroll ? 200 : -200);
 		modchart.ease('y'+i, 15, 2+(i*0.4), 0, FlxEase.cubeOut, 0);
 		modchart.ease('y'+i, 45, 2+(i*0.5), 0, FlxEase.quadOut, 1);
 	}
-}
 
-
-function onSongStart(){
-	
-	for(i in 0...4){
-
-	}
 	modchart.set('x', 25, -300, 1);
 	modchart.ease('z', 45, 1.8, -300, FlxEase.cubeOut, 0);
 	modchart.ease('x', 45, 1.8, -200, FlxEase.cubeOut, 0);
@@ -48,6 +43,13 @@ function update(elapsed) {
 	fireflies1.iTime = a;
 
 	if(FlxG.save.data.lullabyMechanics) feraMechanic();
+
+	switch(bf.animation.name) {
+		case 'singLEFT': camGame.targetOffset.set(-camMoveAmount, 0);
+		case 'singDOWN': camGame.targetOffset.set(0, camMoveAmount);
+		case 'singUP': camGame.targetOffset.set(0, -camMoveAmount);
+		case 'singRIGHT': camGame.targetOffset.set(camMoveAmount, 0);
+	}
 }
 
 function stepHit(){
@@ -61,21 +63,21 @@ function stepHit(){
     );
 }
 
-function beatHit(beat){
-	if(beat == 2 && FlxG.save.data.lullabyMechanics){ 
-		FlxTween.tween(accuracyTxt, {x:520, y: 570}, 1, {
-			ease: FlxEase.cubeOut
-		});
-		accuracyTxt.size = 20;
-		FlxTween.tween(missesTxt, {x:missesTxt.x-100}, 1, {
-			ease: FlxEase.cubeOut
-		});
-		FlxTween.tween(scoreTxt, {x:missesTxt.x-100}, 1, {
-			ease: FlxEase.cubeOut
-		});
-	}
-						
+function beatHit(beat){						
 	switch(beat){
+		case 2:
+			if(!FlxG.save.data.lullabyMechanics) return;
+			FlxTween.tween(accuracyTxt, {x:520, y: 570}, 1, {
+				ease: FlxEase.cubeOut
+			});
+			accuracyTxt.size = 20;
+			FlxTween.tween(missesTxt, {x:missesTxt.x-100}, 1, {
+				ease: FlxEase.cubeOut
+			});
+			FlxTween.tween(scoreTxt, {x:missesTxt.x-100}, 1, {
+				ease: FlxEase.cubeOut
+			});
+
 		case 547: FlxTween.tween(black, {alpha: 0.8}, 10);
 		case 578: black.alpha = 1;
 		case 582: black.alpha = 0;

@@ -82,6 +82,8 @@ void main()
             vec3(0.);
     }
 
+    vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+    col.rgb *= color.a;
     // Output to screen
-    gl_FragColor = vec4(col,1.0);
+    gl_FragColor = vec4(col,color.a);
 }

@@ -45,7 +45,10 @@ void main()
     pointLight2 *= vec3(0.5,0.8,0.5);
    	pointLight += pointLight2;
     */
+
+    vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+    vec3 result = color.rgb + pointLight;
     
-    gl_FragColor = flixel_texture2D(bitmap, openfl_TextureCoordv)+vec4(pointLight,1.0);
+    gl_FragColor = vec4(result, color.a);
 }
 
