@@ -1,6 +1,5 @@
 import flixel.addons.text.FlxTypeText;
 
-importScript('data/scripts/Perish');
 var bg1:FunkinSprite;
 var bg2:FunkinSprite;
 var placebf:FunkinSprite;
@@ -202,7 +201,7 @@ function postCreate() {
 }
 
 function update(elapsed) {
-	if (curStep < 800) {
+	if (curStep < 800 && vignette != null) {
 		switch (iconDAD.curCharacter) {
 			case "icon-wigglytuff":
 				vignette.alpha = lerp(vignette.alpha, 0, 0.05);
@@ -350,6 +349,8 @@ function stepHit(s) {
 				FlxTween.tween(i, {alpha: 0}, 0.5);
 		case 815:
 			FlipIcons = true;
+			iconDAD.flipX = true;
+			iconBF.flipX = true;
 			customHealthBarColors = [bfColor, dadColor];
 		case 825:
 			for (i in uiStuff)

@@ -14,6 +14,8 @@ import flixel.addons.display.FlxBackdrop;
 
 import funkin.backend.utils.DiscordUtil;
 
+// This code looks ugly to me now xd... But it works ima leave it like that for now.
+
 public var curMusic = FlxG.sound.music;
 public var weekList;
 FlxG.game.setFilters([]);

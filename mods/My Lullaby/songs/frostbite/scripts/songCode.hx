@@ -1,6 +1,6 @@
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
-importScript('data/scripts/Perish');
+
 
 FlxG.game.setFilters([]);
 var freezeBar:FlxBar;
@@ -11,7 +11,6 @@ var extraSound:FlxSound;
 function create(){
 	graphicCache.cache(Paths.image('characters/red/freakachu_entrance'));
 	graphicCache.cache(Paths.image('characters/red/Freakachu'));
-	graphicCache.cache(Paths.image('characters/mt_silver_red_dead'));
 
 	if(FlxG.save.data.lullabyShaders){
 		camHUD.addShader(frostbite);
@@ -27,30 +26,31 @@ function create(){
 
 	health = 2;
 
-	redAnim = new FlxSprite(690,330);
+	redAnim = new FlxSprite(755,320);
 	redAnim.frames = Paths.getFrames('characters/red/freakachu_entrance');
 	redAnim.animation.addByPrefix('1', 'Freakachu entrance instance 1', 24, false);
-	redAnim.scale.set(1.1, 1.1);
-	//redAnim.scrollFactor.set(0.95);
+	redAnim.scale.set(0.85, 0.85);
 	redAnim.antialiasing = true;
+	redAnim.scrollFactor.set(dad.scrollFactor.x, dad.scrollFactor.y);
 	redAnim.visible = false;
+	redAnim.animation.play('1');
 	insert(7, redAnim);
 
-	freakachu = new FlxSprite(760,620);
+	freakachu = new FlxSprite(865,550);
 	freakachu.frames = Paths.getFrames('characters/red/Freakachu');
 	freakachu.animation.addByPrefix('idle', 'Freakachu IDLE',24,true);
 	freakachu.animation.addByPrefix('bite', 'Freakachu PAIN SPLIT',24,false);
 	freakachu.animation.play('idle');
-	freakachu.scale.set(1.7, 1.7);
+	freakachu.scale.set(1.3, 1.3);
 	freakachu.antialiasing = true;
-	//freakachu.scrollFactor(0.93);
+	freakachu.scrollFactor.set(dad.scrollFactor.x, dad.scrollFactor.y);
 	freakachu.visible = false;
 	insert(7, freakachu);
 	
 	fog = new FlxSprite().loadGraphic(Paths.image('fog'));
 	fog.setGraphicSize(fog.width, fog.height*0.65);
 	fog.alpha = 0.995;
-	insert(7, fog);
+	//insert(7, fog);
 
 	freezeBar = new FlxBar(
 		50, downscroll ? FlxG.height*0.26 : FlxG.height*0.2,
@@ -87,10 +87,10 @@ function create(){
 	thermo.antialiasing = true;
 	add(thermo);
 
-	//black = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-	//black.cameras = [camHUD];
-	//black.alpha = 0;
-	//add(black);
+	black = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+	black.cameras = [camHUD];
+	black.alpha = 0;
+	add(black);
 
 	scare = new FlxSprite().loadGraphic(Paths.image('jumpscares/Pikachu'));
 	scare.setGraphicSize(FlxG.width, FlxG.height);
@@ -109,12 +109,10 @@ function create(){
 	add(scare1);
 }
 function postCreate(){
-	//canDie = false;
 	gf.alpha = 1;
 	gf.y = 900;
 
-	new FlxTimer().start(0.02, ()->{for(o in uiStuff) o.y += 500;});
-
+	FlxG.signals.postUpdate.addOnce(() -> for(o in uiStuff) o.y += 500);
 	FlipIcons = true;
 }
 
@@ -170,7 +168,7 @@ function update(elapsed){
 }
 
 function postUpdate(){
-	freakachu.y = freakachu.animation.name == "bite" ? 585 : 620;
+	freakachu.offset.y = freakachu.animation.name == "bite" ? 0 : -35;
 }
 
 function beatHit(beat){
@@ -212,12 +210,13 @@ function beatHit(beat){
 			FlxTween.num(25, 35, 5, null, (value) -> frostbite.SPEED = value);
 			frostbite.WIDTH = 1.2;
 			frostbite.DEPTH = 0.6;
-			freakachu.scrollFactor.set(0.96, 0.96);
 			iconP2.setIcon('icon-red-dead');
+			dad.visible = true;
 		case 340:
 			FlxTween.tween(black, {alpha: 1}, 3);
 		
 		case 344:
+			inst.pitch = 0.1;
 			canDie = false;
 			extraSound = FlxG.sound.play(Paths.sound('Frostbite_ending'), 1, false, null, null, () -> endSong());
 			new FlxTimer().start(0.2,()->{health += 0.01;}, 50);

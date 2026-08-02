@@ -2,6 +2,8 @@ import modchart.Manager;
 import modchart.Config;
 import modchart.engine.modifiers.Modifier;
 import openfl.geom.Vector3D;
+
+public var useModchart:Bool = true;
 public var modchart:Manager;
 
 var oldPosX = window.x;
@@ -45,7 +47,6 @@ function postCreate(){
 	rectUp.cameras = [camHUD];
 	test = rectUp.y;
 	rectUp.y = rectUp.height*4;
-	//rectUp.y += camHUD.height;
 	add(rectUp);
 
 	rectDown = new FlxSprite();
@@ -54,7 +55,7 @@ function postCreate(){
 	rectDown.y = -rectDown.height;
 	add(rectDown);
 
-	if(curSong != "mauve-macabre") add(modchart);
+	if(useModchart) add(modchart);
 
 	// V-slice sustain anim 
 	add(holds);
@@ -93,12 +94,8 @@ function beatHit(beat){
 
 function leftUnchecked(){
 	modchart.set('drunk',1,1.5,0);
-	modchart.ease('tipsy', 85, 4, 0.35, FlxEase.cubeOut, 1);
-	modchart.ease('tipsy', 160, 4, 0, FlxEase.cubeOut, 1);
 	modchart.ease('beat', 85, 4, 0.6, FlxEase.cubeOut, 1);
 	modchart.ease('beat', 160, 4, 0, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 200, 4, 1, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 215, 4, 0, FlxEase.cubeOut, 1);
 	modchart.ease('beat', 216, 4, 0.6, FlxEase.cubeOut, 1);
 	modchart.ease('tipsy', 216, 4, 0.35, FlxEase.cubeOut, 1);
 	
@@ -120,8 +117,6 @@ function lostCause(){
 	modchart.ease('vibrate', 277, 4, 0.45, FlxEase.cubeOut, 1);
 	modchart.ease('vibrate', 327, 8, 0.2, FlxEase.cubeOut, 1);
 	modchart.ease('vibrate', 347, 8, 0, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 340, 4, 0.4, FlxEase.cubeOut, 1);
-	modchart.ease('drunk', 390, 4, 0.15, FlxEase.cubeOut, 1);
 	for(i in 0...4){
 		var n = i % 2 == 0 ? -1 : 1;
 		modchart.ease('beat' + i, 340, 4, n*0.4, FlxEase.cubeOut, 1);

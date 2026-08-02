@@ -1,6 +1,4 @@
-importScript('data/scripts/Perish');
 
-// this script is trash i made it fast because i dont like much this song, but I tried make the song faithful the original
 
 var stevenpov;
 var steven2;

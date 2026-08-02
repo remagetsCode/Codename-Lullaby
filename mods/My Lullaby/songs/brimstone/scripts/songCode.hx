@@ -1,7 +1,10 @@
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
+import flixel.addons.display.FlxBackdrop;
+import funkin.game.HudCamera;
 
 var directions = ["LEFT", "DOWN", "UP", "RIGHT"];
+var camhud:FlxCamera;
 
 introLength = 0;
 function create() {
@@ -33,61 +36,79 @@ function create() {
 	hudp = new FunkinSprite(120, 95).loadGraphic(Paths.image("UI/pixel/buried_center"));
 	hudp.camera = camHUD;
 	hudp.scale.set(3.5, 3.5);
-	add(hudp);
+	insert(0, hudp);
 
 	hudo = new FunkinSprite(FlxG.width - 320, downscroll ? 95 : FlxG.height - 145).loadGraphic(Paths.image("UI/pixel/buried_center"));
 	hudo.camera = camHUD;
 	hudo.scale.set(3.5, 3.5);
-	add(hudo);
+	insert(1, hudo);
 
 	hpBar = new FlxBar(145, downscroll ? 42 : 196, FlxBarFillDirection.LEFT_TO_RIGHT, 175, 5);
-
 	hpBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.CYAN);
 	hpBar.cameras = [camHUD];
 	hpBar.numDivisions = 200;
 	hpBar.camera = camHUD;
-	add(hpBar);
+	insert(4, hpBar);
 
 	cpuBar = new FlxBar(984, downscroll ? 42 : FlxG.height - 44, FlxBarFillDirection.RIGHT_TO_LEFT, 175, 5);
-
 	cpuBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.fromRGB(107, 130, 149));
 	cpuBar.cameras = [camHUD];
 	cpuBar.numDivisions = 200;
 	cpuBar.camera = camHUD;
-	add(cpuBar);
+	insert(4, cpuBar);
 
 	if (downscroll) {
 		bfxml.y -= 200;
 		missingnobf.y -= 200;
 	}
+
+	useModchart = false;
 }
 
 function postCreate() {
+	camhud = new HudCamera(0, 0);
+	camhud.bgColor = 0x0;
+	camhud.downscroll = true;
+	FlxG.cameras.add(camhud, false);
+
 	camExtra = new FlxCamera(0, 0);
 	camExtra.bgColor = FlxColor.TRANSPARENT;
 	FlxG.cameras.add(camExtra, false);
 
-	modchart.setPercent('opponentSwap', 1.14);
-	modchart.setPercent('reverse', downscroll ? 0 : 1, 0);
-	modchart.setPercent('y', -30, 0);
-	modchart.setPercent('y', downscroll ? -30 : 0, 1);
+	for(strum in player) strum.x -= 730;
+	cpu.camera = camhud;
+	for(strum in cpu) {
+		strum.x += 730;
+		strum.y = 80;
+	}
+	//modchart.setPercent('opponentSwap', 1.14);
+	//modchart.setPercent('reverse', downscroll ? 0 : 1, 0);
+	//modchart.setPercent('y', -30, 0);
+	//modchart.setPercent('y', downscroll ? -30 : 0, 1);
 	buryman.playAnim('buryman_ground', true);
 
 	bars = [];
-	for (i in 0...20) {
-		var bar = new FlxSprite(0, 0).makeGraphic(FlxG.width, 46, FlxColor.BLACK);
-		bar.setPosition(0, i * bar.height);
-		bar.camera = camExtra;
-		bars.push(bar);
-		add(bar);
-		new FlxTimer().start(0.05, () -> {
-			bar.x += i % 2 == 1 ? -35 : 35;
-		}, 50);
-	}
+
+	bars1 = new FlxBackdrop(null, 0x10, 0, 45);
+	bars1.makeGraphic(FlxG.width, 46, FlxColor.BLACK);
+	bars1.camera = camExtra;
+	add(bars1);
+
+	bars2 = new FlxBackdrop(null, 0x10, 0, 45);
+	bars2.y = 45;
+	bars2.makeGraphic(FlxG.width, 46, FlxColor.BLACK);
+	bars2.camera = camExtra;
+	add(bars2);
+
+	new FlxTimer().start(0.05, () -> {
+		bars1.x += 35;
+		bars2.x += -35;
+	}, 50);
 
 	bfxml.x += 1280;
-	new FlxTimer().start(2, () -> FlxTween.tween(bfxml, {x: bfxml.x - 1280}, 1.5, {onComplete: () -> for (b in bars)
-		b.destroy()}));
+	new FlxTimer().start(2, () -> 
+		FlxTween.tween(bfxml, {x: bfxml.x - 1280}, 1.5, {onComplete: () -> {bars1.destroy(); bars2.destroy();}})
+	);
 
 	gengarEnt = new FlxSprite(763, 240);
 	gengarEnt.frames = Paths.getFrames("characters/buried/enter_gengar");
@@ -110,7 +131,6 @@ function postCreate() {
 	pkball.animation.addByPrefix('break2', 'Ball_Break02', 24, false);
 	pkball.animation.addByPrefix('idle3', 'Ball_Idle_Break02', 24, true);
 	pkball.animation.addByPrefix('final', 'Ball_Final', 24, false);
-
 	pkball.animation.onFinish.add(function(a) {
 		switch (a) {
 			case "throw":
@@ -178,11 +198,12 @@ function postCreate() {
 var time:Float = 0;
 
 function update(e) {
+	camhud.zoom = camHUD.zoom; camhud.zoomMultiplier = camHUD.zoomMultiplier; camhud.alpha = camHUD.alpha;
 	missingno.iTime = time += e;
 	heat1.iTime = time * 0.15;
 	hpBar.percent = health * 50;
 	cpuBar.percent = (2.05 - health) * 50;
-	waShad.setPosition(fakegf.x - 469, -50);
+	waShad.setPosition(fakegf.x - 475, -50);
 	waShad.scale.set(2.5 + (fakegf.y + 68) * 0.03,
 		2.5 + (fakegf.y + 68) * 0.01); // Yeah, detail that 99.999999999999999999% of people wont notice. Ps: there must be a better way to do this.
 }
@@ -190,20 +211,10 @@ function update(e) {
 function stepHit(s) {
 	hpBar.color = CoolUtil.lerpColor(hpBar.color, FlxColor.WHITE, 0.08);
 	switch (s) {
-		case 1: // :smile:
-
-			// Buryman raising
+		// Buryman raising
 		case 50:
 			setMarginColor(FlxColor.fromRGB(136, 192, 112));
-		case 96:
-			shake();
-		case 112:
-			shake();
-		case 128:
-			shake();
-		case 136:
-			shake();
-		case 144:
+		case 96, 112, 128, 136, 144:
 			shake();
 		case 125:
 			buryman.playAnim('buryman_scream', true);
@@ -211,7 +222,7 @@ function stepHit(s) {
 		// gamemboy green color off
 		case 416:
 			setMarginColor(FlxColor.GRAY);
-			FlxTween.num(1, 0, 0.5, {onUpdate: (v) -> gameboy.interpolation = v.value});
+			FlxTween.num(1, 0, 0.5, null, (v) -> gameboy.interpolation = v);
 
 		// gengar entrance
 		case 932:
@@ -257,7 +268,7 @@ function stepHit(s) {
 		// Starts gameboy green color again, gengar and missingno are out
 		case 2385:
 			setMarginColor(FlxColor.fromRGB(136, 192, 112));
-			FlxTween.num(0, 1, 1, {onUpdate: (v) -> gameboy.interpolation = v.value});
+			FlxTween.num(0, 1, 1, null, (v) -> gameboy.interpolation = v);
 			FlxTween.tween(nogega, {alpha: 0}, 1, {onComplete: nogega.destroy});
 			gengarEnt.alpha = 1;
 			gengar.alpha = 0;
@@ -271,7 +282,7 @@ function stepHit(s) {
 
 		// green color off and loanmonster enters
 		case 2656:
-			FlxTween.num(1, 0, 0.5, {onUpdate: (v) -> gameboy.interpolation = v.value});
+			FlxTween.num(1, 0, 0.5, null, (v) -> gameboy.interpolation = v);
 		case 2700:
 			setMarginColor(FlxColor.fromRGB(191, 164, 211));
 			loan.alpha = 1;
@@ -290,8 +301,8 @@ function stepHit(s) {
 			setMarginColor(FlxColor.RED);
 			wa.animation.play('gf');
 			loan.kill();
-			FlxTween.num(0, 3, 5, {onUpdate: (v) -> heat1.intensity = v.value});
-			FlxTween.num(1, 0.2, 7, {onUpdate: (v) -> desat.desaturationAmount = v.value});
+			FlxTween.num(0, 3, 5, null, (v) -> heat1.intensity = v);
+			FlxTween.num(1, 0.2, 7, null, (v) -> desat.desaturationAmount = v);
 			FlxTween.tween(waShad, {y: -22}, 2);
 		case 3468:
 			apparitiongf = true;
@@ -300,7 +311,7 @@ function stepHit(s) {
 
 		// idk
 		case 4192:
-			FlxTween.num(0.2, 0.5, 5, {onUpdate: (v) -> desat.desaturationAmount = v.value});
+			FlxTween.num(0.2, 0.5, 5, null, (v) -> desat.desaturationAmount = v);
 	}
 }
 
@@ -311,9 +322,20 @@ function onPlayerHit(e) {
 			missingnobf.playSingAnim(e.direction);
 		case "geng note":
 			e.preventAnim();
+			e.countAsCombo = false;
+			e.countScore = false;
+
+			if(e.rating == "bad" || e.rating == "shit") {
+				e.cancel();
+				e.preventDeletion();
+				e.countAsCombo = false;
+				e.countScore = false;
+				return;
+			}
+
+			e.healthGain = -0.2;
 			bfxml.playAnim("BF_AURGH", true);
 			FlxG.sound.play(Paths.sound("GengarNoteSFX"), 1);
-			e.healthGain = -0.2;
 			hpBar.color = FlxColor.PURPLE;
 			FlxTween.shake(nogega, 0.09, 1);
 		default:
@@ -324,7 +346,6 @@ function onPlayerHit(e) {
 
 function onPlayerMiss(e) {
 	if (e.note.noteType == "geng note") {
-		#if mobile
 		e.preventAnim();
 		e.preventMissSound();
 		e.preventResetCombo();
@@ -333,25 +354,19 @@ function onPlayerMiss(e) {
 		e.healthGain = 0;
 		e.misses = 0;
 		e.accuracy = null;
-		#else
-		e.cancel(); // Dunno why, but this lags a lot in mobile
-		#end
 	}
 }
 
 function onDadHit(e) {
+	e.preventAnim();
 	switch (e.note.noteType) {
 		case "gengar":
-			e.preventAnim();
 			gengar.playSingAnim(e.direction);
 		case "loan":
-			e.preventAnim();
 			loan.playSingAnim(e.direction);
 		case "fake":
-			e.preventAnim();
 			fakegf.playSingAnim(e.direction);
 		default:
-			e.preventAnim();
 			buryman.playSingAnim(e.direction);
 	}
 }
@@ -384,13 +399,12 @@ function loanCums() {
 		bfxml.playAnim("BF_AURGH", true);
 
 		FlxTween.tween(muk, {alpha: 1}, 0.1);
-		new FlxTimer().start(1, () -> FlxTween.tween(muk, {alpha: 0}, 4, {onComplete: muk.destroy}));
+		FlxTween.tween(muk, {alpha: 0}, 4, {onComplete: muk.destroy, startDelay: 1});
 	});
 }
 
 var gfTween:FlxTween;
 var apparitiongf:Bool = false;
-
 function measureHit() {
 	if (apparitiongf)
 		FlxTween.tween(red, {alpha: 0.2}, 0.05, {onComplete: () -> FlxTween.tween(red, {alpha: 0}, 1)});

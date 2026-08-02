@@ -1,4 +1,5 @@
 var blueballed:Bool = false;
+var camMoveAmount:Float = 20;
 
 function create() {
 	camExtra = new FlxCamera(0, 0);
@@ -53,6 +54,13 @@ function update() {
 		}
 		if (controls.BACK)
 			FlxG.switchState(new MainMenuState());
+	}
+
+	switch(bf.animation.name) {
+		case 'singLEFT': camGame.targetOffset.set(-camMoveAmount, 0);
+		case 'singDOWN': camGame.targetOffset.set(0, camMoveAmount);
+		case 'singUP': camGame.targetOffset.set(0, -camMoveAmount);
+		case 'singRIGHT': camGame.targetOffset.set(camMoveAmount, 0);
 	}
 }
 

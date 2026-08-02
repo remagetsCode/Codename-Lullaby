@@ -1,6 +1,7 @@
 import funkin.game.GameOverSubstate;
 import hxvlc.flixel.FlxVideo;
 import hxvlc.flixel.FlxVideoSprite;
+import openfl.display.BlendMode;
 
 var gf;
 
@@ -18,6 +19,7 @@ function create(event){
 		case 'brimstone': brimstone(event);
 		case 'shitno': shitno(event);
 		case 'pasta-night': pastaNight(event);
+		default: defaultGameOver(event);
 	}
 }
 
@@ -210,30 +212,31 @@ function brimstone(e){
     deathCam.bgColor = FlxColor.TRANSPARENT;
     FlxG.cameras.add(deathCam, false);
 
+	ba = new FlxSprite();
+	ba.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+	ba.animation.addByPrefix('ded', 'buried_death', 24, false);
+	ba.animation.play('ded');
+	ba.scale.set(3,3);
+	ba.updateHitbox();
+	ba.screenCenter();
+	ba.y += 80;
+	ba.alpha = 0;
+	add(ba);
+
+	baRetry = new FlxSprite();
+	baRetry.frames = Paths.getFrames('characters/death/BA_DeathRetry');
+	baRetry.animation.addByPrefix('loop', 'BA_retry0', 24, true);
+	baRetry.animation.addByPrefix('confirm', 'BA_retry_confirm', 24, false);
+	baRetry.scale.set(3,3);
+	baRetry.screenCenter();
+	baRetry.y -= 200;
+	baRetry.animation.play('loop');
+	baRetry.alpha = 0;
+	add(baRetry);
+
 	FlxG.sound.play(Paths.sound('buryman-death/buriedDeath'));
 	FlxG.sound.play(Paths.sound('buryman-death/BA'+FlxG.random.int(0,3)), 1, false, null, true, function() {
 		FlxG.sound.playMusic(Paths.music('BurymanDeath'));
-		ba = new FlxSprite();
-		ba.frames = Paths.getFrames('characters/death/BA_DeathRetry');
-		ba.animation.addByPrefix('ded', 'buried_death', 24, false);
-		ba.animation.play('ded');
-		ba.scale.set(3,3);
-		ba.updateHitbox();
-		ba.screenCenter();
-		ba.y += 80;
-		ba.alpha = 0;
-		add(ba);
-
-		baRetry = new FlxSprite();
-		baRetry.frames = Paths.getFrames('characters/death/BA_DeathRetry');
-		baRetry.animation.addByPrefix('loop', 'BA_retry0', 24, true);
-		baRetry.animation.addByPrefix('confirm', 'BA_retry_confirm', 24, false);
-		baRetry.scale.set(3,3);
-		baRetry.screenCenter();
-		baRetry.y -= 200;
-		baRetry.animation.play('loop');
-		baRetry.alpha = 0;
-		add(baRetry);
 
 		for(a in [ba, baRetry]) FlxTween.tween(a, {alpha: 1}, 3);
 		new FlxTimer().start(3.4, ()->{
@@ -295,6 +298,82 @@ function pastaNight(e) {
 	pj.x -= 240;
 	telon.x -= 240;
 	FlxG.sound.play(Paths.sound('PS_Death'));
+}
+
+function defaultGameOver(e) {
+	e.cancel();
+
+	var deathMessages:Array<String> = [
+		"That was funny to watch.",
+		"My dog plays better than you lmao.",
+		"This was very painful to see, not for me but for you.",
+		"That was a good try. But all destinies end into death, but YOU can always try again.",
+		"You're not good enough, this is not a kid's game.",
+		"No one said it'd be easy.",
+		"Do you know you're supposed to win? Then stop being so bad and play seriously."
+	];
+	var retryMessages:Array<String> = [
+		"Retry?",
+		"Do you want to try again?",
+		"Stay Determined Player!",
+		"Let's continue, shall we?",
+		"Try again?",
+		"Un-die?"
+	];
+
+	PlayState.instance.persistentUpdate = false;
+	PlayState.instance.persistentDraw = true;
+
+	camera = deathCam = new FlxCamera(0, 0);
+    deathCam.bgColor = FlxColor.TRANSPARENT;
+    FlxG.cameras.add(deathCam, false);
+
+	red = new FunkinSprite().makeGraphic(2000, 2000, 0xFFFF0000);
+	red.scrollFactor.set(0, 0);
+	red.zoomFactor = 0;
+	red.screenCenter();
+	red.alpha = 0;
+	red.blend = BlendMode.MULTIPLY;
+	red.camera = deathCam;
+	add(red);
+
+	black = new FunkinSprite().makeGraphic(2000, 2000, 0xFF000000);
+	black.scrollFactor.set(0, 0);
+	black.zoomFactor = 0;
+	black.screenCenter();
+	black.alpha = 0;
+	black.camera = deathCam;
+	add(black);
+
+	FlxTween.tween(black, {alpha: 1}, 0.25);
+	FlxTween.tween(red, {alpha: 1}, 0.25);
+	new FlxTimer().start(0.5, () -> {
+		FlxG.sound.play(Paths.sound('over'));
+	});
+
+    new FlxTimer().start(2.5, function(tmr:FlxTimer){
+        deathText = new FlxTypeText(100, 200, 630, FlxG.random.getObject(deathMessages), 30);
+        deathText.alignment = "center";
+        deathText.camera = deathCam;
+        deathText.screenCenter();
+        deathText.y -= 150;
+        deathText.start(0.05);
+        add(deathText);
+
+        retryText = new FlxTypeText(100, 400, 630, FlxG.random.getObject(retryMessages), 20);
+        retryText.alignment = "center";
+        retryText.camera = deathCam;
+        retryText.screenCenter(FlxAxes.X);
+        add(retryText);
+
+        deathText.completeCallback = ()->{
+            new FlxTimer().start(1, ()->{
+                retryText.y = deathText.y+deathText.height+70;
+                retryText.start(0.05);
+            });
+        }
+    });
+
 }
 
 function update(){

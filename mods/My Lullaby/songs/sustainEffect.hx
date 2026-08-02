@@ -2,11 +2,14 @@ import funkin.game.Splash;
 
 final colors:Array<String> = ["Purple", "Blue", "Green", "Red"];
 var generated:Bool = false;
+var disableHoldCovers:Bool = false;
+
 public var holds:FlxTypedGroup<HoldCover> = new FlxTypedGroup<HoldCover>();
 
 function postCreate(){
 	camera.zoom = defaultCamZoom;
 
+	if(disableHoldCovers) disableScript();
 	for(c in colors) graphicCache.cache(Paths.image('holdCover'+c));
 
 	PlayState.instance.splashHandler.grpMap.set('holdCover', holds);
@@ -61,7 +64,7 @@ function onNoteHit(event){
 		if(hold.strum != null) {
 			hold.x = hold.strum.x - hold.width/3;
 			hold.y = hold.strum.y - (!Options.downscroll ? hold.height/4 : hold.height/2);
-			hold.camera = hold.camera;
+			hold.camera = hold.strum.strumLine.camera;
 		}});
 	
 }
@@ -80,9 +83,8 @@ function postUpdate()
 			player.members[i].playAnim('pressed', true);
 
 function setHoldCoverStyle(milk:HoldCover, style:String, ?color:String) {
-	//milk.style = style;
+	var isDownscroll:Bool = milk.strum?.strumLine?.camera?.downscroll;
 	if(curSong == 'brimstone' || curSong == 'mauve-macabre' || curSong == 'shinto' || curSong == 'shitno') {
-		//milk.offset.y = 50;
 		style = 'pixel';
 	}
 	switch(style) {
@@ -105,8 +107,8 @@ function setHoldCoverStyle(milk:HoldCover, style:String, ?color:String) {
 			milk.animation.addByPrefix('end', 'explode', 24, false);
 			milk.scale.set(7, 7);
 			//milk.updateHitbox();
-			milk.offset.x = -200;
-			milk.offset.y = -35;
+			milk.offset.x = -215;
+			milk.offset.y = isDownscroll ? 35 : -35;
 			milk.antialiasing = false;
 	
 		default:

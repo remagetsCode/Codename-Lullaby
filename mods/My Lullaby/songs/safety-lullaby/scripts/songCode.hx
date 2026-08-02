@@ -1,182 +1,82 @@
-var pressed = false;
-var startedTimer = false;
-var counter = 1;
-var t:Float = 60/Conductor.bpm;
-var songStarted = false;
-var healthDrain:Float = 0.15;
-var reactionTime = 0.5;
-var extras:FlxSprite;
-var both:Array = [];
+importScript("data/scripts/pendulum.hx");
 
-public var healthHypno:Float = 1.5;
+import openfl.display.BlendMode;
+import DropShadowShader;
 
-importScript("data/scripts/FeelingTired.hx");
+var lil:FlxSprite;
+var adjustColor:CustomShader = new CustomShader('adjustColor');
+var dropShadowEffects = [];
+
 function postCreate(){
+	black = new FlxSprite();
+	black.makeGraphic(FlxG.width * 3, FlxG.height * 3, 0x99000000);
+	black.screenCenter();
+	black.blend = BlendMode.SUBSTRACT;
+	//add(black);
+
 	lil = new FlxSprite();
 	lil.frames = Paths.getFrames('UI/base/hypno/Pendelum');
 	lil.animation.addByPrefix('idle', 'Pendelum instance 1',24,true);
 	lil.animation.play('idle');
 	lil.origin.set(lil.width, 0);
 	add(lil);
-	
-	pendelum = new FlxSprite();
-	//pendelum.loadGraphic(Paths.image("UI/base/hypno/Pendelum_Phase2"));
-	pendelum.frames = Paths.getFrames('UI/base/hypno/Pendelum_Phase2');
-	pendelum.animation.addByPrefix('idle','Pendelum Phase 2',24);
-	pendelum.animation.play('idle');
-	add(pendelum);
-	pendelum.setGraphicSize(pendelum.width * 1.30, pendelum.height * 1.30);
-	pendelum.screenCenter();
-	pendelum.scrollFactor.set(0);
-	pendelum.cameras = [camHUD];
-	pendelum.antialiasing = true;
-	pendelum.origin.set(pendelum.width/2, 0);
-	pendelum.visible = false;
-	
 
-	extras = new FlxSprite();
-	extras.frames = Paths.getFrames('UI/base/hypno/Extras');
-	extras.setGraphicSize(extras.width * 0.75, extras.height * 0.75);
-	extras.animation.addByPrefix('Check','Checkmark',24,false);
-	extras.animation.addByPrefix('Bad','X finished',24,false);
-	extras.animation.addByPrefix('Spacebar1','SpacebarIdle',3);
-	extras.animation.addByPrefix('Spacebar2','Spacebar',3);
-	extras.animation.play('Spacebar1');
-	extras.screenCenter();
-	extras.cameras = [camHUD];
-	extras.antialiasing = true;
-	add(extras);
+	if(FlxG.save.data.lullabyShaders){
+		adjustColor.hue = 4;
+		adjustColor.saturation = -25;
+		adjustColor.brightness = -28;
+		adjustColor.contrast = 15;
+		dad.shader = adjustColor;
 
-	both.push(pendelum);
-	both.push(lil);
+		dropShadow = new DropShadowShader(bf, [100, 85, 90], 45, 25, 1, 0.1);
+		dropShadow.setAdjustColor(4, -15, -8, 10);
+		dropShadowEffects.push(dropShadow);
+	}
+}
 
-	if(downscroll){
-		pendelum.y += downscroll ? 200 : -200;
-		extras.y += downscroll ? -100 : 100;
-	}	
+function postUpdate() {
+	for (c in dropShadowEffects) {
+		c?.postUpdate(Conductor.songPosition / 1000);
+	}
 }
 
 function onSongStart(){
-	if(FlxG.save.data.lullabyMechanics) songStarted = true;
+	pendelum.destroy();
+	pendelum = lil;
+	angleOffset = -10;
+	if(FlxG.save.data.lullabyMechanics) pendulumStarted = true;
 	else lil.visible = false;
-	
-	for(pend in both){
-		FlxTween.angle(pend, 0, -50, t*3, {
-			ease: FlxEase.sineOut
-		});
-	}	
 }
+
 function update(){
-	//health +=1;
-	if(dad.animation.curAnim.name == "idle"){
-		lil.x = 350;
-		lil.y = 360;
+	switch(dad.animation.curAnim.name) {
+		case "idle":
+			lil.x = 330;
+			lil.y = 465;
+		case "singLEFT":
+			lil.x = 330;
+			lil.y = 555;
+		case "singUP":
+			lil.x = 240;
+			lil.y = 0;
+		case "singDOWN":
+			lil.x = 230;
+			lil.y = 455;
+		case "singRIGHT":
+			lil.x = 360;
+			lil.y = 735;
+		case "Psyshock":
+			lil.x = 3800;
+			lil.y = 6300;
 	}
-	else if(dad.animation.curAnim.name == "singLEFT"){
-		lil.x = 350;
-		lil.y = 450;
-	}
-	else if(dad.animation.curAnim.name == "singUP"){
-		lil.x = 260;
-		lil.y = 0;
-	}
-	else if(dad.animation.curAnim.name == "singDOWN"){
-		lil.x = 250;
-		lil.y = 350;
-	}
-	else if(dad.animation.curAnim.name == "singRIGHT"){
-		lil.x = 380;
-		lil.y = 630;
-	}
-	else if(dad.animation.curAnim.name == "Psyshock"){
-		lil.x = 3800;
-		lil.y = 6300;
-	}
-	
-	if(!startedTimer && FlxG.keys.justPressed.SPACE){ 
-		FlxG.sound.play(Paths.sound('error'), 0.3);
-		healthHypno -= healthDrain/2;
-		showBad();
-	}
-	else if(startedTimer && FlxG.keys.justPressed.SPACE){
-		pressed = true;
-		healthHypno += healthDrain/2;
-		showCheck();
-	}
-
-
-}
-
-function stepHit(step){
-	if(songStarted && step == (counter*7)+(counter-1)){
-		
-			if(counter % 2 == 1) {
-				pend();
-			}
-			counter += 1;
-			pressed = false;
-			startedTimer = true;
-			
-		
-			// Reaction time to hit that spacebar
-			new FlxTimer().start(reactionTime, ()->{
-				if(!pressed){
-					healthHypno -= healthDrain;
-					showBad();
-				}
-				startedTimer = false;
-			});
-			
-		}
-	
-		if(healthHypno <= 0) gameOver();
-		if(healthHypno > 2) healthHypno = 2;
-	}
-
-function pend(){
-	for(pend in both){
-		FlxTween.angle(pend, -50, 30, t*2, { 
-    	    ease: FlxEase.quadInOut, 
-    	    onComplete: function(){
-				FlxTween.angle(pend, 30, -50, t*2, { 
-    	    		ease: FlxEase.quadInOut, 
-    			});
-			}
-    	});
-}
-
-}
-function showCheck(){
-		extras.alpha = 1;
-		extras.animation.play('Check');
-}
-
-function showBad(){
-		extras.alpha = 1;
-		extras.animation.play('Bad');
 }
 
 function beatHit(beat){
-	switch(beat){
-		case 2: extras.animation.play('Spacebar2');
-		case 3: extras.animation.play('Spacebar1');
-		case 4: extras.animation.play('Spacebar2');
-		case 5: extras.animation.play('Spacebar1');
-		case 6: extras.animation.play('Spacebar2');
-		case 7: extras.animation.play('Spacebar1');
-		case 8: extras.animation.play('Spacebar2');
-		case 9: extras.animation.play('Spacebar1');
-		case 10: extras.animation.play('Spacebar2');
-			extras.animation.addByPrefix('Check','Checkmark',24,false);
-			extras.animation.addByPrefix('Bad','X finished',24,false);
-		case 11: extras.animation.play('Spacebar1');
-		case 12: extras.animation.play('Spacebar2');
-		case 13:
-			extras.animation.play('Spacebar1');
-			FlxTween.tween(extras, { alpha: 0 }, 1, {
-				ease: FlxTween.cubeOut
-			});
-		
+	if(beat <= 13) {
+		extras.animation.play(beat % 2 == 0 ? 'Spacebar1' : 'Spacebar2');
+	}
+	else if(beat == 13) {
+		extras.animation.play('Spacebar1');
+		FlxTween.tween(extras, { alpha: 0 }, 1, { ease: FlxTween.cubeOut });
 	}
 }
-

@@ -3,6 +3,7 @@ import flixel.ui.FlxBar;
 import flixel.ui.FlxBarFillDirection;
 import funkin.backend.utils.NdllUtil;
 import funkin.backend.system.framerate.Framerate;
+import flixel.group.FlxTypedSpriteGroup;
 
 var reverse:Bool = false;
 var limit:Float = 0;
@@ -97,14 +98,14 @@ function create() {
 }
 
 function postCreate() {
+	unownCam = new FlxCamera(0, 0);
+	unownCam.bgColor = FlxColor.fromRGB(255, 20, 20, 150);
+	FlxG.cameras.add(unownCam, false);
+	unownCam.visible = false;
+
 	FlxG.sound.play(Paths.sound('gold/ImDead' + FlxG.random.int(1, 7)));
 
-	unownCam = new FlxCamera(0, 0);
-	unownCam.bgColor = FlxColor.TRANSPARENT;
-	FlxG.cameras.add(unownCam, false);
-
 	ljBar = new FlxBar(FlxG.width * 0.25, healthBar.y - 2, FlxBarFillDirection.RIGHT_TO_LEFT, 623, 15);
-
 	ljBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.BLACK);
 	ljBar.cameras = [camHUD];
 	ljBar.numDivisions = 200;
@@ -115,7 +116,8 @@ function postCreate() {
 		type: FlxTweenType.PINGPONG
 	});
 
-	new FlxTimer().start(0.01, () -> {
+	FlxG.signals.postUpdate.addOnce(() ->
+	{
 		modchart.setPercent('alpha', 0);
 		for (u in uiStuff.members) {
 			u.alpha = 0;
@@ -153,11 +155,13 @@ function onSongStart() {
 }
 
 function update() {
-	if (health < limit)
+	if (health < limit) {
 		gameOver();
+		unownCam.visible = false;
+	}
 	ljBar.percent = limit * 50;
 
-	user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
+	var user = CoolUtil.keyToString(FlxG.keys.firstJustPressed());
 
 	if (FlxG.keys.pressed.SHIFT) {
 		trace('shift pressed');
@@ -181,15 +185,7 @@ function update() {
 			if (curWord.charAt(counter) == " ")
 				counter++;
 
-			if (counter >= curWord.length) {
-				bg.kill();
-				unownGrp.kill();
-				linesGrp.kill();
-				timer.kill();
-				timeBar.kill();
-				anotherTimer.cancel();
-				unownTimer.cancel();
-			}
+			if (counter >= curWord.length) finishUnownMechanic();
 		}
 	}
 	if (FlxG.keys.justPressed.R) {
@@ -245,171 +241,151 @@ var timer:FlxText;
 var timeBar:FlxBar;
 
 function unownMechanic(?word:String) {
+	
 	// IF TRYING TO PORT THIS TO MOBILE, JUST COMMENT ALL THIS CHUNK OR DISABLE THE MECHANICS.
-	if (FlxG.save.data.lullabyMechanics) {
-		unownGrp = new FlxTypedGroup<FlxSprite>();
-		linesGrp = new FlxTypedGroup<FlxSprite>();
-		counter = 0;
-		counter2ndcoming = 0;
-		unown = true;
+	if (!FlxG.save.data.lullabyMechanics) return;
+	unownCam.visible = true;
 
-		if (word == "")
-			curWord = data.monochromeTexts.words[FlxG.random.int(0, data.monochromeTexts.words.length - 1)];
-		else
-			curWord = word;
+	counter = 0;
+	counter2ndcoming = 0;
+	unown = true;
 
-		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 20, 20, 150));
-		bg.scrollFactor.set(0);
-		bg.camera = unownCam;
-		add(bg);
+	if (word == "")
+		curWord = data.monochromeTexts.words[FlxG.random.int(0, data.monochromeTexts.words.length - 1)];
+	else
+		curWord = word;
 
-		var test = 1 - curWord.length * 0.055;
+	unownGrp = new FlxTypedSpriteGroup<FlxSprite>();
+	unownGrp.cameras = [unownCam];
+	linesGrp = new FlxTypedSpriteGroup<FlxSprite>();
+	linesGrp.cameras = [unownCam];
+	add(unownGrp);
+	add(linesGrp);
 
-		for (i in 0...curWord.length) {
-			var char = curWord.charAt(i);
-			if (char != " ") {
-				var uAlpha = new FlxSprite();
-				uAlpha.frames = Paths.getFrames('UI/base/Unown_Alphabet');
-				uAlpha.animation.addByPrefix('this', char, 24, true);
-				uAlpha.animation.play('this');
-				uAlpha.setGraphicSize((uAlpha.width * test) + 20, uAlpha.height * test);
-				uAlpha.updateHitbox();
-				uAlpha.setPosition((420 - curWord.length * 26) + (uAlpha.width * 1.5) * i, 150);
-				uAlpha.scrollFactor.set(0);
-				uAlpha.antialiasing = true;
-				uAlpha.camera = unownCam;
-				unownGrp.add(uAlpha);
+	var realScale = 1 - (0.05 * curWord.length); 
+	var realX = 260 - (15 * curWord.length);
 
-				var line = new FlxSprite().loadGraphic(Paths.image('UI/base/line'));
-				line.scrollFactor.set(0);
-				line.setGraphicSize(line.width * test, line.height * test);
-				line.setPosition(uAlpha.x - line.width / 4, uAlpha.y + 450);
-				line.camera = unownCam;
-				linesGrp.add(line);
-			}
-		}
-		add(unownGrp);
-		add(linesGrp);
+	for (i in 0...curWord.length) 
+	{
+		var char = curWord.charAt(i);
 
-		unownTimer = new FlxTimer().start(6, () -> {
-			FlxTween.num(health, health - (curWord.length - counter) * 0.3, 0.75, {
-				ease: FlxEase.quintOut,
-				onUpdate: (v) -> {
-					health = v.value;
-				}
-			});
-			if (bg.alive || unownGrp.alive) {
-				bg.kill();
-				unownGrp.kill();
-				linesGrp.kill();
-				timer.kill();
-				timeBar.kill();
-				anotherTimer.kill();
+		if (char == " ") continue;
+
+		var uAlpha = new FlxSprite(0, 140);
+		uAlpha.x += realX <= 0 ? 40 * i : realX * i;
+		uAlpha.frames = Paths.getFrames('UI/base/Unown_Alphabet');
+		uAlpha.animation.addByPrefix('this', char, 24, true);
+		uAlpha.animation.play('this');
+		uAlpha.scale.set(realScale, realScale);
+		uAlpha.updateHitbox();
+		uAlpha.antialiasing = Options.antialiasing;
+		unownGrp.add(uAlpha);
+
+		var line = new FlxSprite().loadGraphic(Paths.image('UI/base/line'));
+		line.scale.set(realScale, realScale);
+		line.setPosition(uAlpha.x - line.width / 4, uAlpha.y + 450);
+		linesGrp.add(line);
+	}
+
+	unownGrp.screenCenter(0x01);
+	linesGrp.x = unownGrp.x;
+
+	unownTimer = new FlxTimer().start(6, () -> 
+	{
+		FlxTween.num(health, health - (curWord.length - counter) * 0.3, 0.75, {
+			ease: FlxEase.quintOut,
+			onUpdate: (v) -> {
+				health = v.value;
 			}
 		});
+	});
 
-		timer = new FlxText(0, 0, 0, "6", 34, false);
-		timer.screenCenter();
-		timer.y += 100;
-		timer.camera = unownCam;
-		add(timer);
+	timer = new FlxText(0, 0, 0, "6", 34, false);
+	timer.screenCenter();
+	timer.y += 100;
+	timer.camera = unownCam;
+	add(timer);
 
-		timeBar = new FlxBar(FlxG.width * 0.06, FlxG.height * 0.7, FlxBarFillDirection.LEFT_TO_RIGHT, 1123, 15);
+	timeBar = new FlxBar(FlxG.width * 0.06, FlxG.height * 0.7, FlxBarFillDirection.LEFT_TO_RIGHT, 1123, 15);
+	timeBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.WHITE);
+	timeBar.cameras = [camHUD];
+	timeBar.numDivisions = 200;
+	timeBar.camera = unownCam;
+	add(timeBar);
 
-		timeBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.WHITE);
-		timeBar.cameras = [camHUD];
-		timeBar.numDivisions = 200;
-		timeBar.camera = unownCam;
-		add(timeBar);
+	anotherTimer = new FlxTimer().start(0.03, () -> {
+		if (unownTimer.active) {
+			timer.text = 6 - Std.int(unownTimer.elapsedTime);
+			timeBar.percent = (6 - unownTimer.elapsedTime) * (100 / 6);
+			timeBar.updateBar();
+		}
+	}, 0);
+}
 
-		anotherTimer = new FlxTimer().start(0.03, () -> {
-			if (unownTimer.active) {
-				timer.text = 6 - Std.int(unownTimer.elapsedTime);
-				timeBar.percent = (6 - unownTimer.elapsedTime) * (100 / 6);
-				timeBar.updateBar();
-			}
-		}, 0);
-	}
+function finishUnownMechanic() {
+	unownGrp?.kill();
+	linesGrp?.kill();
+	timeBar?.kill();
+	timer?.destroy();
+	anotherTimer?.destroy();
+	unownCam.visible = false;
 }
 
 function celebiMechanic() {
 	// IF TRYING TO PORT TO MOBILE, THIS MECHANIC CAN BE USED BUT IF ITS TOO DIFFICULT YOU CAN ADJUST IT WITH THE FOLLOWING VARIABLE
 	var much:Float = 0.35;
-	if (FlxG.save.data.lullabyMechanics) {
-		reverse = false;
-		celebi.visible = true;
-		celebi.animation.play('spawn');
-		celebi.setPosition(600, FlxG.random.int(50, 300));
+	if (!FlxG.save.data.lullabyMechanics) return;
 
-		new FlxTimer().start(0.7, () -> {
-			notes.setPosition(celebi.x, celebi.y - 50);
-			notes.animation.play('idle');
-			FlxTween.quadPath(notes, [
-				FlxPoint.get(notes.x, notes.y),
-				FlxPoint.get(notes.x - 100, notes.y - 50),
-				FlxPoint.get(notes.x - 100, notes.y - 100),
-				FlxPoint.get(notes.x - 250, notes.y - 150),
-				FlxPoint.get(notes.x - 100, notes.y - 650)
-			], 2, true, {
-				ease: FlxEase.smootherStepOut
-			});
+	reverse = false;
+	celebi.visible = true;
+	celebi.animation.play('spawn');
+	celebi.setPosition(600, FlxG.random.int(50, 300));
 
-			FlxTween.num(limit, limit + much, 1, {
-				ease: FlxEase.cubeOut,
-				onUpdate: (v) -> {
-					limit = v.value;
-				}
-			});
+	new FlxTimer().start(0.7, () -> {
+		notes.setPosition(celebi.x, celebi.y - 50);
+		notes.animation.play('idle');
+		FlxTween.quadPath(notes, [
+			FlxPoint.get(notes.x, notes.y),
+			FlxPoint.get(notes.x - 100, notes.y - 50),
+			FlxPoint.get(notes.x - 100, notes.y - 100),
+			FlxPoint.get(notes.x - 250, notes.y - 150),
+			FlxPoint.get(notes.x - 100, notes.y - 650)
+		], 2, true, {
+			ease: FlxEase.smootherStepOut
 		});
 
-		new FlxTimer().start(1.5, () -> {
-			celebi.animation.play('spawn', false, true);
-			reverse = true;
+		FlxTween.num(limit, limit + much, 1, {
+			ease: FlxEase.cubeOut,
+			onUpdate: (v) -> {
+				limit = v.value;
+			}
 		});
-	}
+	});
+
+	new FlxTimer().start(1.5, () -> {
+		celebi.animation.play('spawn', false, true);
+		reverse = true;
+	});
+	
 }
 
 // I was lazy so i just duped the function dont kill me :'(
-function jumpscare() {
-	jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold' + FlxG.random.int(0, 1)));
+// You lazy ass, there i improved it a bit - Actual Rema
+function jumpscare(?time:Float = 0.2) {
+	if(time == '') time = 0.2;
+
+	var jemp = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold' + FlxG.random.int(0, 1)));
 	jemp.setGraphicSize(FlxG.width, FlxG.height);
 	jemp.updateHitbox();
 	jemp.cameras = [camHUD];
 	jemp.alpha = 0;
 	add(jemp);
 
-	FlxTween.tween(jemp, {alpha: 0.95}, 0.2, {
-		ease: FlxEase.expoOut,
-		onComplete: () -> {
-			FlxTween.tween(jemp, {alpha: 0}, 0.4, {
-				ease: FlxEase.expoIn
-			});
-		}
-	});
+	FlxTween.tween(jemp, {alpha: 0.95}, time, {	ease: FlxEase.expoOut });
+	FlxTween.tween(jemp, {alpha: 0}, time*2, { ease: FlxEase.expoIn, startDelay: time });
 }
 
-function jumpscare1() {
-	jump = new FlxSprite().loadGraphic(Paths.image('jumpscares/Gold' + FlxG.random.int(0, 1)));
-	jump.setGraphicSize(FlxG.width, FlxG.height);
-	jump.updateHitbox();
-	jump.cameras = [camHUD];
-	jump.alpha = 0;
-	add(jump);
-
-	FlxTween.tween(jump, {alpha: 0.95}, 0.05, {
-		ease: FlxEase.expoOut,
-		onComplete: () -> {
-			FlxTween.tween(jump, {alpha: 0}, 0.07, {
-				ease: FlxEase.expoIn
-			});
-		}
-	});
-}
-
-function onGameOver(event) {
-	// event.cancel();
-	// dad.animation.play('spawn',true,true);
-}
+function jumpscare1() jumpscare(0.05);
 
 function destroy() {
 	window.fullscreen = false;

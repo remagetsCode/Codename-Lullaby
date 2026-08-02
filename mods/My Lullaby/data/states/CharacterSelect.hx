@@ -97,7 +97,6 @@ function select() {
     }
     new FlxTimer().start(1.48, ()->selectorCam.setFilters([]));
     new FlxTimer().start(1.5, ()->{
-        
         selectorCam.destroy();
         fuckingoldmusic.destroy();
         close();

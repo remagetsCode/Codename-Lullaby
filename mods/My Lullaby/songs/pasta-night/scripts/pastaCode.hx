@@ -1,3 +1,5 @@
+importScript("data/scripts/pendulum.hx");
+
 public static var asMX:Bool = false;
 public static var asHypno:Bool = false;
 public static var asLordX:Bool = false;
@@ -46,16 +48,18 @@ function onCountdown(e)
 
 function beatHit(b) {
 	block.animation.play('idle');
-	if (b == 1) // :smile:
-		switch (b) {
-			case 2:
-				FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
-			case 40 | 63 | 84 | 106 | 111 | 133 | 143 | 168 | 177 | 186 | 191 | 250 | 262 | 274 | 284 | 292 | 299:
-				mxHit();
-		}
+	switch (b) {
+		case 2:
+			FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
+		case 40 | 63 | 84 | 106 | 111 | 133 | 143 | 168 | 177 | 186 | 191 | 250 | 262 | 274 | 284 | 292 | 299:
+			mxHit();
+	}
 }
 
 function onSongStart() {
+	if(!asHypno) {
+		pendulumStarted = true;
+	}
 	iconDAD.setIcon(asMX ? 'icon-lord-x' : asHypno ? 'icon-mx' : 'icon-hypno-cards');
 	iconBF.setIcon(asMX ? 'icon-mx' : asHypno ? 'icon-hypno-cards' : 'icon-lord-x');
 }

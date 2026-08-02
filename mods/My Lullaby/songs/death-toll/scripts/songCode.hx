@@ -4,6 +4,7 @@ var bficon:HealthIcon;
 var dawnColor:FlxColor;
 
 introLength = 10;
+disableHoldCovers = true;
 function onCountdown(e){
     e.cancel();
 }
@@ -17,12 +18,13 @@ function postCreate(){
     if(FlxG.save.data.lullabyShaders)
     {
         FlxG.game.addShader(blur);
-        FlxG.game.addShader(aberration);
-        FlxG.game.addShader(heat1);
+        camHUD.addShader(aberration);
+        camGame.addShader(aberration);
+        camHUD.addShader(heat1);
+        camGame.addShader(heat1);
         blur.Size = 0;
         aberration.iTime = 6.5;
     }
-    camDS.setFilters([]);
     gf.alpha = 1;
 
     drama = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -40,6 +42,11 @@ function postCreate(){
     contract.animation.addByPrefix('e', 'Contract', 4, false);
     contract.alpha = 0;
     contract.antialiasing = true;
+    contract.animation.onFinish.add(function(){
+        contract.color = FlxColor.RED;
+        FlxTween.tween(contract, {alpha: 0}, 1);
+        FlxTween.tween(contract.scale, {x: 0.1, y: 0.1}, 1, {ease: FlxEase.backIn});
+    });
     add(contract);
 
     white = new FunkinSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
@@ -85,7 +92,6 @@ function postCreate(){
     dsBF.antialiasing = true;
     add(dsBF);
 
-
     ds = new FunkinSprite().loadGraphic(Paths.image("UI/base/hellbell/ds_01"));
     ds.scrollFactor.set(0);
     ds.zoomFactor = 0.5;
@@ -101,11 +107,11 @@ function postCreate(){
 
 	bficon = new HealthIcon(strumLines.members[1].characters[1].icon, true);
 	bficon.cameras = [camHUD];
+    insert(members.indexOf(healthBar)+2, bficon);
 	
 	dawnColor = (boyfriend?.xml?.exists("iconColor") | boyfriend?.xml?.exists("color")) ? CoolUtil.getColorFromDynamic(boyfriend.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(boyfriend.xml.get("color")) : 0xFF66FF33;
-	bfColor = (strumLines.members[1]?.characters[1]?.xml != null && strumLines.members[1]?.characters[1]?.xml.exists("iconColor") | strumLines.members[1]?.characters[1]?.xml.exists("color")) ? CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("iconColor")) | CoolUtil.getColorFromDynamic(strumLines.members[1].characters[1].xml.get("color")) : 0xFF66FF33;
-
-	insert(members.indexOf(healthBar)+2, bficon);	
+	bfColor = (dawnbf?.xml != null && dawnbf?.xml.exists("iconColor") | dawnbf?.xml.exists("color")) ? CoolUtil.getColorFromDynamic(dawnbf.xml.get("iconColor")) | CoolUtil.getColorFromDynamic(dawnbf.xml.get("color")) : 0xFF66FF33;
+		
 	iconArray = [iconBF,iconDAD,bficon]; //Makes it so the BF Icon also will properly bop and such		
 	FlipIcons = true;
 
@@ -116,13 +122,20 @@ function postCreate(){
 
 var shaderVel:Float = 1;
 var time:Float = 0;
-public var bruh;
+public var blurAmount;
 function update(e){
     heat1.iTime = time += e*shaderVel;
-    blur.Size = bruh;
-    bruh = lerp(bruh, 0, 0.009);
+    blur.Size = blurAmount;
+    blurAmount = lerp(blurAmount, 0, 0.009);
     modchart.setPercent('x', 1550-(camera.scroll.x*0.95), 0);
     modchart.setPercent('y', -452-camera.scroll.y, 0);
+
+	iconBF.alpha = dawn.alpha;
+	bficon.alpha = dawnbf.alpha;	
+	bficon.x = iconBF.x; bficon.y = iconBF.y;
+	customHealthBarColors[0] = FlxColor.interpolate(dawnColor, bfColor, dawnbf.alpha);
+
+    if(curBeat > 7) modchart.setPercent('vibrate', modchart.getPercent('vibrate', 1) > 0 ? modchart.getPercent('vibrate', 1)-0.01 : 0, 1);
 }
 
 var amount:Float = 0.1;
@@ -131,13 +144,6 @@ function postUpdate(){
     inst.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.6 : 1, amount);
     vocals.volume = lerp(inst.volume, dawnbf.idleSuffix == "-cover" ? 0.8 : 1, amount);
     pitio.volume = lerp(pitio.volume, 0, 0.005);	
-	
-	iconBF.alpha = strumLines.members[1].characters[0].alpha;
-	bficon.alpha = strumLines.members[1].characters[1].alpha;	
-	bficon.x = iconBF.x;bficon.y = iconBF.y;
-	customHealthBarColors[0] = FlxColor.interpolate(dawnColor, bfColor, strumLines.members[1].characters[1].alpha);
-
-    if(curBeat > 7) modchart.setPercent('vibrate', modchart.getPercent('vibrate', 1) > 0 ? modchart.getPercent('vibrate', 1)-0.01 : 0, 1);
 }
 
 var getFreaky:Bool = false;
@@ -152,7 +158,6 @@ function beatHit(){
 var transTween:FlxTween;
 var transAmount:Float = 1;
 function stepHit(s){
-     //1477, -452
     switch(s){
         case 5: setMarginColor(0xfd831a);
         case 240: heat1.intensity = 0.01;
@@ -175,11 +180,6 @@ function stepHit(s){
             contract.alpha = 1;
             FlxTween.tween(contract, {y: contract.y+10}, 1, {ease: FlxEase.quadInOut, type: 4});
             
-            contract.animation.onFinish.add(function(){
-                contract.color = FlxColor.RED;
-                FlxTween.tween(contract, {alpha: 0}, 1);
-                FlxTween.tween(contract.scale, {x: 0.1, y: 0.1}, 1, {ease: FlxEase.backIn});
-            });
         case 1296: getFreaky = true;
         
         case 1320:
@@ -187,9 +187,7 @@ function stepHit(s){
             FlxTween.num(1, 0.1, 35, {onUpdate: (v)->transAmount = v.value});
             transTween = FlxTween.num(0,0.8, 2.4, {
                 type: 4, 
-                onUpdate: (v)->{
-                    dawn.alpha = v.value + transAmount;
-                }
+                onUpdate: (v)->dawn.alpha = v.value + transAmount
             });
 
         case 1350: transAmount = 0.3;
@@ -228,25 +226,25 @@ function stepHit(s){
     else if(dawnbf.idleSuffix == "-cover") dawnbf.singAnims = ["singLEFT-cover", "singDOWN-cover", "singUP-cover", "singRIGHT-cover"];
 }
 
-var coverTime:FlxTimer = new FlxTimer();
+var coverTime:FlxTimer;
 function onPlayerHit(e){
     if(e.note.strumID == 4) {
         e.preventAnim();
-        countAsCombo = false;
-        countScore = false;
+        e.countAsCombo = false;
+        e.countScore = false;
         if(dawn.idleSuffix == "")
         {
-            dawn.playAnim('coveringTrans', true);
+            dawn.playAnim('coveringTrans', true, "LOCK");
             dawn.idleSuffix = "-cover";
         }
 
         if(dawnbf.idleSuffix == "")
         {
-            dawnbf.playAnim('coveringTrans', true);
+            dawnbf.playAnim('coveringTrans', true, "LOCK");
             dawnbf.idleSuffix = "-cover";
         }
         
-        coverTime.cancel();
+        coverTime?.cancel();
         coverTime = new FlxTimer().start(0.25, ()->{
             if(dawn.idleSuffix != "-morph") dawn.idleSuffix = "";
             dawnbf.idleSuffix = "";
@@ -254,7 +252,7 @@ function onPlayerHit(e){
     }
 }
 
-var missTime:FlxTimer = new FlxTimer();
+var missTime:FlxTimer;
 function onPlayerMiss(e){
     if(e.note.strumID == 4){
         e.preventVocalsMute();
@@ -265,8 +263,8 @@ function onPlayerMiss(e){
         pitio.volume = 1;
         amount = 0.005;
 
-        bruh = 10;
-        missTime.cancel();
+        blurAmount = 10;
+        missTime?.cancel();
         missTime = new FlxTimer().start(5.25, ()->{
             amount = 0.1;
         });

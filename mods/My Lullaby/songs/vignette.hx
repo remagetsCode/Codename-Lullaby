@@ -3,7 +3,7 @@ public var vignette:FlxSprite;
 public var black:FlxSprite;
 
 function postCreate(){
-	new FlxTimer().start(0.01, ()->{
+	FlxG.signals.postUpdate.addOnce(() -> {
 		vignette = new FlxSprite().loadGraphic(Paths.image('UI/base/vignette2'));
 		vignette.screenCenter();
 		vignette.setGraphicSize(FlxG.width, FlxG.height);
@@ -23,7 +23,7 @@ function postCreate(){
 }
 
 function vignetteIdk(){
-	FlxTween.tween(vignette, { alpha: 1 }, 4, {
+	FlxTween.tween(vignette, { alpha: 0.75 }, 4, {
 			ease:FlxEase.smootherStepOut,
 			type: FlxTween.PINGPONG
 		});

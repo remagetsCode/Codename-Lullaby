@@ -35,13 +35,12 @@ function create(){
 	bf.x -= 200;
 	
 	window.borderless = true;
-	
 }
 
 function postCreate(){
 	camera.zoom = 1;
 	
-	new FlxTimer().start(0.03, ()->{for(obj in uiStuff) obj.alpha = 0; black.alpha = 1;});
+	FlxG.signals.postUpdate.addOnce(() -> for(obj in uiStuff) {obj.alpha = 0; black.alpha = 1;});
 	
 	FlxTween.tween(dad, {y: dad.y+30}, 1, {ease: FlxEase.sineInOut, type: 4});
 }
@@ -132,27 +131,3 @@ function glitch(){
 function destroy(){
 	window.borderless = false;
 }
-
-
-
-//function setBruh(time:Float){
-//		//Conductor.setupSong(SONG);
-//		//instance.loadSong(PlayState.SONG.song);
-//		if(time < 0) time = 0;
-//
-//		FlxG.sound.music.pause();
-//		vocals.pause();												//Experimental
-//
-//		FlxG.sound.music.time = time;
-//		FlxG.sound.music.pitch = 1;
-//		FlxG.sound.music.play();
-//
-//		if (Conductor.songPosition <= vocals.length)
-//		{
-//			vocals.time = time;
-//			vocals.pitch = 1;
-//		}
-//		vocals.play();
-//		Conductor.songPosition = time;
-//		newTime = time;
-//}

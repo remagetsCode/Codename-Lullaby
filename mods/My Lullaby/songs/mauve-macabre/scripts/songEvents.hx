@@ -4,6 +4,8 @@ missingno.ENABLE_MODE = 1;
 missingno.MODE = 4;
 missingno.GLITCH_RECT_DIVISION = 10;
 missingno.GLITCH_THR = 0.0;
+
+useModchart = false;
 function create() {
 	FlxG.game.addShader(missingno);
 }

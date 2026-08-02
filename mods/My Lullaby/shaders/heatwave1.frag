@@ -8,8 +8,6 @@ void main()
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = openfl_TextureCoordv;
     vec3 col = vec3(0.0,0.0,0.0);
-    
-    
 
      //zoom in to avoid the edge clipping
      float zoomIn = 0;
@@ -29,7 +27,8 @@ void main()
      //play with the colours a bit
      //col = mix(col, vec3(1.0,1.0,0.5), (1.0 - col.b)/10.0);
      
-    
+    vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+
     // Output to screen
-    gl_FragColor = vec4(col,1.0);
+    gl_FragColor = vec4(col, color.a);
 }

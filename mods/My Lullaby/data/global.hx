@@ -27,6 +27,7 @@ var overwriteStates:Map<String, String> = [
 ];
 
 static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
+public static var healthHypno:Float = 1.5;
 function new() {
 	
     MusicBeatTransition.script = 'data/scripts/customTransition';
@@ -56,6 +57,10 @@ function preStateSwitch() {
 		if(Std.isOfType(FlxG.game._state, MusicBeatState) && FlxG.game._state.scriptName == "Shop")playerSpawnPos = [15, 16];	
 	}
 	initMarginCamera();
+}
+
+function update() {
+	//if(FlxG.keys.justPressed.I) FlxG.timeScale = FlxG.timeScale == 1 ? 5 : 1;
 }
 
 public static var twen:FlxTween;

@@ -4,7 +4,6 @@
 	<sprite x="-1138" scroll="0.5" sprite="tiles" y="-1039" type="none" scale="0.9" name="Tiles"/>
 	<sprite x="-672.901152581862" sprite="haze" y="-1041.32092146623" type="none" scalex="0.925026681442979" scaley="0.93559350305155" name="Gradient"/>
 	<girlfriend x="1100" y="-500"/>
-	<ratings x="1150" y="400"/>
-	<dad scale="0.95" x="1153" scroll="0.53" y="0"/>
-	<boyfriend camxoffset="350" x="466" scrollx="1.1" scrolly="0.8" camyoffset="-65" y="256" zoomfactor="0.7"/>
+	<dad scale="0.9" x="1223" scroll="0.6" y="-16"/>
+	<boyfriend scrolly="0.8" camxoffset="350" x="466" camyoffset="-65" y="256" zoomfactor="0.7" scrollx="1.1"/>
 </stage>

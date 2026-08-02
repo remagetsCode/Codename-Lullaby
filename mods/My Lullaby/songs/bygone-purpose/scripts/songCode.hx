@@ -1,4 +1,4 @@
-importScript('data/scripts/Perish');
+
 
 var alexisColor:FlxColor;
 

@@ -67,16 +67,10 @@ function beatHit(beat){
 	switch(beat){
 		case 2:
 			if(!FlxG.save.data.lullabyMechanics) return;
-			FlxTween.tween(accuracyTxt, {x:520, y: 570}, 1, {
-				ease: FlxEase.cubeOut
-			});
+			FlxTween.tween(accuracyTxt, {x:520, y: 570}, 1, {ease: FlxEase.cubeOut});
 			accuracyTxt.size = 20;
-			FlxTween.tween(missesTxt, {x:missesTxt.x-100}, 1, {
-				ease: FlxEase.cubeOut
-			});
-			FlxTween.tween(scoreTxt, {x:missesTxt.x-100}, 1, {
-				ease: FlxEase.cubeOut
-			});
+			FlxTween.tween(missesTxt, {x:missesTxt.x-100}, 1, {ease: FlxEase.cubeOut});
+			FlxTween.tween(scoreTxt, {x:missesTxt.x-100}, 1, {ease: FlxEase.cubeOut});
 
 		case 547: FlxTween.tween(black, {alpha: 0.8}, 10);
 		case 578: black.alpha = 1;
@@ -110,7 +104,7 @@ function feraMechanic(){
 			}
 		},10);
 
-		timer2 = new FlxTimer().start(5, ()->{gameOver();});
+		timer2 = new FlxTimer().start(5, ()->gameOver());
 	}
 }
 

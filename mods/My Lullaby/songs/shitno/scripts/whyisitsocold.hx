@@ -1,3 +1,6 @@
+import DropShadowShader;
+
+var dropShadowEffects:Array = [];
 introLength = 0;
 function postCreate(){
     camExtra = new FlxCamera(0, 0);
@@ -18,10 +21,22 @@ function postCreate(){
     }
 
     new FlxTimer().start(0.05, ()->{
-        vignette.alpha = 1;
+        vignette.alpha = 0.8;
         vignette.camera = camExtra;
     });
     FlxTween.shake(iconBF, 0.015, 9999999);
+
+    if(FlxG.save.data.lullabyShaders){
+		dropShadow = new DropShadowShader(bf, [100, 95, 90], 150, 0, 1, 0.1);
+		dropShadow.setAdjustColor(4, -15, -138, 30);
+		dropShadowEffects.push(dropShadow);
+	}
+}
+
+function postUpdate() {
+	for (c in dropShadowEffects) {
+		c?.postUpdate(Conductor.songPosition / 1000);
+	}
 }
 
 function stepHit(e){
@@ -38,6 +53,7 @@ function stepHit(e){
 
         case 428:
             for(i in [healthBar, healthBarBG, iconDAD]) FlxTween.tween(i, {alpha: 1}, 2);
+            FlxTween.tween(dropShadowEffects[0], {distance: 5}, 5);
             FlxTween.tween(vignette, {alpha: 0.5}, 5); 
             bf.cameraOffset = FlxPoint.get(-400, 0);
 

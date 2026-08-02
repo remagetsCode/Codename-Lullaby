@@ -1,8 +1,13 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="mt_silver_red_norm" icon="icon-red" color="#FF0808">
+<character sprite="mt_silver_red" icon="icon-red" color="#FF0808">
 	<anim name="idle" anim="Norm Red Idle"/>
-	<anim name="singDOWN" anim="Norm Red down" x="9" y="3"/>
+	<anim name="singDOWN" anim="Norm Red down" x="12" y="5"/>
 	<anim name="singRIGHT" anim="Norm Red right" x="-59"/>
-	<anim name="singLEFT" anim="Norm Red left" x="22" y="3"/>
-	<anim name="singUP" anim="Norm Red UP" x="3" y="36"/>
+	<anim name="singLEFT" anim="Norm Red left" x="20" y="1"/>
+	<anim name="singUP" anim="Norm Red UP" y="36"/>
+	<anim name="idle-alt" anim="DEAD RED IDLE" x="16" y="3"/>
+	<anim name="singDOWN-alt" anim="DEAD RED down" x="34" y="-4"/>
+	<anim name="singRIGHT-alt" anim="DEAD RED right" x="-67" y="2"/>
+	<anim name="singLEFT-alt" anim="DEAD RED left" x="190" y="7"/>
+	<anim name="singUP-alt" anim="DEAD RED up" x="15" y="61"/>
 </character>
