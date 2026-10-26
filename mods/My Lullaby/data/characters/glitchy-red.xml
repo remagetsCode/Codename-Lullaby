@@ -1,8 +1,13 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="Glitchy_Red_Assets_elpepe" icon="icon-glitchy-red1" color="#FF0000">
-	<anim name="idle" anim="RedIdle"/>
-	<anim name="singDOWN" anim="RedDown" x="1" y="-13"/>
-	<anim name="singRIGHT" anim="RedRight" x="-58" y="24"/>
-	<anim name="singLEFT" anim="RedLeft" x="105" y="11"/>
-	<anim name="singUP" anim="RedUp" x="80" y="30"/>
+<character sprite="glitchy-red" scale="0.85" icon="icon-glitchy-red1" color="#FF0000">
+	<anim name="idle" anim="RedIdle0"/>
+	<anim name="singDOWN" anim="RedDown0" x="1" y="-13"/>
+	<anim name="singRIGHT" anim="RedRight0" x="-58" y="24"/>
+	<anim name="singLEFT" anim="RedLeft0" x="105" y="11"/>
+	<anim name="singUP" anim="RedUp0" x="80" y="30"/>
+	<anim name="idle-alt" anim="RedIdleMad"/>
+	<anim name="singDOWN-alt" anim="RedDownMad" x="-64" y="-17"/>
+	<anim name="singRIGHT-alt" anim="RedRightMad" x="-151" y="11"/>
+	<anim name="singLEFT-alt" anim="RedLeftMad" x="72" y="18"/>
+	<anim name="singUP-alt" anim="RedUpMad" x="-73" y="55"/>
 </character>

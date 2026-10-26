@@ -46,7 +46,7 @@ function update() {
 
 function stepHit(step) {
 	switch(step){
-		case 1100, 1101, 1102, 1103, 1104, 11050: black.alpha = black.alpha == 1 ? 0 : 1; 
+		case 1100, 1101, 1102, 1103, 1104, 1105: black.alpha = black.alpha == 1 ? 0 : 1; 
 	}
 }
 
@@ -56,7 +56,6 @@ function beatHit(beat) {
 			damage = true;
 			bgDesat = true;
 			iconP2.setIcon('icon-glitchy-red-mad1');
-			dad.scrollFactor.set(0.6,1);
 
 		case 468: 
 			legacy.alpha = 1;
